@@ -4,10 +4,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What This Is
 
-A Claude Code **plugin** (not a software project) that automates publication workflows across three ecosystems:
+A Claude Code **plugin** (not a software project) that automates publication workflows across four ecosystems:
 - **R packages**: CRAN → JOSS → JSS pipeline
 - **Python packages**: PyPI publishing
 - **Books**: Amazon KDP (technical + fiction/nonfiction)
+- **Academic preprints**: OSF / MetaArXiv
 
 There is no build system, no test suite, no compiled code. The entire plugin is Markdown files with YAML frontmatter. "Development" means editing skills, commands, and reference docs.
 
@@ -41,6 +42,7 @@ Each skill has a corresponding slash command. Commands are minimal — just fron
 | `commands/kdp-audit.md` | `skills/kdp-audit/` | KDP |
 | `commands/kdp-listing.md` | `skills/kdp-listing/` | KDP |
 | `commands/kdp-publish.md` | `skills/kdp-publish/` | KDP |
+| `commands/osf-preprint.md` | `skills/osf-preprint/` | Academic preprints |
 
 The router skill (`skills/pub-pipeline/`) has no command — it triggers via natural language ("publish my package").
 
@@ -59,6 +61,7 @@ Skills reference detailed policy/requirements docs via `${CLAUDE_PLUGIN_ROOT}/do
 - `pypi-reference.md` — PyPI metadata requirements, trusted publishers
 - `kdp-reference.md` — KDP formatting, pricing, submission guide
 - `kdp-exemplars.md` — Fiction blurb examples, keyword strategies, category tactics
+- `osf-reference.md` — OSF API v2 endpoints, authentication, preprint providers, and common errors
 
 ## Conventions
 
