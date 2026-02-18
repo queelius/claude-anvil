@@ -1,0 +1,13 @@
+{
+  "name": "pub-pipeline",
+  "version": "0.3.0",
+  "description": "Unified publication pipeline: R packages (CRAN/JOSS/JSS), Python packages (PyPI), and books (Amazon KDP)",
+  "author": {
+    "name": "Alexander Towell",
+    "email": "lex@metafunctor.com",
+    "url": "https://github.com/queelius"
+  },
+  "repository": "https://github.com/queelius/pub-pipeline",
+  "license": "MIT",
+  "keywords": ["R", "CRAN", "JOSS", "PyPI", "KDP", "publication", "academic", "audit"]
+}

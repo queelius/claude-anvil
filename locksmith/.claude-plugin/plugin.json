@@ -1,0 +1,8 @@
+{
+  "name": "alex-confidential",
+  "description": "Confidentiality toolkit — smart routing across cryptoid (Hugo encryption), pagevault (HTML/file encryption), and gpg (file encryption/signing)",
+  "version": "0.1.0",
+  "author": {
+    "name": "Alex Towell"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "mf",
+  "description": "Metafunctor site management — blog architecture, content workflows, mf CLI, and crier cross-posting",
+  "version": "1.0.0",
+  "author": {
+    "name": "Alex Towell"
+  }
+}

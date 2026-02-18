@@ -1,0 +1,11 @@
+{
+  "name": "worldsmith",
+  "version": "0.1.0",
+  "description": "Documentation-first worldbuilding methodology for fiction projects. The Silmarillion approach: docs ARE the world, story text derives from them.",
+  "author": {
+    "name": "Spinoza"
+  },
+  "repository": "https://github.com/spinoza/worldsmith",
+  "license": "MIT",
+  "keywords": ["fiction", "worldbuilding", "editorial", "writing", "lore", "consistency"]
+}

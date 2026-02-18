@@ -1,0 +1,57 @@
+{
+  "name": "queelius",
+  "owner": {
+    "name": "Alexander Towell",
+    "email": "lex@metafunctor.com"
+  },
+  "metadata": {
+    "description": "Personal Claude Code plugins: publication workflows, research paper management, fiction worldbuilding, and repository management"
+  },
+  "plugins": [
+    {
+      "name": "pub-pipeline",
+      "source": "./pub-pipeline",
+      "description": "Unified publication pipeline: R packages (CRAN/JOSS/JSS), Python packages (PyPI), and books (Amazon KDP)",
+      "version": "0.2.0",
+      "author": {
+        "name": "Alexander Towell"
+      }
+    },
+    {
+      "name": "papermill",
+      "source": "./papermill",
+      "description": "Research paper lifecycle management — thesis refinement, literature surveys, experimental design, editorial review, and publication venue matching",
+      "version": "0.1.0",
+      "author": {
+        "name": "Alexander Towell"
+      }
+    },
+    {
+      "name": "worldsmith",
+      "source": "./worldsmith",
+      "description": "Documentation-first worldbuilding methodology for fiction projects. The Silmarillion approach: docs ARE the world, story text derives from them.",
+      "version": "0.1.0",
+      "author": {
+        "name": "Alexander Towell"
+      }
+    },
+    {
+      "name": "mf",
+      "source": "./mf",
+      "description": "Metafunctor site management — blog architecture, content workflows, mf CLI, and crier cross-posting",
+      "version": "1.0.0",
+      "author": {
+        "name": "Alexander Towell"
+      }
+    },
+    {
+      "name": "repoindex",
+      "source": "./repoindex",
+      "description": "Collection-aware repository intelligence — query, analyze, and maintain your git repository collection",
+      "version": "0.10.0",
+      "author": {
+        "name": "Alexander Towell"
+      }
+    }
+  ]
+}
