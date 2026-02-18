@@ -17,9 +17,29 @@ Identify the R package to audit. Look for `DESCRIPTION` file in the current work
 
 Read `.claude/pub-pipeline.local.md` if it exists (Read tool). Extract author metadata and package context from YAML frontmatter. If the file is missing, inform the user and offer to create one from the template at `${CLAUDE_PLUGIN_ROOT}/docs/user-config-template.md`.
 
+### 1c. Verify Dependency Availability
+
+Before running the full audit, check that all dependencies are available on CRAN (Bash tool):
+
+1. Parse `Imports`, `Depends`, and `LinkingTo` fields from `DESCRIPTION`
+2. For each dependency that is not a base or recommended package, verify it exists on CRAN:
+```bash
+Rscript -e 'ap <- available.packages(); cat("PKG_NAME" %in% rownames(ap))'
+```
+3. For dependencies with version requirements (e.g., `pkg (>= 2.0)`), verify the requirement is satisfiable:
+```bash
+Rscript -e 'ap <- available.packages(); cat(ap["PKG_NAME", "Version"])'
+```
+Compare the available version against the minimum required version.
+
+If any dependency is **not on CRAN**, flag it as a **hard blocker** in the gap report and stop here — the package cannot pass `R CMD check --as-cran` until all dependencies are available. Recommend the user publish the missing dependency first or switch to a CRAN-available alternative.
+
 ### 2. Gather Package State
 
 Run these checks in parallel where possible:
+
+**Regenerate documentation** (Bash tool):
+Run `Rscript -e 'devtools::document()'` to ensure NAMESPACE and `man/` files are current before auditing them. This prevents false negatives from stale roxygen output.
 
 **Package metadata** (Read tool):
 - Read `DESCRIPTION` — check all required fields

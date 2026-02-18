@@ -73,10 +73,7 @@ If `paper.md` exists, validate against JOSS format requirements.
 - `# Summary` — high-level for non-specialists
 - `# Statement of Need` or `# Statement of need` — research purpose, target audience
 - `# State of the Field` or `# State of the field` — comparison to existing packages
-- `# Software Design` or `# Software design` — architecture, trade-offs (recently added requirement — verify against current JOSS guidelines)
-- `# Research Impact` or similar — evidence of impact (recently added requirement — verify against current JOSS guidelines)
-- `# AI Usage Disclosure` or similar — generative AI transparency (recently added requirement — verify against current JOSS guidelines)
-- `# References`
+- `# Software Design` or `# Software design` — architecture, trade-offs- `# Research Impact` or similar — evidence of impact- `# AI Usage Disclosure` or similar — generative AI transparency- `# References`
 
 **Bibliography** (Read/Grep tools):
 - `paper.bib` exists at expected path

@@ -4,75 +4,57 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What This Is
 
-Worldsmith is a Claude Code **plugin** for documentation-first fiction worldbuilding (the "Silmarillion approach"). There is no build system, test suite, or compiled code. The entire codebase is Markdown files with YAML frontmatter, bash scripts, JSON hooks, and starter templates. "Development" means editing skills, commands, agents, hooks, scripts, and templates.
+Worldsmith is a Claude Code **plugin** for documentation-first fiction worldbuilding (the "Silmarillion approach"). There is no build system, test suite, or compiled code. The entire codebase is Markdown files with YAML frontmatter, bash scripts, and JSON hooks. "Development" means editing skills, commands, agents, hooks, and scripts.
 
 ## Plugin Structure
 
 ```
-.claude-plugin/plugin.json   # Manifest (name, version, description, author)
-skills/<name>/SKILL.md        # Interactive skills (core logic + trigger phrases)
-skills/<name>/references/     # Deep reference docs loaded by skills
-commands/<name>.md            # Slash commands (workflow entry points)
-agents/<name>.md              # Autonomous subagents with system prompts
-hooks/hooks.json              # Prompt-based PostToolUse and Stop hooks
-scripts/*.sh                  # Bash utilities (doc detection, propagation, pattern counting)
-templates/*.template          # Starter templates for /worldsmith:init-world scaffolding
+.claude-plugin/plugin.json                       # Manifest (name, version, description)
+skills/worldsmith-methodology/SKILL.md            # Single skill: editorial methodology
+skills/worldsmith-methodology/references/          # Deep reference docs (propagation, doc structure)
+commands/{init-world,change,check}.md             # 3 slash commands
+agents/{lorekeeper,critic}.md                     # 2 agents (1 read-write, 1 read-only)
+hooks/hooks.json                                  # SessionStart + PostToolUse + Stop hooks
+hooks/scripts/detect-worldsmith-project.sh        # Ambient project detection
+scripts/count_patterns.py                         # Prose pattern counting (reads patterns.md)
+scripts/patterns.md                               # Default pattern definitions (overridable per project)
 ```
 
 ## File Format Conventions
 
 ### Commands (`commands/*.md`)
-YAML frontmatter with `description`, `allowed-tools` (comma-separated tool names), and optional `argument-hint`. Body contains the full workflow with numbered steps. Commands reference `$ARGUMENTS` for user input.
+YAML frontmatter with `description`, `allowed-tools`, and optional `argument-hint`. Body contains instructions FOR Claude describing rules and awareness, not rigid scripts. Commands reference `$ARGUMENTS` for user input and `${CLAUDE_PLUGIN_ROOT}` for sibling files.
 
 ### Skills (`skills/*/SKILL.md`)
-YAML frontmatter with `name`, `description` (contains trigger phrases for auto-detection), and `version`. Body uses numbered workflow steps with tool annotations in parentheses: `(Read tool)`, `(Bash tool)`, `(Glob/Grep tools)`. Skills reference sibling files via `${CLAUDE_PLUGIN_ROOT}` — when adding references, verify the target file exists.
+YAML frontmatter with `name`, `description` (trigger phrases for auto-detection), and `version`. Body is lean methodology (~1600 words) with references to detailed docs via `${CLAUDE_PLUGIN_ROOT}`. When adding references, verify the target file exists.
 
 ### Agents (`agents/*.md`)
-YAML frontmatter with `name`, `description` (with `<example>` blocks showing trigger patterns), `tools` (list), `model: inherit`, and `color`. Body is the agent's system prompt. **Two of three agents are READ-ONLY** (continuity-checker, editor) — they only have Read/Grep/Glob tools to prevent accidental file corruption.
+YAML frontmatter with `name`, `description` (with `<example>` blocks), `tools` (list), `model: inherit`, and `color`. Body is the agent's system prompt. The **critic** agent is READ-ONLY (Read/Grep/Glob only). The **lorekeeper** has write access.
 
 ### Hooks (`hooks/hooks.json`)
-Prompt-based hooks (not code-based). Two event types:
-- **PostToolUse** (matcher: `Write|Edit`): Reminds about cross-reference propagation when docs/manuscript are edited
-- **Stop** (matcher: `*`): Blocks session exit if propagation appears incomplete
+Three event types:
+- **SessionStart** (command): Runs `detect-worldsmith-project.sh` for ambient awareness
+- **PostToolUse** (prompt, matcher: `Write|Edit`): Propagation reminders for doc/manuscript edits
+- **Stop** (prompt): Completion verification before session exit
 
-### Templates (`templates/*.template`)
-Use `{{PLACEHOLDER}}` syntax (e.g. `{{PROJECT_NAME}}`, `{{GENRE}}`, `{{FORMAT}}`). Placeholders are filled by the `/worldsmith:init-world` command during project scaffolding.
+### Scripts
+- `scripts/count_patterns.py` — Python, reads pattern definitions from `scripts/patterns.md`. Projects can override by placing `patterns.md` in `.worldsmith/` at project root.
+- `scripts/patterns.md` — Default pattern list (crutch words, filter words, weak verbs, dialogue tags). Plain markdown, self-documenting, editable by Claude or by hand.
+- `hooks/scripts/detect-worldsmith-project.sh` — Bash, runs on SessionStart.
 
-### Scripts (`scripts/*.sh`)
-All use `set -euo pipefail`. Accept positional arguments with `${1:?Usage: ...}` pattern.
+## Core Concepts
 
-## Core Concept: The Doc Ecosystem
+**Role-based doc ecosystem.** The plugin thinks in document roles (timeline authority, lore, systems, characters, style conventions, outline, editorial backlog, themes/anti-cliche, exploratory ideas) — not hardcoded filenames. Each target project's CLAUDE.md maps roles to its own file structure.
 
-The plugin's entire methodology revolves around six tightly coupled documents that form a target project's editorial system:
+**Canonical hierarchy** (when sources disagree): canonical tables > timeline authority > system specs > character entries > outline > manuscript.
 
-```
-                    outline.md
-                   (diagnostic hub)
-                   /    |    \
-          lore.md   characters.md   worldbuilding.md
-              \         |         /
-                style-guide.md
-                        |
-                  future-ideas.md
-```
+**Dual workflow:**
+- **Canonical changes**: docs first, then manuscript, then propagation check
+- **Exploratory ideas**: provisional sections only, no manuscript changes until promoted
 
-**Canonical hierarchy** (when sources disagree): CANONICAL tables > Timeline > Character entries > Outline > Manuscript.
+**Propagation awareness.** Every change has a blast radius. Claude traces changes through the doc graph using awareness (not rigid matrices). Details in `references/propagation-awareness.md`.
 
-**Dual workflow** is a first-class concept:
-- **Canonical** (`/fix`): docs first → manuscript → outline → verify propagation
-- **Exploratory** (`/explore`): write to provisional sections only, no manuscript changes until `/promote`
-
-Every command, agent, skill, and hook enforces or supports this ecosystem. When editing plugin components, preserve this discipline.
-
-## Propagation Rules
-
-The propagation matrix is central to the plugin. It's encoded in:
-- `skills/doc-ecosystem/references/propagation-rules.md` (detailed rules)
-- `templates/CLAUDE.md.template` (cross-reference table for target projects)
-- `scripts/check-propagation.sh` (automated checking)
-- `hooks/hooks.json` (runtime reminders)
-
-If you change the propagation rules in one place, update all four.
+**Series awareness.** Projects can reference related projects (prequels, sequels, shared-world companions) in their CLAUDE.md. Shared world facts propagate across projects; project-local facts don't.
 
 ## Validation
 
@@ -87,20 +69,19 @@ for f in commands/*.md; do echo "=== $f ===" && head -5 "$f" && echo; done
 for f in agents/*.md; do echo "=== $f ===" && head -10 "$f" && echo; done
 
 # ${CLAUDE_PLUGIN_ROOT} references point to existing files
-grep -roh '\${CLAUDE_PLUGIN_ROOT}/[^`"]*' skills/ | sort -u | while read ref; do
+grep -roh '\${CLAUDE_PLUGIN_ROOT}/[^`"]*' skills/ commands/ | sort -u | while read ref; do
   resolved="${ref/\$\{CLAUDE_PLUGIN_ROOT\}/\.}"
   [ -f "$resolved" ] || echo "BROKEN: $ref"
 done
 
 # Scripts are executable
-ls -la scripts/*.sh
+ls -la scripts/*.sh hooks/scripts/*.sh
 ```
 
 ## Editing Guidelines
 
-- Commands are workflow entry points — they contain the full step-by-step process, not just a trigger for a skill
-- Skills provide methodology and reference material loaded on-demand via trigger phrases
-- Keep READ-ONLY agents (continuity-checker, editor) restricted to Read/Grep/Glob tools only
-- When editing propagation-related content, check all four locations where rules are encoded
-- Templates use `{{PLACEHOLDER}}` — don't accidentally introduce literal values
-- The hook prompts are carefully worded to avoid false positives on non-worldbuilding edits
+- Commands provide rules and awareness, not rigid step-by-step scripts — Claude Code is the intelligence layer
+- Skills are lean (~2000 words max) with detailed content in `references/`
+- The **critic** agent is strictly read-only — only Read/Grep/Glob tools
+- Hook prompts are carefully worded to avoid false positives on non-worldbuilding edits
+- When editing propagation-related content, check both `references/propagation-awareness.md` and `hooks/hooks.json`

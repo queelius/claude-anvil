@@ -18,9 +18,9 @@
         "matcher": "Write|Edit",
         "hooks": [
           {
-            "type": "prompt",
-            "prompt": "A file was just edited. If the file is part of a worldbuilding documentation ecosystem (a docs/ or lore/ directory containing files like lore.md, worldbuilding.md, characters.md, timeline.md, themes.md, style-guide.md, outline.md, or future-ideas.md) OR part of the manuscript (chapters/, manuscript/, or similar), briefly note which other files may need checking for consistency based on the project's CLAUDE.md cross-reference rules. If the edit is unrelated to worldbuilding docs or manuscript, say nothing.",
-            "timeout": 10
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/hooks/scripts/propagation-reminder.sh",
+            "timeout": 5
           }
         ]
       }
@@ -30,9 +30,9 @@
         "matcher": "*",
         "hooks": [
           {
-            "type": "prompt",
-            "prompt": "Before stopping, check: if this session involved editing worldbuilding docs or manuscript text, verify that consistency was maintained. (1) Were relevant docs and manuscript kept in sync? (2) Were cross-references checked? (3) Was the outline updated if applicable? (4) Should the project CLAUDE.md be updated to reflect any changes? If something was clearly missed, return 'block' with a brief reminder. If everything looks addressed or no worldbuilding edits occurred, return 'approve'.",
-            "timeout": 15
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/hooks/scripts/completion-check.sh",
+            "timeout": 5
           }
         ]
       }

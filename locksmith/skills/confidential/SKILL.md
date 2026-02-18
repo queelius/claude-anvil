@@ -79,7 +79,7 @@ cryptoid config remove-group NAME
 cryptoid config generate-salt [--apply]
 ```
 
-For detailed reference: **`references/cryptoid.md`**
+For detailed reference: **`${CLAUDE_PLUGIN_ROOT}/skills/confidential/references/cryptoid.md`**
 
 ## pagevault — HTML/File Encryption
 
@@ -104,7 +104,7 @@ pagevault config init                     # Create .pagevault.yaml
 pagevault sync _locked/ -r               # Re-encrypt after password change
 ```
 
-For detailed reference: **`references/pagevault.md`**
+For detailed reference: **`${CLAUDE_PLUGIN_ROOT}/skills/confidential/references/pagevault.md`**
 
 ## gpg — File Encryption and Signing
 
@@ -135,13 +135,13 @@ gpg --export -a "Name" > public.key            # Export public key
 gpg --import public.key                        # Import someone's key
 ```
 
-For detailed reference: **`references/gpg.md`**
+For detailed reference: **`${CLAUDE_PLUGIN_ROOT}/skills/confidential/references/gpg.md`**
 
 ## Additional Resources
 
 ### Reference Files
 
 For detailed usage, configuration, and troubleshooting:
-- **`references/cryptoid.md`** — Full cryptoid reference (config format, cascade rules, front matter options, build workflow, security model)
-- **`references/pagevault.md`** — Full pagevault reference (config format, viewers, selectors, site bundling, multi-user)
-- **`references/gpg.md`** — GPG reference (key management, trust model, batch operations, common recipes)
+- **`${CLAUDE_PLUGIN_ROOT}/skills/confidential/references/cryptoid.md`** — Full cryptoid reference (config format, cascade rules, front matter options, build workflow, security model)
+- **`${CLAUDE_PLUGIN_ROOT}/skills/confidential/references/pagevault.md`** — Full pagevault reference (config format, viewers, selectors, site bundling, multi-user)
+- **`${CLAUDE_PLUGIN_ROOT}/skills/confidential/references/gpg.md`** — GPG reference (key management, trust model, batch operations, common recipes)

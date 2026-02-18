@@ -1,10 +1,14 @@
 #!/bin/bash
 # Detect if the current project is a worldsmith-managed worldbuilding project.
 # Runs on SessionStart to give Claude ambient awareness of the doc ecosystem.
+# Sets WORLDSMITH_PROJECT=1 via $CLAUDE_ENV_FILE so other hooks can gate on it.
 
 set -euo pipefail
 
 PROJECT_DIR="${CLAUDE_PROJECT_DIR:-.}"
+
+# Default: not a worldsmith project
+IS_WORLDSMITH=0
 
 # Look for docs/ or lore/ directory with markdown files
 DOCS_DIR=""
@@ -14,35 +18,49 @@ elif [ -d "$PROJECT_DIR/lore" ] && ls "$PROJECT_DIR/lore/"*.md &>/dev/null; then
   DOCS_DIR="$PROJECT_DIR/lore"
 fi
 
+# Also check for CLAUDE.md with worldsmith markers
+HAS_WORLDSMITH_CONFIG=0
+if [ -f "$PROJECT_DIR/CLAUDE.md" ]; then
+  if grep -qi "document roles\|propagation\|canonical hierarchy\|doc.*ecosystem\|worldbuilding\|worldsmith" "$PROJECT_DIR/CLAUDE.md"; then
+    HAS_WORLDSMITH_CONFIG=1
+  fi
+fi
+
+# Need both a docs dir AND worldsmith config (or just config for projects with non-standard layouts)
+if [ -n "$DOCS_DIR" ] && [ "$HAS_WORLDSMITH_CONFIG" = "1" ]; then
+  IS_WORLDSMITH=1
+elif [ "$HAS_WORLDSMITH_CONFIG" = "1" ]; then
+  IS_WORLDSMITH=1
+fi
+
+# Persist detection result for PostToolUse and Stop hooks
+if [ -n "${CLAUDE_ENV_FILE:-}" ]; then
+  echo "export WORLDSMITH_PROJECT=$IS_WORLDSMITH" >> "$CLAUDE_ENV_FILE"
+fi
+
 # Not a worldsmith project — exit silently
-if [ -z "$DOCS_DIR" ]; then
+if [ "$IS_WORLDSMITH" = "0" ]; then
   exit 0
 fi
 
 # It's a worldsmith project — output context for Claude
 echo "Worldsmith project detected."
 echo ""
-echo "Documentation directory: $DOCS_DIR"
-echo "Documents found:"
-for f in "$DOCS_DIR"/*.md; do
-  [ -f "$f" ] && echo "  - $(basename "$f") ($(wc -l < "$f") lines)"
-done
 
-# Check for subdirectories (feedback/, future/)
-for subdir in feedback future; do
-  if [ -d "$DOCS_DIR/$subdir" ]; then
-    count=$(find "$DOCS_DIR/$subdir" -name "*.md" 2>/dev/null | wc -l)
-    echo "  - $subdir/ ($count files)"
-  fi
-done
+if [ -n "$DOCS_DIR" ]; then
+  echo "Documentation directory: $DOCS_DIR"
+  echo "Documents found:"
+  for f in "$DOCS_DIR"/*.md; do
+    [ -f "$f" ] && echo "  - $(basename "$f") ($(wc -l < "$f") lines)"
+  done
 
-# Check for project CLAUDE.md with worldsmith configuration
-if [ -f "$PROJECT_DIR/CLAUDE.md" ]; then
-  if grep -qi "document roles\|propagation\|canonical hierarchy\|doc.*ecosystem\|worldbuilding\|worldsmith" "$PROJECT_DIR/CLAUDE.md"; then
-    echo ""
-    echo "Project CLAUDE.md contains worldsmith configuration."
-    echo "Read it for document roles and propagation rules."
-  fi
+  # Check for subdirectories (feedback/, future/)
+  for subdir in feedback future; do
+    if [ -d "$DOCS_DIR/$subdir" ]; then
+      count=$(find "$DOCS_DIR/$subdir" -name "*.md" 2>/dev/null | wc -l)
+      echo "  - $subdir/ ($count files)"
+    fi
+  done
 fi
 
 # Check for related projects referenced in CLAUDE.md

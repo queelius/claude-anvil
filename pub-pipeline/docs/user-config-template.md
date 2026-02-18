@@ -23,6 +23,9 @@ r:
     []
     # - name: "survival"
     #   notes: "foundational but different paradigm"
+  dependency_chain: []                 # own packages that must be on CRAN first
+    # - name: "likelihood.model"
+    #   status: "on-cran"              # "not-submitted", "submitted", "on-cran"
 
 # Python package publication config (fill if publishing to PyPI)
 python:

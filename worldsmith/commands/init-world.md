@@ -1,12 +1,14 @@
 ---
 description: Scaffold or adopt a worldbuilding documentation ecosystem
-allowed-tools: Read, Write, Edit, Bash, Grep, Glob, AskUserQuestion
+allowed-tools: Read, Write, Edit, Bash(mkdir:*), Grep, Glob, AskUserQuestion
 argument-hint: [project-name]
 ---
 
 # /worldsmith:init-world
 
 Assess the project state and set up (or verify) a worldbuilding documentation ecosystem. Adapt behavior to what already exists. Do not impose structure on a project that already has one.
+
+If `$ARGUMENTS` is provided, use it as the project name or description rather than asking.
 
 ## Mode Detection
 

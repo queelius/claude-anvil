@@ -5,6 +5,7 @@ A Claude Code plugin for automating publication workflows across multiple ecosys
 - **R packages**: CRAN → JOSS → JSS
 - **Python packages**: PyPI
 - **Books**: Amazon KDP (technical + fiction/nonfiction)
+- **Academic preprints**: OSF / MetaArXiv
 
 ## Skills & Commands
 
@@ -28,11 +29,18 @@ A Claude Code plugin for automating publication workflows across multiple ecosys
 | Command | Skill | Purpose |
 |---------|-------|---------|
 | `/kdp-audit` | kdp-audit | Audit manuscript against KDP requirements |
+| `/kdp-listing` | kdp-listing | Craft Amazon KDP listing: blurb, keywords, categories, author bio |
 | `/kdp-publish` | kdp-publish | Guide the full KDP publishing workflow |
+
+### Academic Preprints
+
+| Command | Skill | Purpose |
+|---------|-------|---------|
+| `/osf-preprint` | osf-preprint | Submit a preprint to MetaArXiv or OSF Preprints |
 
 ### Auto-Detection
 
-Say "publish my package" or "publication pipeline" and the top-level `pub-pipeline` skill will detect your project type (R, Python, or book) and route to the right workflow.
+Say "publish my package" or "publication pipeline" and the top-level `pub-pipeline` skill will detect your project type (R, Python, book, or academic preprint) and route to the right workflow.
 
 ## Configuration
 
@@ -72,6 +80,8 @@ The `docs/` directory contains comprehensive reference material:
 - `joss-exemplars.md` — Real JOSS R package paper examples
 - `pypi-reference.md` — PyPI publishing requirements and workflow
 - `kdp-reference.md` — Amazon KDP formatting, pricing, and submission guide
+- `kdp-exemplars.md` — Fiction blurb examples, keyword strategies, category tactics
+- `osf-reference.md` — OSF API v2 endpoints, authentication, preprint providers
 
 ## License
 

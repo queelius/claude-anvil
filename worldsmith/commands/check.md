@@ -1,6 +1,6 @@
 ---
 description: Run diagnostics — consistency, editorial, cross-references, or project status
-allowed-tools: Read, Grep, Glob, AskUserQuestion
+allowed-tools: Read, Grep, Glob, Bash(python3:*), AskUserQuestion
 argument-hint: [scope: all|consistency|editorial|xref|status]
 ---
 
@@ -36,7 +36,7 @@ Check for contradictions between docs and between docs and manuscript. Use the c
 
 ## Editorial Diagnostics
 
-Analyze prose patterns and style adherence. Use `${CLAUDE_PLUGIN_ROOT}/scripts/count-patterns.sh` for mechanical pattern counting (crutch words, filter words, weak verbs, adverb dialogue tags). Layer analytical judgment on top of the counts.
+Analyze prose patterns and style adherence. Use `python3 ${CLAUDE_PLUGIN_ROOT}/scripts/count_patterns.py` for mechanical pattern counting. The script reads patterns from `${CLAUDE_PLUGIN_ROOT}/scripts/patterns.md` (defaults) but will use `.worldsmith/patterns.md` in the project root if it exists (project-specific overrides). Layer analytical judgment on top of the counts.
 
 **Prose patterns** -- Identify accumulating crutch words, filter word density, weak verb constructions, and adverb-heavy dialogue tags. Distinguish between occasional use (acceptable) and pattern accumulation (problematic).
 

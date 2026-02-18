@@ -9,7 +9,13 @@ Guide the complete workflow for submitting a preprint to OSF Preprints or MetaAr
 
 ## Workflow
 
-### 1. Check Authentication
+### 1. Load User Config
+
+Read `.claude/pub-pipeline.local.md` if it exists (Read tool). Extract author metadata (`author.name`, `author.email`, `author.orcid`) from the YAML frontmatter to pre-populate submission fields.
+
+If the file does not exist, offer to create one from the template at `${CLAUDE_PLUGIN_ROOT}/docs/user-config-template.md`.
+
+### 2. Check Authentication
 
 Verify that the OSF personal access token is available (Bash tool).
 
@@ -24,7 +30,7 @@ If `OSF_TOKEN` is not set:
 
 Do not proceed without a valid token.
 
-### 2. Locate the Paper
+### 3. Locate the Paper
 
 Find the LaTeX source and compiled PDF (Glob tool).
 
@@ -52,7 +58,7 @@ cd /path/to/paper && latexmk -pdf main.tex
 
 If no `.tex` file is found, ask the user for the manuscript location.
 
-### 3. Extract Metadata from LaTeX
+### 4. Extract Metadata from LaTeX
 
 Read the `.tex` file and extract submission metadata (Read tool).
 
@@ -74,7 +80,7 @@ Convert SSH URLs (`git@github.com:user/repo.git`) to HTTPS (`https://github.com/
 
 **Handle extraction failures**: Nested braces, multi-line fields, and non-standard macros can break regex extraction. If any field cannot be reliably extracted, present what was found and ask the user to confirm or provide the missing values.
 
-### 4. Choose Provider
+### 5. Choose Provider
 
 Ask the user which preprint provider to use:
 
@@ -85,7 +91,7 @@ Ask the user which preprint provider to use:
 
 Default to **MetaArXiv** if the user does not specify a preference.
 
-### 5. Confirm Metadata
+### 6. Confirm Metadata
 
 Present all extracted metadata to the user for review before proceeding:
 
@@ -101,7 +107,7 @@ PDF:      [path to PDF file]
 
 Allow the user to edit any field. Do not proceed until the user confirms the metadata is correct.
 
-### 6. Create OSF Project Node
+### 7. Create OSF Project Node
 
 Create a new OSF project to host the preprint (Bash tool).
 
@@ -126,7 +132,7 @@ Extract the node ID from the response: `.data.id`
 
 If the API returns an error, check the error handling table below.
 
-### 7. Upload PDF to Node
+### 8. Upload PDF to Node
 
 Upload the compiled PDF to the OSF project node's file storage (Bash tool).
 
@@ -142,7 +148,7 @@ Extract the file ID from the response for use in the preprint creation step.
 
 **Handle 409 Conflict**: If a file with the same name already exists, the API returns 409. Offer the user the option to upload a new version instead of creating a duplicate.
 
-### 8. Create Preprint
+### 9. Create Preprint
 
 Create a draft preprint linking the node and uploaded PDF (Bash tool).
 
@@ -187,7 +193,7 @@ Extract the preprint URL from the response (`.data.links.html`).
 
 The preprint is created as a **draft** (`is_published: false`) so the user can review it on OSF before making it public.
 
-### 9. Report Results
+### 10. Report Results
 
 Present the submission summary to the user:
 
@@ -205,12 +211,6 @@ Status:       Draft (not yet public)
 3. Set a license (e.g., CC-BY 4.0) on OSF
 4. Click "Publish" on OSF to make the preprint public and receive a DOI
 5. After publishing, the DOI will be minted by OSF and become resolvable within ~24 hours
-
-### 10. Load User Config
-
-Read `.claude/pub-pipeline.local.md` if it exists (Read tool). Extract author metadata (`author.name`, `author.email`, `author.orcid`) from the YAML frontmatter to pre-populate submission fields.
-
-If the file does not exist, offer to create one from the template at `${CLAUDE_PLUGIN_ROOT}/docs/user-config-template.md`.
 
 ## Error Handling
 

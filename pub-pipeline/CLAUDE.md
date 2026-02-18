@@ -18,8 +18,8 @@ There is no build system, no test suite, no compiled code. The entire plugin is 
 
 ```
 .claude-plugin/plugin.json    # Plugin manifest (name, version, metadata)
-skills/                       # 9 skill files — the core logic
-commands/                     # 8 slash commands — thin wrappers that trigger skills
+skills/                       # 10 skill files — the core logic
+commands/                     # 9 slash commands — thin wrappers that trigger skills
 docs/                         # Reference docs and config template
 docs/plans/                   # Design and implementation plans (architectural decisions)
 ```

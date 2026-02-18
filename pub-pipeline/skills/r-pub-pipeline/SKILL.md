@@ -33,10 +33,25 @@ Start by understanding where the package stands:
 5. Check if already on JOSS — search joss.theoj.org (WebSearch tool)
 ```
 
+**Dependency chain** (Bash tool):
+Parse `Imports`, `Depends`, and `LinkingTo` from `DESCRIPTION`. For each non-base/non-recommended package, verify it exists on CRAN:
+```bash
+Rscript -e 'ap <- available.packages(); cat("PKG_NAME" %in% rownames(ap))'
+```
+If any dependency is not on CRAN, this is a hard blocker — the package cannot pass `R CMD check --as-cran`. Present the submission order (publish dependencies first) and offer to switch to the dependency package. Also check `r.dependency_chain` in the user config for structured dependency status.
+
+**CI status** (Bash/Glob tools):
+Check for `.github/workflows/` directory (Glob tool). If present, check recent CI status:
+```bash
+gh run list --limit 3 --json conclusion,name,headBranch
+```
+Flag if CI is failing — passing CI is important for CRAN confidence and JOSS reviewer trust.
+
 Classify the package into one of:
 
 | State | Next Step |
 |-------|-----------|
+| Dependencies not on CRAN | Start with dependency package |
 | Not on CRAN, no paper.md | Start with CRAN audit |
 | On CRAN, no paper.md | Start with JOSS audit |
 | On CRAN, has paper.md | Review paper, prepare JOSS submission |
