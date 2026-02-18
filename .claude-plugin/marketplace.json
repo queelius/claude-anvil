@@ -52,6 +52,24 @@
       "author": {
         "name": "Alexander Towell"
       }
+    },
+    {
+      "name": "deets",
+      "source": "./deets",
+      "description": "Personal metadata queries via the deets CLI — identity, contact, academic, education, and cross-platform profile lookups",
+      "version": "1.0.0",
+      "author": {
+        "name": "Alexander Towell"
+      }
+    },
+    {
+      "name": "alex-confidential",
+      "source": "./locksmith",
+      "description": "Confidentiality toolkit — smart routing across cryptoid, pagevault, and gpg encryption tools",
+      "version": "0.1.0",
+      "author": {
+        "name": "Alexander Towell"
+      }
     }
   ]
 }
