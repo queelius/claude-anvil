@@ -65,7 +65,7 @@ fi
 
 # Check for related projects referenced in CLAUDE.md
 if [ -f "$PROJECT_DIR/CLAUDE.md" ]; then
-  related=$(grep -oP '~/[^\s)]+' "$PROJECT_DIR/CLAUDE.md" 2>/dev/null | head -5)
+  related=$(grep -oP '~/[^\s)]+' "$PROJECT_DIR/CLAUDE.md" 2>/dev/null | head -5 || true)
   if [ -n "$related" ]; then
     echo ""
     echo "Related projects:"
