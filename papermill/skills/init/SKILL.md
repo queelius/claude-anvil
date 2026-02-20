@@ -239,6 +239,8 @@ venue:
   candidates: []
 
 review_history: []
+
+related_papers: []
 ---
 
 ## Notes
@@ -265,6 +267,8 @@ papers. DOI: 10.5281/zenodo.XXXXXXX">
 - `thesis.refined` starts as `null` and is set to `true` by the thesis skill
 - `prior_art.last_survey` is a date string (`YYYY-MM-DD`) or `null`
 - Leave empty fields as empty strings `""`, not `null`, unless the schema above specifies `null`
+- `related_papers[].rel` must be one of: `extends`, `extended-by`, `implements`, `implemented-by`, `companion`, `series`, `merged-into`, `supersedes`
+- `related_papers[].path` should be absolute or `~/`-relative
 
 **List field structures** (populated by their respective skills — empty at init):
 
@@ -293,6 +297,12 @@ venue:
     - name: "Journal or Conference Name"
       fit: "high | good | moderate"
       deadline: "YYYY-MM-DD or rolling"
+
+# Each entry in related_papers[] (added by init or refresh):
+related_papers:
+  - path: "~/github/path/to/related-project"
+    rel: "extends | extended-by | implements | implemented-by | companion | series | merged-into | supersedes"
+    label: "One-line description of the relationship"
 ```
 
 ---
