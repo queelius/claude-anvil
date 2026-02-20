@@ -196,7 +196,62 @@ Ask the user whether this paper connects to any of their other projects or softw
 
 This step is optional — if the user says "standalone" or skips it, proceed without adding anything. Do not press for detail.
 
-If the user describes relationships or software, note them verbatim for inclusion in the Notes section of `.papermill.md` (Step 7). Do not create structured YAML fields for this — freeform notes are sufficient. Claude Code will read these notes in future sessions and use them as context for thesis refinement, prior-art surveys, review, and polish (code availability statements, DOI references).
+If the user describes relationships or software, do two things:
+
+1. **Freeform notes**: Note them verbatim for inclusion in the Notes section of `.papermill.md` (Step 7), under a `## Related Work and Software` heading. This preserves context for Claude in future sessions.
+
+2. **Structured entries**: For each relationship the user describes, create a `related_papers` entry. Ask the user to confirm for each:
+   - The **path** to the related project (absolute or `~/`-relative).
+   - The **relationship type** (`rel`). Present the vocabulary and suggest the best fit:
+     - `extends` / `extended-by` — builds on or is built upon
+     - `implements` / `implemented-by` — theory ↔ software
+     - `companion` — different angle on the same research
+     - `series` — part of a numbered series
+     - `merged-into` — absorbed into another paper
+     - `supersedes` — replaces a previous version
+   - A **one-line label** describing the relationship.
+
+   Example interaction:
+
+   > You mentioned this paper extends the foundation paper in `~/github/papers/masked-causes-in-series-systems`. I'll add:
+   >
+   > ```yaml
+   > - path: ~/github/papers/masked-causes-in-series-systems
+   >   rel: extends
+   >   label: "Foundation paper — general masked-cause framework"
+   > ```
+   >
+   > Does that look right?
+
+### Repoindex discovery (opt-in)
+
+After the manual question, check if `repoindex` is available (Bash tool: `command -v repoindex`). If it is:
+
+1. Query for other papermill-tracked projects:
+
+   ```bash
+   repoindex sql "SELECT name, path FROM repos WHERE path IN (SELECT repo_path FROM files WHERE name = '.papermill.md')" --json
+   ```
+
+2. Filter out the current project from results.
+
+3. If matches are found, present them:
+
+   > I found **N** other papermill-tracked projects via repoindex:
+   >
+   > | Project | Path |
+   > |---------|------|
+   > | masked-causes-in-series-systems | ~/github/papers/masked-causes-in-series-systems |
+   > | maskedcauses | ~/github/rlang/maskedcauses |
+   > | ... | ... |
+   >
+   > Are any of these related to this paper? If so, I'll add them to the `related_papers` block.
+
+4. For each confirmed match, ask for `rel` type and label as above.
+
+If `repoindex` is not available or the query fails, skip silently and proceed.
+
+### Repo-clue scanning
 
 Also check for clues already in the repo (Read/Glob/Grep tools):
 - CLAUDE.md, README.md for mentions of related papers or packages
