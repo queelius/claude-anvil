@@ -1,6 +1,6 @@
 ---
 name: mf
-description: Use mf (metafunctor) to manage papers, projects, series, and content for the metafunctor.com Hugo site. Also covers site architecture, taxonomies, front matter conventions, and the mf-to-crier publishing pipeline. Invoke from ANY repo — mf works globally.
+description: Use mf (metafunctor) to manage papers, projects, series, and content for the metafunctor.com Hugo site. Also covers site architecture, taxonomies, front matter conventions. For cross-posting, use the crier plugin. Invoke from ANY repo — mf works globally.
 argument-hint: "[intent — e.g. 'new post about X', 'sync papers', 'health check']"
 ---
 

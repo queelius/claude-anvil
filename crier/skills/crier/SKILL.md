@@ -1,6 +1,6 @@
 ---
 name: crier
-description: Cross-post blog content to social platforms. Claude handles audit, user selection, and generates rewrites for short-form platforms.
+description: Cross-post blog content to social platforms. Claude handles audit, user selection, and generates rewrites for short-form platforms. Invoke from ANY repo — crier works globally via site_root config.
 ---
 
 # Crier Cross-Posting Workflow
@@ -28,6 +28,59 @@ Crier cross-posts blog content to multiple platforms. The blog is the canonical 
 - `API` = automatic posting via API
 - `import` = user imports from canonical URL (like Medium)
 - `paste` = user copy-pastes (content goes to clipboard)
+
+## Configuration
+
+Crier uses a single global config file. No local config, no `--project` flag.
+
+### Global Config (`~/.config/crier/config.yaml`)
+
+```yaml
+# Where the content project lives (for registry + resolving relative content_paths)
+site_root: ~/github/repos/metafunctor
+
+# Content discovery
+content_paths:
+  - content
+site_base_url: https://metafunctor.com
+exclude_patterns:
+  - _index.md
+file_extensions:
+  - .md
+
+# Defaults
+default_profile: everything
+rewrite_author: claude-code
+
+# API keys
+platforms:
+  bluesky:
+    api_key: handle:app-password
+  devto:
+    api_key: ...
+
+# Publishing profiles
+profiles:
+  blogs:
+    - devto
+    - hashnode
+    - medium
+  social:
+    - bluesky
+    - mastodon
+  everything:
+    - blogs
+    - social
+```
+
+**Key points:**
+- `site_root` tells crier where the content project and registry live
+- Registry is at `<site_root>/.crier/registry.yaml`
+- Content paths resolve relative to `site_root`
+- Works from any directory — no need to `cd` to the project
+- Precedence: **global config < env vars < CLI args**
+- Override config path: `CRIER_CONFIG` env var
+- Override API keys: `CRIER_{PLATFORM}_API_KEY` env vars
 
 ## Checking Publication Status
 
@@ -305,102 +358,19 @@ crier audit --since 1w --publish --yes --only-api
 
 # Sample 5 recent posts (last month)
 crier audit --sample 5 --since 1m --only-api --long-form
+
+# Fully automated batch mode (implies --yes --json, skips manual)
+crier audit --publish --batch --long-form
 ```
 
 ### Filters
-- `[PATH]` - Limit to specific directory (e.g., `content/post`, `content/projects`)
-- `--since` - Only content from this date (e.g., `1d`, `1w`, `1m`, `2025-01-01`)
-- `--until` - Only content until this date
-- `--only-api` - Skip manual/import/paste platforms
-- `--long-form` - Skip short-form platforms (bluesky, mastodon, twitter, threads)
-- `--sample N` - Random sample of N items
-- `--include-changed` - Also update changed content (default: missing only)
-
-### Claude Code Bulk Workflow
-
-1. Run automated batch: `crier audit --publish --yes --only-api --long-form --sample 10`
-2. Check what else needs work: `crier audit`
-3. Handle short-form platforms with --rewrite
-4. Guide user through manual/import platforms
-
-## Running from Other Repos
-
-Crier finds its `.crier/` config by walking up from the current directory (like git finds `.git/`). Use `--project` to point at a different directory:
-
-```bash
-# From any directory
-crier --project ~/github/repos/metafunctor audit
-crier --project ~/github/repos/metafunctor summary
-
-# All commands support --project
-crier --project ~/github/repos/metafunctor publish content/post/slug/index.md --to devto
-crier --project ~/github/repos/metafunctor status content/post/slug/index.md
-```
-
-`--project` overrides config and registry discovery — config, registry, and content paths all resolve relative to the specified directory.
-
-## Important Rules
-
-1. **Crier appends the canonical URL** to short-form posts automatically. Don't include it in your rewrite text.
-
-2. **DevTo tags are auto-sanitized**. Hyphens removed, lowercase, max 4 tags. No action needed.
-
-3. **Use --yes for non-API modes**. This skips interactive prompts that don't work through Claude Code.
-
-4. **Ask simple yes/no** after manual operations. Trust the user's answer.
-
-5. **Show the canonical URL** for import-mode platforms. It's the key piece of information.
-
-## Configuration
-
-### Global Config (~/.config/crier/config.yaml)
-API keys and profiles (shared across all projects):
-
-```bash
-# Set API key for automatic posting
-crier config set devto.api_key <key>
-
-# Set import mode (Medium)
-crier config set medium.api_key import
-
-# Set paste mode (Twitter)
-crier config set twitter.api_key manual
-
-# Check configuration
-crier doctor
-```
-
-### Local Config (.crier/config.yaml)
-Project-specific settings:
-
-```yaml
-# Content discovery
-content_paths:
-  - content
-site_base_url: https://yoursite.com
-exclude_patterns:
-  - _index.md           # Hugo section pages
-file_extensions:
-  - .md
-  - .mdx                # Optional: for MDX content
-
-# Defaults
-default_profile: everything   # Used when no --to or --profile specified
-rewrite_author: claude-code   # Default author for Claude-generated rewrites
-```
-
-| Option | Purpose |
-|--------|---------|
-| `content_paths` | Directories to scan for content |
-| `site_base_url` | For inferring canonical URLs |
-| `exclude_patterns` | Files to skip (e.g., `_index.md`) |
-| `file_extensions` | Extensions to scan (default: `.md`) |
-| `default_profile` | Profile to use when none specified |
-| `rewrite_author` | Default `--rewrite-author` value |
-
-### Section Tracking
-
-Crier automatically tracks the content section (e.g., `post`, `papers`, `projects`) for each registered article, inferred from the source file path. This powers the `crier summary` breakdown by section. No configuration needed.
+- `[PATH]` — Limit to specific directory (e.g., `content/post`, `content/projects`)
+- `--since` — Only content from this date (e.g., `1d`, `1w`, `1m`, `2025-01-01`)
+- `--until` — Only content until this date
+- `--only-api` — Skip manual/import/paste platforms
+- `--long-form` — Skip short-form platforms (bluesky, mastodon, twitter, threads)
+- `--sample N` — Random sample of N items
+- `--include-changed` — Also update changed content (default: missing only)
 
 ## Front Matter Requirements
 
@@ -411,4 +381,16 @@ canonical_url: "https://yourblog.com/your-article/"
 ---
 ```
 
-The `canonical_url` is required - it's the article's identity for tracking and linking.
+The `canonical_url` is required — it's the article's identity for tracking and linking.
+
+## Section Tracking
+
+Crier automatically tracks the content section (e.g., `post`, `papers`, `projects`) for each registered article, inferred from the source file path. This powers the `crier summary` breakdown by section. No configuration needed.
+
+## Important Rules
+
+1. **Crier appends the canonical URL** to short-form posts automatically. Don't include it in your rewrite text.
+2. **DevTo tags are auto-sanitized**. Hyphens removed, lowercase, max 4 tags. No action needed.
+3. **Use --yes for non-API modes**. This skips interactive prompts that don't work through Claude Code.
+4. **Ask simple yes/no** after manual operations. Trust the user's answer.
+5. **Show the canonical URL** for import-mode platforms. It's the key piece of information.
