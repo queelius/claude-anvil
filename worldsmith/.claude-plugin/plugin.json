@@ -1,11 +1,11 @@
 {
   "name": "worldsmith",
   "version": "0.2.0",
-  "description": "Documentation-first worldbuilding methodology for fiction projects. The Silmarillion approach: docs ARE the world, story text derives from them.",
+  "description": "Documentation-first worldbuilding methodology and prose craft guardrails for fiction projects. The Silmarillion approach: docs ARE the world, story text derives from them.",
   "author": {
     "name": "Spinoza"
   },
   "repository": "https://github.com/queelius/claude-anvil",
   "license": "MIT",
-  "keywords": ["fiction", "worldbuilding", "editorial", "writing", "lore", "consistency"]
+  "keywords": ["fiction", "worldbuilding", "editorial", "writing", "lore", "consistency", "prose-craft"]
 }
