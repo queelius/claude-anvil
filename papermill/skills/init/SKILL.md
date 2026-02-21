@@ -49,6 +49,7 @@ Compare the existing YAML frontmatter against the current schema (shown in Step 
 - Missing `experiments` → add as `[]`
 - Missing `venue` block → add with `target: null`, `candidates: []`
 - Missing `review_history` → add as `[]`
+- Missing `related_papers` → add as `[]`
 - Missing `authors[].orcid` → add as `""`
 
 Report what was added: "Added N missing fields to bring the state file up to the current schema." If nothing is missing, say so.
@@ -67,6 +68,7 @@ For format mismatches, ask the user: "The state file says `latex` but I also fou
 
 Check for content that the current init flow captures but older versions may not have asked about:
 
+- **Related papers (Step 6)**: If `related_papers` is empty or missing, run the repoindex discovery query (if `repoindex` is available) and present any papermill-tracked projects found. Also re-ask the Step 6 question about related work and software. If `related_papers` is already populated, still offer repoindex discovery to catch newly-initialized projects: "You have N related papers linked. Want me to check for any new papermill-tracked projects?"
 - **Related work and software (Step 6)**: If the Notes section does not contain a `## Related Work` heading, run the related-work question from Step 6. If the user provides context, append it to the notes.
 - **Author ORCID**: If `authors[].orcid` is empty, check `deets` and offer to fill it in.
 - **Title**: If `title` is empty or looks like a placeholder, re-run title inference from Step 4.
