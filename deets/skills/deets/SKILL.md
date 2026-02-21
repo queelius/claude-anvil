@@ -42,10 +42,12 @@ deets get profiles.github.username
 # Multiple paths in one call (returns structured output)
 deets get identity.name contact.email academic.orcid
 
-# Glob patterns
-deets get profiles.github            # all fields for a platform
-deets get profiles.*.email           # one field across all platforms
-deets get profiles.*.url             # all profile URLs
+# Glob patterns — ALWAYS quote patterns containing * or ?
+# The shell will expand unquoted globs to filenames before deets sees them
+deets get 'profiles.*.email'         # one field across all platforms
+deets get 'profiles.*.url'           # all profile URLs
+deets get '*.orcid'                  # find key across categories
+deets get profiles.github            # no glob chars, quoting optional
 
 # With fallback (never fails, exit 0)
 deets get academic.scholar --default ""
