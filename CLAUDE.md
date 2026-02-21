@@ -6,18 +6,20 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 A Claude Code **plugin marketplace** (`queelius`). All plugins are distributed as a single git repo. No build system, test suite, or compiled code — the codebase is Markdown files with YAML frontmatter.
 
-**Install**: `/plugin marketplace add queelius/claude-code-marketplace`
+**Install**: `/plugin marketplace add queelius/claude-anvil`
 **Install a plugin**: `/plugin install repoindex@queelius`
 
 | Plugin | Dir | Purpose | Version |
 |--------|-----|---------|---------|
-| **papermill** | `papermill/` | Academic paper lifecycle: thesis, lit survey, experiment, review, venue, submission | 0.2.0 |
+| **papermill** | `papermill/` | Academic paper lifecycle: thesis, lit survey, experiment, review, venue, submission | 0.3.0 |
 | **worldsmith** | `worldsmith/` | Documentation-first fiction worldbuilding (the "Silmarillion approach") | 0.2.0 |
 | **pub-pipeline** | `pub-pipeline/` | Publication workflows: R/CRAN/JOSS, Python/PyPI, books/KDP, preprints/OSF | 0.4.0 |
 | **mf** | `mf/` | Metafunctor site management: blog architecture, content workflows, crier | 1.0.0 |
 | **repoindex** | `repoindex/` | Collection-aware repository intelligence — query, analyze, maintain git repos | 0.10.0 |
 | **deets** | `deets/` | Personal metadata queries — identity, contact, academic, profiles | 1.0.0 |
 | **alex-confidential** | `locksmith/` | Confidentiality toolkit — cryptoid, pagevault, gpg encryption | 0.1.0 |
+| **kdp** | `kdp/` | Amazon KDP book publishing: manuscript audit, listing craft, submission workflow | 0.1.0 |
+| **jot** | `jot/` | Journal-aware sessions — surfaces tasks, ideas, and plans from your jot journal | 0.1.0 |
 
 ## Plugin Anatomy
 
