@@ -13,7 +13,7 @@ A Claude Code **plugin marketplace** (`queelius`). All plugins are distributed a
 |--------|-----|---------|---------|
 | **papermill** | `papermill/` | Academic paper lifecycle: thesis, lit survey, experiment, review, venue, submission | 0.3.0 |
 | **worldsmith** | `worldsmith/` | Documentation-first fiction worldbuilding (the "Silmarillion approach") | 0.2.0 |
-| **pub-pipeline** | `pub-pipeline/` | Publication workflows: R/CRAN/JOSS, Python/PyPI, books/KDP, preprints/OSF | 0.4.0 |
+| **pub-pipeline** | `pub-pipeline/` | Publication workflows: R/CRAN/JOSS, Python/PyPI, preprints/OSF | 0.4.0 |
 | **mf** | `mf/` | Metafunctor site management: blog architecture, content workflows, crier | 1.0.0 |
 | **repoindex** | `repoindex/` | Collection-aware repository intelligence — query, analyze, maintain git repos | 0.10.0 |
 | **deets** | `deets/` | Personal metadata queries — identity, contact, academic, profiles | 1.0.0 |
@@ -52,15 +52,15 @@ JSON with event handlers. Worldsmith uses three: `SessionStart` (command hook fo
 
 ## Cross-Plugin Patterns
 
-**State files**: Both papermill (`.papermill.md`) and pub-pipeline (`.claude/pub-pipeline.local.md`) use per-project state files with YAML frontmatter + markdown body. These live in the *target* project, not in this repo.
+**State files**: papermill (`.papermill.md`), pub-pipeline (`.claude/pub-pipeline.local.md`), and kdp (`.claude/kdp.local.md`) use per-project state files with YAML frontmatter + markdown body. These live in the *target* project, not in this repo.
 
 **`${CLAUDE_PLUGIN_ROOT}` references**: Skills reference sibling files via this variable (resolves to plugin installation directory at runtime). When adding references, verify the target file exists.
 
-**Router pattern**: pub-pipeline has a top-level router skill (`skills/pub-pipeline/SKILL.md`) that detects project type by indicator files (`DESCRIPTION` → R, `pyproject.toml` → Python, `.tex`/`.docx` → book) and delegates to the ecosystem-specific skill. The router has no command — it triggers via natural language.
+**Router pattern**: pub-pipeline has a top-level router skill (`skills/pub-pipeline/SKILL.md`) that detects project type by indicator files (`DESCRIPTION` → R, `pyproject.toml` → Python, `.tex`+`.pdf` → academic paper) and delegates to the ecosystem-specific skill. The router has no command — it triggers via natural language.
 
 **Auto-detection via deets**: Other plugins (papermill, pub-pipeline) depend on the deets skill for author metadata. The deets skill has no slash command — it auto-triggers when Claude needs identity/contact/profile information.
 
-**Audit report pattern** (pub-pipeline): Audit skills produce structured gap reports with Critical (Must Fix) / Warnings (Should Fix) / Passed sections.
+**Audit report pattern** (pub-pipeline, kdp): Audit skills produce structured gap reports with Critical (Must Fix) / Warnings (Should Fix) / Passed sections.
 
 **Propagation discipline** (worldsmith): Role-based document system — the plugin thinks in doc roles (timeline authority, lore, systems, characters, style conventions, outline, themes, editorial backlog), not hardcoded filenames. Each target project maps roles to its own file structure. Canonical docs are always updated before manuscript text.
 

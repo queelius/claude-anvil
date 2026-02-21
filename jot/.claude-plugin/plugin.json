@@ -1,0 +1,13 @@
+{
+  "name": "jot",
+  "version": "0.1.0",
+  "description": "Journal-aware Claude Code sessions. Surfaces relevant tasks, ideas, and plans from your jot journal on session start. Provides slash commands and deep journal analysis.",
+  "author": {
+    "name": "Alexander Towell",
+    "email": "lex@metafunctor.com",
+    "url": "https://metafunctor.com"
+  },
+  "repository": "https://github.com/queelius/claude-anvil",
+  "license": "MIT",
+  "keywords": ["journal", "tasks", "notes", "ideas", "planning", "context"]
+}
