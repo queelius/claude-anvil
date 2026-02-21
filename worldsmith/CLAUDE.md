@@ -12,10 +12,12 @@ Worldsmith is a Claude Code **plugin** for documentation-first fiction worldbuil
 .claude-plugin/plugin.json                       # Manifest (name, version, description)
 skills/worldsmith-methodology/SKILL.md            # Single skill: editorial methodology
 skills/worldsmith-methodology/references/          # Deep reference docs (propagation, doc structure)
+skills/prose-craft/SKILL.md                      # Prose craft rules (show-don't-tell, dialogue, scene structure)
 commands/{init-world,change,check}.md             # 3 slash commands
 agents/{lorekeeper,critic}.md                     # 2 agents (1 read-write, 1 read-only)
 hooks/hooks.json                                  # SessionStart + PostToolUse + Stop hooks
 hooks/scripts/detect-worldsmith-project.sh        # Ambient project detection
+hooks/scripts/check-fiction-cliches.sh           # Cliche detection (stock reactions, dead metaphors, emotional labeling)
 scripts/count_patterns.py                         # Prose pattern counting (reads patterns.md)
 scripts/patterns.md                               # Default pattern definitions (overridable per project)
 ```
@@ -26,7 +28,11 @@ scripts/patterns.md                               # Default pattern definitions 
 YAML frontmatter with `description`, `allowed-tools`, and optional `argument-hint`. Body contains instructions FOR Claude describing rules and awareness, not rigid scripts. Commands reference `$ARGUMENTS` for user input and `${CLAUDE_PLUGIN_ROOT}` for sibling files.
 
 ### Skills (`skills/*/SKILL.md`)
-YAML frontmatter with `name`, `description` (trigger phrases for auto-detection), and `version`. Body is lean methodology (~1600 words) with references to detailed docs via `${CLAUDE_PLUGIN_ROOT}`. When adding references, verify the target file exists.
+Two skills, independently triggered:
+- **worldsmith-methodology** — Editorial methodology: canonical hierarchy, propagation, doc roles, dual workflow. Triggers on doc ecosystem and worldbuilding keywords.
+- **prose-craft** — Sentence-level prose craft: show-don't-tell, dialogue mechanics, scene structure, AI-fiction failure modes. Triggers on fiction writing and editing keywords.
+
+YAML frontmatter with `name`, `description` (trigger phrases for auto-detection), and `version`. Body is lean methodology with references to detailed docs via `${CLAUDE_PLUGIN_ROOT}`. When adding references, verify the target file exists.
 
 ### Agents (`agents/*.md`)
 YAML frontmatter with `name`, `description` (with `<example>` blocks), `tools` (list), `model: inherit`, and `color`. Body is the agent's system prompt. The **critic** agent is READ-ONLY (Read/Grep/Glob only). The **lorekeeper** has write access.
@@ -34,7 +40,7 @@ YAML frontmatter with `name`, `description` (with `<example>` blocks), `tools` (
 ### Hooks (`hooks/hooks.json`)
 Three event types:
 - **SessionStart** (command): Runs `detect-worldsmith-project.sh` for ambient awareness
-- **PostToolUse** (prompt, matcher: `Write|Edit`): Propagation reminders for doc/manuscript edits
+- **PostToolUse** (command, matcher: `Write|Edit`): Two hooks — propagation reminders for doc/manuscript edits, and cliche detection for stock body reactions, dead metaphors, and emotional labeling in fiction files (.tex, .md, .mdx, .txt)
 - **Stop** (prompt): Completion verification before session exit
 
 ### Scripts
