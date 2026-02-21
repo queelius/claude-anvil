@@ -10,14 +10,16 @@ Worldsmith is a Claude Code **plugin** for documentation-first fiction worldbuil
 
 ```
 .claude-plugin/plugin.json                       # Manifest (name, version, description)
-skills/worldsmith-methodology/SKILL.md            # Single skill: editorial methodology
+skills/worldsmith-methodology/SKILL.md            # Editorial methodology skill
 skills/worldsmith-methodology/references/          # Deep reference docs (propagation, doc structure)
 skills/prose-craft/SKILL.md                      # Prose craft rules (show-don't-tell, dialogue, scene structure)
 commands/{init-world,change,check}.md             # 3 slash commands
 agents/{lorekeeper,critic}.md                     # 2 agents (1 read-write, 1 read-only)
 hooks/hooks.json                                  # SessionStart + PostToolUse + Stop hooks
 hooks/scripts/detect-worldsmith-project.sh        # Ambient project detection
+hooks/scripts/propagation-reminder.sh            # PostToolUse propagation reminders
 hooks/scripts/check-fiction-cliches.sh           # Cliche detection (stock reactions, dead metaphors, emotional labeling)
+hooks/scripts/completion-check.sh                # Stop hook: propagation verification
 scripts/count_patterns.py                         # Prose pattern counting (reads patterns.md)
 scripts/patterns.md                               # Default pattern definitions (overridable per project)
 ```
