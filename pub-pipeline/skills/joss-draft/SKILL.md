@@ -60,6 +60,7 @@ Thoroughly understand what the package does. Skip files you already read in Step
 - What problem does it solve that existing tools don't?
 - Who is the target audience? (researchers, practitioners, students)
 - Is this package part of a larger research program with companion papers?
+- Check `related_work` in the user config for declared companion papers, preprints, and sibling packages. If a companion paper exists at a local path, read it for context.
 
 ### 3. Get Author Metadata
 
@@ -102,7 +103,7 @@ This is critical — JOSS reviewers specifically check the "State of the Field" 
 
 **If no existing paper content exists**, draft from the package analysis in Steps 2-4.
 
-Either way, populate the YAML frontmatter from the user config (`.claude/pub-pipeline.local.md`, if it exists). Use `r.domain` and `r.audience` to inform the Statement of Need. Use `r.competitors` to seed State of the Field. Use `ai_usage` fields for the AI Usage Disclosure section.
+Either way, populate the YAML frontmatter from the user config (`.claude/pub-pipeline.local.md`, if it exists). Use `r.domain` and `r.audience` to inform the Statement of Need. Use `r.competitors` to seed State of the Field. Use `ai_usage` fields for the AI Usage Disclosure section. Use `related_work` entries to identify companion papers (cite them), preprints (reference the DOI), and sibling packages (mention in State of the Field or Software Design).
 
 The paper should follow this structure:
 

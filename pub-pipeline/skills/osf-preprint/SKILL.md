@@ -212,6 +212,18 @@ Status:       Draft (not yet public)
 4. Click "Publish" on OSF to make the preprint public and receive a DOI
 5. After publishing, the DOI will be minted by OSF and become resolvable within ~24 hours
 
+**Record in user config**: If `.claude/pub-pipeline.local.md` exists, offer to add a `related_work` entry recording this preprint submission:
+
+```yaml
+related_work:
+  - type: "preprint"
+    doi: null  # fill in after DOI is minted
+    path: null
+    notes: "Submitted to <PROVIDER> via /osf-preprint on <DATE>. OSF node: <NODE_ID>"
+```
+
+This makes the preprint visible to other pub-pipeline skills (e.g., `joss-draft` can cite it, `r-pub-pipeline` can reference it in the assessment).
+
 ## Error Handling
 
 | Error | Response |

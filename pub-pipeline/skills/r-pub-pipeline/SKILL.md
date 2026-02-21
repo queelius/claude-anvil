@@ -23,7 +23,7 @@ Each stage builds on the previous. CRAN gives the package legitimacy. JOSS gives
 
 Start by understanding where the package stands:
 
-**Load user config** (Read tool): Read `.claude/pub-pipeline.local.md` if it exists. Extract author metadata, `r.domain`, `r.audience`, `r.competitors`, and publication `targets` from the YAML frontmatter.
+**Load user config** (Read tool): Read `.claude/pub-pipeline.local.md` if it exists. Extract author metadata, `r.domain`, `r.audience`, `r.competitors`, `related_work`, and publication `targets` from the YAML frontmatter. If `related_work` contains companion papers or preprints, note them — they affect the JOSS paper (cite companion papers, reference preprint DOIs) and the overall publication strategy.
 
 ```
 1. Read DESCRIPTION for package metadata (Read tool)
