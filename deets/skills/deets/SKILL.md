@@ -16,12 +16,16 @@ categories (identity, contact, academic, education) and platform profiles
 
 ## Strategy
 
-1. **Don't know the field path?** Run `deets search <query>` — it searches
+1. **Need multiple fields?** Start with `deets show --format json` — it's
+   only ~2.7KB. One call, zero guessing. Parse what you need from the dump.
+2. **Don't know the field path?** Run `deets search <query>` — it searches
    keys, values, and descriptions. More forgiving than guessing globs.
-2. **Want to see what's available?** Run `deets schema --format json` for
+3. **Want the full schema?** Run `deets schema --format json` for
    all fields with types, descriptions, and examples.
-3. **Know the exact path?** Use `deets get <path>` with `--default ""` so
+4. **Know the exact path?** Use `deets get <path>` with `--default ""` so
    the command never fails.
+5. **Quick existence check?** Use `deets get <path> --exists` — exit 0 if
+   found, exit 2 if not. No output, no parsing.
 
 ## Querying
 
@@ -35,6 +39,9 @@ deets get identity.name
 deets get contact.email
 deets get profiles.github.username
 
+# Multiple paths in one call (returns structured output)
+deets get identity.name contact.email academic.orcid
+
 # Glob patterns
 deets get profiles.github            # all fields for a platform
 deets get profiles.*.email           # one field across all platforms
@@ -43,8 +50,11 @@ deets get profiles.*.url             # all profile URLs
 # With fallback (never fails, exit 0)
 deets get academic.scholar --default ""
 
+# Existence check (exit 0 if found, exit 2 if not, no output)
+deets get identity.name --exists
+
 # Structured output
-deets show --format json             # full dump
+deets show --format json             # full dump (~2.7KB, best first move)
 deets export --format env            # DEETS_IDENTITY_NAME="..." format
 ```
 
@@ -88,7 +98,7 @@ data store and hits external APIs.
 
 ## Output Conventions
 
-- Single `get`: bare value, no decoration (pipe-friendly)
-- Multiple matches: JSON when piped, table on TTY
+- Single exact `get`: bare value, no decoration (pipe-friendly, even when piped)
+- Multiple matches / multi-path / globs: JSON when piped, table on TTY
 - `--format`: table, json, toml, yaml, env
 - Exit code 0 = success, 2 = not found
