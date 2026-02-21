@@ -31,28 +31,27 @@ r:
 python:
   pypi_username: ""
 
-# Amazon KDP book publication config (fill if publishing a book)
-kdp:
-  pen_name: null                       # if different from author.name
-  publisher: null                      # imprint name, if any
-  genre: ""                            # e.g., "epic fantasy", "thriller", "literary fiction"
-  series:
-    name: null                         # series name, if part of a series
-    volume: null                       # volume/book number
-  trim_size: "5.5x8.5"                # fiction default; "6x9" for nonfiction
-  paper_type: "cream"                  # "cream" for fiction, "white" for technical/nonfiction
-  target: "both"                       # "ebook", "paperback", or "both"
-  categories: []                       # BISAC codes (populated by /kdp-listing)
-  keywords: []                         # up to 7 phrases (populated by /kdp-listing)
-  blurb: ""                            # Amazon description (populated by /kdp-listing)
-  author_bio: ""                       # genre-appropriate bio (populated by /kdp-listing)
-
 # AI usage disclosure (for JOSS papers and other venues requiring it)
 ai_usage:
   used: false                          # set to true if AI tools were used
   tools: []                            # e.g., ["Claude Code", "GitHub Copilot"]
   scope: ""                            # e.g., "code generation, documentation drafting"
   human_oversight: ""                  # e.g., "All design decisions by authors"
+
+# Related work — companion papers, sibling packages, preprints, prior pub-pipeline outputs
+related_work: []
+  # - type: "companion-paper"          # companion-paper, preprint, sibling-package, dependency
+  #   path: "../reliability-paper/"    # local path (relative to project root) or URL
+  #   doi: null                        # DOI if published (e.g., "10.31219/osf.io/xxxxx")
+  #   notes: "Theory paper; this package implements the methods"
+  # - type: "preprint"
+  #   doi: "10.31219/osf.io/xxxxx"
+  #   path: null
+  #   notes: "Submitted via /osf-preprint on 2026-01-15"
+  # - type: "sibling-package"
+  #   path: "../other-package/"
+  #   doi: null
+  #   notes: "Shares core algorithms; this package adds the Bayesian layer"
 
 # Funding and acknowledgements (optional)
 funding: null                          # e.g., "NSF Grant #12345"

@@ -24,7 +24,7 @@ Each phase gates the next. Do not submit a manuscript that fails audit. Do not f
 
 Determine where the book stands in the pipeline to skip completed phases.
 
-**Load user config** (Read tool): Read `.claude/pub-pipeline.local.md` if it exists. Extract the `kdp` section and `author` metadata from YAML frontmatter. If the file is missing, offer to create one from the template at `${CLAUDE_PLUGIN_ROOT}/docs/user-config-template.md`.
+**Load user config** (Read tool): Read `.claude/kdp.local.md` if it exists. Extract the `kdp` section and `author` metadata from YAML frontmatter. If the file is missing, offer to create one from the template at `${CLAUDE_PLUGIN_ROOT}/docs/user-config-template.md`.
 
 **Detect manuscript files** (Glob tool): Search for manuscript files in the project:
 - `.tex` files (LaTeX -- technical books)
@@ -79,7 +79,7 @@ Run `/kdp-listing` to generate the four marketing artifacts:
 - BISAC categories (2-3 browse categories)
 - Author bio (for the product page and Author Central)
 
-The listing skill reads manuscript context, generates drafts, iterates with the user, and saves all artifacts to `.claude/pub-pipeline.local.md`.
+The listing skill reads manuscript context, generates drafts, iterates with the user, and saves all artifacts to `.claude/kdp.local.md`.
 
 **Gate**: All four artifacts must be saved to the config before proceeding. Phase 7 reads them during dashboard submission.
 
@@ -216,7 +216,7 @@ See `${CLAUDE_PLUGIN_ROOT}/docs/kdp-reference.md` for detailed post-publication 
 For complete KDP requirements, formatting guidelines, and exemplar listings:
 - **`${CLAUDE_PLUGIN_ROOT}/docs/kdp-reference.md`** -- Full KDP formatting requirements, cover templates, metadata guidelines, submission checklist, and pricing calculator reference
 - **`${CLAUDE_PLUGIN_ROOT}/docs/kdp-exemplars.md`** -- Blurb examples by genre, keyword strategies, category selection tactics, author bio conventions
-- **`${CLAUDE_PLUGIN_ROOT}/docs/user-config-template.md`** -- Template for `.claude/pub-pipeline.local.md` user config file
+- **`${CLAUDE_PLUGIN_ROOT}/docs/user-config-template.md`** -- Template for `.claude/kdp.local.md` user config file
 
 ## Important Notes
 

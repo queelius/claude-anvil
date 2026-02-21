@@ -30,7 +30,7 @@ If no manuscript is found, ask the user which file to audit.
 
 ### 1b. Load User Config
 
-Read `.claude/pub-pipeline.local.md` if it exists (Read tool). Extract the `kdp` configuration section and `author` metadata from YAML frontmatter. The config may include:
+Read `.claude/kdp.local.md` if it exists (Read tool). Extract the `kdp` configuration section and `author` metadata from YAML frontmatter. The config may include:
 
 ```yaml
 kdp:

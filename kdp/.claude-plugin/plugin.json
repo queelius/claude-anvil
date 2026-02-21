@@ -1,0 +1,13 @@
+{
+  "name": "kdp",
+  "version": "0.1.0",
+  "description": "Amazon KDP book publishing: manuscript audit, listing craft, and submission workflow",
+  "author": {
+    "name": "Alexander Towell",
+    "email": "lex@metafunctor.com",
+    "url": "https://github.com/queelius"
+  },
+  "repository": "https://github.com/queelius/claude-anvil",
+  "license": "MIT",
+  "keywords": ["KDP", "Amazon", "publishing", "books", "kindle", "self-publishing"]
+}

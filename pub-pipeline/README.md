@@ -4,7 +4,6 @@ A Claude Code plugin for automating publication workflows across multiple ecosys
 
 - **R packages**: CRAN → JOSS → JSS
 - **Python packages**: PyPI
-- **Books**: Amazon KDP (technical + fiction/nonfiction)
 - **Academic preprints**: OSF / MetaArXiv
 
 ## Skills & Commands
@@ -24,14 +23,6 @@ A Claude Code plugin for automating publication workflows across multiple ecosys
 |---------|-------|---------|
 | `/pypi-publish` | pypi-publish | Audit, build, test, and publish to PyPI |
 
-### Book Publication (Amazon KDP)
-
-| Command | Skill | Purpose |
-|---------|-------|---------|
-| `/kdp-audit` | kdp-audit | Audit manuscript against KDP requirements |
-| `/kdp-listing` | kdp-listing | Craft Amazon KDP listing: blurb, keywords, categories, author bio |
-| `/kdp-publish` | kdp-publish | Guide the full KDP publishing workflow |
-
 ### Academic Preprints
 
 | Command | Skill | Purpose |
@@ -40,7 +31,7 @@ A Claude Code plugin for automating publication workflows across multiple ecosys
 
 ### Auto-Detection
 
-Say "publish my package" or "publication pipeline" and the top-level `pub-pipeline` skill will detect your project type (R, Python, book, or academic preprint) and route to the right workflow.
+Say "publish my package" or "publication pipeline" and the top-level `pub-pipeline` skill will detect your project type (R, Python, or academic preprint) and route to the right workflow.
 
 ## Configuration
 
@@ -68,8 +59,6 @@ claude plugin add /path/to/pub-pipeline
 
 **Python packages**: Python with `build`, `twine`, `pytest`
 
-**Books (KDP)**: Manuscript files (`.docx`, `.epub`, `.tex`, or `.pdf`); cover image
-
 ## Reference Documents
 
 The `docs/` directory contains comprehensive reference material:
@@ -79,8 +68,6 @@ The `docs/` directory contains comprehensive reference material:
 - `joss-reference.md` — JOSS requirements and reviewer checklist
 - `joss-exemplars.md` — Real JOSS R package paper examples
 - `pypi-reference.md` — PyPI publishing requirements and workflow
-- `kdp-reference.md` — Amazon KDP formatting, pricing, and submission guide
-- `kdp-exemplars.md` — Fiction blurb examples, keyword strategies, category tactics
 - `osf-reference.md` — OSF API v2 endpoints, authentication, preprint providers
 
 ## License

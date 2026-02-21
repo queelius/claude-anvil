@@ -11,7 +11,7 @@ Generate the four marketing artifacts for an Amazon KDP listing: blurb (book des
 
 ### 1. Load User Config
 
-Read `.claude/pub-pipeline.local.md` if it exists (Read tool). Extract the `kdp` section and `author` metadata from YAML frontmatter. Key fields to look for:
+Read `.claude/kdp.local.md` if it exists (Read tool). Extract the `kdp` section and `author` metadata from YAML frontmatter. Key fields to look for:
 
 - `kdp.blurb` — existing blurb draft (if any)
 - `kdp.keywords` — existing keyword list
@@ -150,7 +150,7 @@ Consult the exemplars reference doc for genre conventions and annotated bio exam
 
 ### 8. Save Artifacts
 
-Write all outputs back to `.claude/pub-pipeline.local.md` under the `kdp` section (Edit tool). Fields to populate:
+Write all outputs back to `.claude/kdp.local.md` under the `kdp` section (Edit tool). Fields to populate:
 
 ```yaml
 kdp:
@@ -188,4 +188,4 @@ For KDP listing best practices, exemplar blurbs, and metadata requirements, cons
 - Keywords supplement title, subtitle, and categories. Do not duplicate words already indexed elsewhere — that wastes a keyword slot.
 - This skill crafts the listing, not the book. It reads enough manuscript context to market effectively, not to edit or critique.
 - Run this skill before `/kdp-publish` — the publish workflow reads these artifacts from the config and checks for completeness.
-- All artifacts are saved to `.claude/pub-pipeline.local.md` in the user's project, not to the plugin repo.
+- All artifacts are saved to `.claude/kdp.local.md` in the user's project, not to the plugin repo.
