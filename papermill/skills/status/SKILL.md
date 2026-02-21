@@ -89,6 +89,18 @@ Show the `venue.target` field. If not set, show: "Not yet selected."
 
 If `venue.candidates` has entries, list them as bullet points.
 
+### Related Papers
+
+If `related_papers` contains entries, display a markdown table:
+
+| Project | Relationship | Description |
+|---------|-------------|-------------|
+| ... | ... | ... |
+
+Where **Project** is the last path component of `path` (e.g., `masked-causes-in-series-systems`), **Relationship** is the `rel` value, and **Description** is the `label`.
+
+If the `related_papers` list is empty or missing, show: "None linked. Run `/papermill:init` with refresh to discover related projects."
+
 ## Step 4: Suggest the next action
 
 Based on the current project state, suggest exactly one next skill to run. Evaluate the conditions in order and use the first match:
