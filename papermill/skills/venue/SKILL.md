@@ -37,6 +37,7 @@ Look at where the paper's key references are published. These venues are likely 
 - **Applied methods**: Domain-specific journals (Biometrics, Technometrics, JRSS-B)
 - **Systems**: Systems conferences (OSDI, SOSP) or journals (TOCS)
 - **Short/preliminary results**: Workshop papers or letters
+- **Software with research application**: JOSS (Journal of Open Source Software) — any language, any domain. See the JOSS note below.
 
 ### From web search
 Search for "best venues for [topic]" and check recent calls for papers (WebSearch tool).
@@ -100,6 +101,16 @@ venue:
 
 Append a timestamped note documenting the venue analysis.
 
+## JOSS Note
+
+If JOSS is recommended or selected, be aware that JOSS papers are **not traditional manuscripts** — they are 750-1750 word software descriptions in Markdown (`paper.md`) with rigid required sections. Papermill's writing tools (outline, proof, polish) are not designed for this format. Instead:
+
+- Use **`/pub-pipeline:joss-draft`** to draft the `paper.md` and `paper.bib`.
+- Use **`/pub-pipeline:joss-audit`** to verify repository and paper compliance.
+- If the software has a companion theory paper, write *that* with papermill and cite it from the JOSS paper.
+
+JOSS accepts software in any language (Python, R, Julia, C++, etc.) with obvious research application. It does not require the paper to present novel methodology — just that the software is useful for research. The JOSS paper describes the software; the research contribution lives in companion papers or the software's own documentation.
+
 ## Step 7: Suggest Next Steps
 
 > Venue selected. Next steps:
@@ -107,3 +118,4 @@ Append a timestamped note documenting the venue analysis.
 > - **`/papermill:polish`**: Prepare the paper for submission to the target venue.
 > - **Check formatting**: Download the venue's template and verify compliance.
 > - **Write cover letter**: Some venues require a cover letter; draft one if needed.
+> - **If JOSS was selected**: Use `/pub-pipeline:joss-draft` instead of papermill for the paper itself.
