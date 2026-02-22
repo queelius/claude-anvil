@@ -7,7 +7,7 @@
     "email": "lex@metafunctor.com",
     "url": "https://github.com/queelius"
   },
-  "repository": "https://github.com/queelius/deets",
+  "repository": "https://github.com/queelius/claude-anvil",
   "license": "MIT",
   "keywords": ["identity", "metadata", "personal", "deets", "profiles", "orcid", "author"]
 }

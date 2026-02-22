@@ -1,0 +1,13 @@
+{
+  "name": "crier",
+  "version": "1.0.0",
+  "description": "Cross-post blog content to multiple platforms — audit, publish, rewrite, and track content distribution via the crier CLI",
+  "author": {
+    "name": "Alexander Towell",
+    "email": "lex@metafunctor.com",
+    "url": "https://metafunctor.com"
+  },
+  "repository": "https://github.com/queelius/claude-anvil",
+  "license": "MIT",
+  "keywords": ["cross-posting", "blog", "publishing", "devto", "hashnode", "bluesky", "mastodon", "content-distribution"]
+}
