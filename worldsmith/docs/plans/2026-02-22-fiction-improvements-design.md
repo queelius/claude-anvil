@@ -4,7 +4,7 @@
 
 ## Summary
 
-Follow-up improvements to the fiction merge (2026-02-20). Expands the cliche detection hook with conservative new patterns, connects the prose-craft skill to the pattern audit system, and bumps the version.
+Follow-up improvements to the fiction merge (2026-02-20). Expands the cliche detection hook with conservative new patterns, connects the prose-craft skill to the pattern audit system, bumps the version, and adds a help command for workflow discovery.
 
 ## Changes
 
@@ -35,6 +35,17 @@ Bump `plugin.json` version from `0.2.0` to `0.3.0`. The fiction merge added a sk
 ### 4. Update CLAUDE.md
 
 Update the hook documentation in CLAUDE.md to reflect the expanded cliche detection categories.
+
+### 5. Add `/worldsmith:help` command
+
+Create `commands/help.md` — a quick-reference command that summarizes the three existing commands, two skills, typical workflows, and what the hooks do automatically. Helps users discover the plugin's capabilities without reading source files.
+
+Typical workflows to document:
+- **Starting a project**: `/worldsmith:init-world` to scaffold or adopt a doc ecosystem
+- **Making changes**: `/worldsmith:change` for canonical edits, exploratory ideas, or promotions
+- **Running diagnostics**: `/worldsmith:check [scope]` for consistency, editorial, xref, or status
+- **Writing fiction**: prose-craft skill auto-triggers when writing/editing scenes
+- **Automatic guards**: cliche detection fires on Write/Edit, propagation reminders fire on doc changes
 
 ## Design Decisions
 
