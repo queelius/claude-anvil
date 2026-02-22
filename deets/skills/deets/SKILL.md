@@ -15,71 +15,54 @@ description: >
 
 # deets — Personal Metadata CLI
 
-Query the user's personal metadata store. Fields are organized into core
-categories (identity, contact, academic, education) and platform profiles
-(profiles.github, profiles.pypi, profiles.orcid, etc.).
+Query the user's personal metadata store.
 
-## Strategy
+## Strategy — ALWAYS dump first
 
-1. **Need multiple fields?** Start with `deets show --format json` — it's
-   only ~2.7KB. One call, zero guessing. Parse what you need from the dump.
-2. **Don't know the field path?** Run `deets search <query>` — it searches
-   keys, values, and descriptions. More forgiving than guessing globs.
-3. **Want the full schema?** Run `deets schema --format json` for
-   all fields with types, descriptions, and examples.
-4. **Know the exact path?** Use `deets get <path>` with `--default ""` so
-   the command never fails.
-5. **Quick existence check?** Use `deets get <path> --exists` — exit 0 if
-   found, exit 2 if not. No output, no parsing.
+**Do NOT guess field paths.** The schema evolves and hardcoded paths break.
+Instead, always start with the full dump:
 
-## Querying
+```bash
+deets show --format json
+```
+
+This returns the entire database in one call — it's small. Parse what you
+need from the result. This is cheaper than a single failed `get` + retry.
+
+**Only use targeted `get` when** you've already seen the dump in this session
+and know the exact path exists:
+
+```bash
+# Refresh a specific field you already know exists
+deets get identity.name
+deets get contact.email
+
+# Multiple known paths in one call
+deets get identity.name contact.email academic.orcid
+
+# Glob patterns — ALWAYS quote to prevent shell expansion
+deets get '*.orcid'
+```
+
+## Other Commands
 
 ```bash
 # Fuzzy discovery (searches keys, values, and descriptions)
 deets search orcid
 deets search university
 
-# Exact single value (bare output, pipe-friendly)
-deets get identity.name
-deets get contact.email
-deets get profiles.github.username
-
-# Multiple paths in one call (returns structured output)
-deets get identity.name contact.email academic.orcid
-
-# Glob patterns — ALWAYS quote patterns containing * or ?
-# The shell will expand unquoted globs to filenames before deets sees them
-deets get 'profiles.*.email'         # one field across all platforms
-deets get 'profiles.*.url'           # all profile URLs
-deets get '*.orcid'                  # find key across categories
-deets get profiles.github            # no glob chars, quoting optional
-
-# With fallback (never fails, exit 0)
-deets get academic.scholar --default ""
+# Full schema with types and descriptions
+deets schema --format json
 
 # Existence check (exit 0 if found, exit 2 if not, no output)
 deets get identity.name --exists
 
-# Structured output
-deets show --format json             # full dump (~2.7KB, best first move)
-deets export --format env            # DEETS_IDENTITY_NAME="..." format
+# With fallback (never fails, exit 0)
+deets get some.field --default ""
+
+# Export as environment variables
+deets export --format env
 ```
-
-## Identity Consolidation
-
-The `identity_web` category links name variants, handles, emails, and
-profile URLs so that searching any one resolves to the same person.
-
-```bash
-deets get identity_web               # everything
-deets get identity_web.names          # name variants
-deets get identity_web.handles        # platform handles
-deets get identity_web.emails         # all emails
-deets get identity_web.urls           # all profile URLs
-```
-
-Use this when populating CITATION.cff, ORCID profiles, Hugo site configs,
-or any metadata that benefits from consistent cross-platform identity linkage.
 
 ## Local vs Global
 

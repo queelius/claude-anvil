@@ -21,9 +21,8 @@ No agents or hooks. The skill auto-triggers when Claude needs personal metadata 
 
 - **Auto-detection + explicit command**: The skill fires implicitly via trigger phrases in its description. The `/deets` command is a thin wrapper for when auto-detection doesn't fire.
 - **CLI dependency**: Requires `deets` to be installed on the host system. The skill documents the CLI interface but doesn't install or configure it.
-- **Dump-first strategy**: The skill recommends `deets show --format json` (~2.7KB full dump) as the default first move when multiple fields are needed. Reserve targeted `get` for refreshing specific fields.
+- **Always dump first**: The skill directs Claude to run `deets show --format json` as the first move — never guess field paths. The schema evolves and hardcoded paths break. Targeted `get` is only for refreshing fields whose paths were seen in the dump.
 - **Multi-path `get`**: `deets get path1 path2 path3` queries multiple paths in one call. Single exact path returns bare value; multi-path returns structured output. `--default` and `--exists` apply per-path.
-- **Discovery-first**: The skill's strategy section directs Claude to use `deets search` for fuzzy discovery and `deets schema --format json` for full introspection, rather than hardcoding field names.
 - **Read-focused**: The skill teaches querying thoroughly but only mentions `populate` as a suggestion to the user — Claude should not run write commands without explicit user request.
 
 ## Editing Guidelines
