@@ -152,6 +152,13 @@ need a floor plan before the scene begins.
 > Before: The office was small and cluttered, with papers stacked on every surface and a window that looked out onto the parking lot.
 > After: Mira shoved a stack of folders aside to make room for her laptop, knocking a coffee cup she'd forgotten about. Cold. At least three days old.
 
+## Manuscript-Wide Audit
+
+For pattern counts across an entire manuscript, use `/worldsmith:check editorial`.
+It runs `count_patterns.py` to detect accumulating crutch words, filter words, weak
+verbs, and adverb dialogue tags. Projects can customize the pattern list by placing
+a `patterns.md` in `.worldsmith/` at project root.
+
 ## What This Skill Doesn't Cover
 
 **Project-specific lore.** Characters, plot, world-building, timelines — those
