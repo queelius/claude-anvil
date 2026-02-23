@@ -18,7 +18,7 @@ agents/{lorekeeper,critic}.md                     # 2 agents (1 read-write, 1 re
 hooks/hooks.json                                  # SessionStart + PostToolUse + Stop hooks
 hooks/scripts/detect-worldsmith-project.sh        # Ambient project detection
 hooks/scripts/propagation-reminder.sh            # PostToolUse propagation reminders
-hooks/scripts/check-fiction-cliches.sh           # Cliche detection (stock reactions, dead metaphors, emotional labeling)
+hooks/scripts/check-fiction-cliches.sh           # Cliche detection (stock reactions, dead metaphors, emotional labeling, redundant adverbs, fancy dialogue tags)
 hooks/scripts/completion-check.sh                # Stop hook: propagation verification
 scripts/count_patterns.py                         # Prose pattern counting (reads patterns.md)
 scripts/patterns.md                               # Default pattern definitions (overridable per project)
@@ -42,7 +42,7 @@ YAML frontmatter with `name`, `description` (with `<example>` blocks), `tools` (
 ### Hooks (`hooks/hooks.json`)
 Three event types:
 - **SessionStart** (command): Runs `detect-worldsmith-project.sh` for ambient awareness
-- **PostToolUse** (command, matcher: `Write|Edit`): Two hooks — propagation reminders for doc/manuscript edits, and cliche detection for stock body reactions, dead metaphors, and emotional labeling in fiction files (.tex, .md, .mdx, .txt)
+- **PostToolUse** (command, matcher: `Write|Edit`): Two hooks — propagation reminders for doc/manuscript edits, and cliche detection for stock body reactions, dead metaphors, emotional labeling, redundant adverbs, and fancy dialogue tags in fiction files (.tex, .md, .mdx, .txt)
 - **Stop** (prompt): Completion verification before session exit
 
 ### Scripts
