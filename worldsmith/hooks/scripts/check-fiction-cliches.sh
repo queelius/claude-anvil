@@ -1,6 +1,6 @@
 #!/bin/bash
-# Fiction cliche check: detect stock body reactions, dead metaphors, and
-# emotional labeling in prose content.
+# Fiction cliche check: detect stock body reactions, dead metaphors,
+# emotional labeling, redundant adverbs, and fancy dialogue tags in prose content.
 # Runs as a PostToolUse hook on Write|Edit for fiction files (.tex, .md, .mdx, .txt).
 #
 # If it fires, rewrite the passage to show the sensation through physical
@@ -86,6 +86,41 @@ a mixture of excitement
 filled with a sense of
 let out a breath
 didn't realize they had been holding
+PHRASES
+
+# --- Redundant adverbs (adverb duplicates the verb — cut or choose a more precise verb) ---
+while IFS= read -r phrase; do
+  [ -z "$phrase" ] && continue
+  if echo "$text" | grep -qi -F "$phrase"; then
+    violations="${violations}- \"${phrase}\" (adverb duplicates the verb — cut it or choose a more precise verb)\n"
+  fi
+done <<'PHRASES'
+whispered quietly
+shouted loudly
+sprinted quickly
+crept slowly
+muttered softly
+screamed loudly
+tiptoed quietly
+rushed hurriedly
+PHRASES
+
+# --- Fancy dialogue tags (use "said" or a physical beat instead) ---
+while IFS= read -r phrase; do
+  [ -z "$phrase" ] && continue
+  if echo "$text" | grep -qi -F "$phrase"; then
+    violations="${violations}- \"${phrase}\" (use \"said\" or a physical beat instead)\n"
+  fi
+done <<'PHRASES'
+exclaimed
+opined
+mused
+interjected
+proclaimed
+declared
+retorted
+quipped
+remarked
 PHRASES
 
 # --- Report ---
