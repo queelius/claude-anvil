@@ -19,7 +19,7 @@ There is no build system, no test suite, no compiled code. The entire plugin is 
 .claude-plugin/plugin.json    # Plugin manifest (name, version, metadata)
 skills/                       # 7 skill files — the core logic
 commands/                     # 6 slash commands — thin wrappers that trigger skills
-docs/                         # Reference docs and config template
+docs/                         # Reference docs, config template, and design plans
 ```
 
 ### Routing Pattern
@@ -55,6 +55,15 @@ Skills reference detailed policy/requirements docs via `${CLAUDE_PLUGIN_ROOT}/do
 - `joss-exemplars.md` — Real JOSS paper examples (generalized, not package-specific)
 - `pypi-reference.md` — PyPI metadata requirements, trusted publishers
 - `osf-reference.md` — OSF API v2 endpoints, authentication, preprint providers, and common errors
+
+### Design Plans
+
+`docs/plans/` contains historical design and implementation docs for features that have been built. These are not referenced at runtime — they capture rationale for past decisions (pub-pipeline initial design, KDP extraction, OSF preprint skill). KDP publishing was later extracted to a separate `kdp/` plugin in the parent repo.
+
+### Cross-Plugin Dependencies
+
+- **deets CLI**: Skills that need author metadata (name, ORCID, email) can fall back to the `deets` CLI tool (`deets show --format json`), which is configured globally. The shared user config (`.claude/pub-pipeline.local.md`) also stores author info, so skills check the config first.
+- **KDP extraction**: KDP publishing was originally part of pub-pipeline but was extracted to a standalone `kdp/` plugin. The `docs/plans/2026-02-16-kdp-*` files document this. If adding book/manuscript publishing features, they belong in `kdp/`, not here.
 
 ## Conventions
 
@@ -109,6 +118,7 @@ for f in commands/*.md; do echo "=== $f ===" && head -5 "$f" && echo; done
 # All ${CLAUDE_PLUGIN_ROOT} references point to existing files
 grep -roh '\${CLAUDE_PLUGIN_ROOT}/[^`"]*' skills/ | sort -u
 
-# No stale package-specific content in exemplars
-grep -ri "dfr.dist" skills/ docs/ || echo "CLEAN"
+# No stale package-specific content leaked into skills or docs
+# (exemplars should use generalized examples, not real package names)
+grep -riE "dfr\.dist|specific-pkg-name" skills/ docs/ || echo "CLEAN"
 ```
