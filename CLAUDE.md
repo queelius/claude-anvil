@@ -34,7 +34,7 @@ Each plugin directory follows Claude Code plugin conventions:
 └── CLAUDE.md                     # Per-plugin editing guidance (read before editing)
 ```
 
-Not all plugins use every component. Minimal plugins like deets have only a skill. Larger plugins add extras: worldsmith has `hooks/`, `scripts/`; pub-pipeline has `docs/` (reference material and design plans).
+Not all plugins use every component. Minimal plugins like alex-confidential have only a skill. Larger plugins add extras: worldsmith has `hooks/`, `scripts/`; pub-pipeline has `docs/` (reference material and design plans).
 
 ## File Format Conventions
 
@@ -58,7 +58,7 @@ JSON with event handlers. Worldsmith uses three: `SessionStart` (command hook fo
 
 **Router pattern**: pub-pipeline has a top-level router skill (`skills/pub-pipeline/SKILL.md`) that detects project type by indicator files (`DESCRIPTION` → R, `pyproject.toml` → Python, `.tex`+`.pdf` → academic paper) and delegates to the ecosystem-specific skill. The router has no command — it triggers via natural language.
 
-**Auto-detection via deets**: Other plugins (papermill, pub-pipeline) depend on the deets skill for author metadata. The deets skill has no slash command — it auto-triggers when Claude needs identity/contact/profile information.
+**Author metadata via deets CLI**: Plugins needing author info (papermill, pub-pipeline) can fall back to the `deets` CLI tool (`deets show --format json`), configured globally. Per-project config files (e.g. `.claude/pub-pipeline.local.md`) are checked first.
 
 **Audit report pattern** (pub-pipeline, kdp): Audit skills produce structured gap reports with Critical (Must Fix) / Warnings (Should Fix) / Passed sections.
 
