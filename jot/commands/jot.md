@@ -57,7 +57,17 @@ When invoked with arguments, interpret them as a natural language instruction an
 
 ### Routing Rules
 
-- When adding entries (`jot add`), automatically include the current project as a tag if project context is available. Determine this by running `basename "$PWD"` and checking for a matching tag via `jot tags --fuzzy <basename> --json`.
+**Tag discipline (mandatory for all `jot add` operations):**
+
+1. Before any `jot add`, detect the project tag:
+   - Run `basename "$PWD"` to get the project name.
+   - Run `jot tags --fuzzy <basename> --json` to check for a matching tag.
+2. If a matching tag is found, **always append it to `--tags`** on the `jot add` command, unless the user explicitly provided tags that already include it.
+3. If no matching tag is found, ask the user: "No project tag detected for `<basename>`. What tag should I use?" Then include their answer in `--tags`.
+4. Never run `jot add` without at least one tag. Untagged entries are not allowed.
+
+**General routing:**
+
 - Always use `--json` when the output needs to be parsed programmatically. Present results in a human-readable format to the user.
 - For ambiguous queries, prefer listing/searching over modifying. Ask the user for confirmation before destructive operations like `jot purge` or bulk status changes.
 - When the user asks to "show" or "list" something, default to `--json` output and format the results as a readable summary.
