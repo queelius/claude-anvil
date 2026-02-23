@@ -5,7 +5,7 @@
     "email": "lex@metafunctor.com"
   },
   "metadata": {
-    "description": "Personal Claude Code plugins: publication workflows, research paper management, fiction worldbuilding, and repository management"
+    "description": "Personal Claude Code plugins: publication workflows, research paper management, fiction worldbuilding, content cross-posting, and repository management"
   },
   "plugins": [
     {
@@ -38,7 +38,7 @@
     {
       "name": "mf",
       "source": "./mf",
-      "description": "Metafunctor site management — blog architecture, content workflows, mf CLI, and crier cross-posting",
+      "description": "Metafunctor site management — blog architecture, content workflows, and mf CLI",
       "version": "1.0.0",
       "author": {
         "name": "Alexander Towell"
@@ -85,6 +85,15 @@
       "source": "./jot",
       "description": "Journal-aware Claude Code sessions — surfaces relevant tasks, ideas, and plans from your jot journal",
       "version": "0.1.0",
+      "author": {
+        "name": "Alexander Towell"
+      }
+    },
+    {
+      "name": "crier",
+      "source": "./crier",
+      "description": "Cross-post blog content to multiple platforms — audit, publish, rewrite, and track content distribution via the crier CLI",
+      "version": "1.0.0",
       "author": {
         "name": "Alexander Towell"
       }
