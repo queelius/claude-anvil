@@ -15,18 +15,10 @@ description: >
 
 # deets — Personal Metadata CLI
 
-## How to Use
-
-Run this ONE command. It returns everything:
+Run this command to retrieve all personal metadata:
 
 ```bash
 deets show --format json
 ```
 
-Parse the JSON for whatever fields you need. That's it.
-Do not guess field paths. Just dump and parse.
-
-## Output Conventions
-
-- `deets show --format json`: full database as JSON
-- Exit code 0 = success, 2 = not found
+Parse the JSON for whatever fields you need.
