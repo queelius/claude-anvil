@@ -1,6 +1,6 @@
 {
   "name": "kdp",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Amazon KDP book publishing: manuscript audit, listing craft, and submission workflow",
   "author": {
     "name": "Alexander Towell",

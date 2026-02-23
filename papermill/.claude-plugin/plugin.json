@@ -1,7 +1,7 @@
 {
   "name": "papermill",
   "description": "Research paper lifecycle management — thesis refinement, literature surveys, experimental design, editorial review, and publication venue matching",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "author": {
     "name": "Alexander Towell",
     "url": "https://github.com/queelius"
