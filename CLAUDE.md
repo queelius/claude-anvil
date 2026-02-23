@@ -16,7 +16,6 @@ A Claude Code **plugin marketplace** (`queelius`). All plugins are distributed a
 | **pub-pipeline** | `pub-pipeline/` | Publication workflows: R/CRAN/JOSS, Python/PyPI, preprints/OSF | 0.4.0 |
 | **mf** | `mf/` | Metafunctor site management: blog architecture, content workflows, crier | 1.0.0 |
 | **repoindex** | `repoindex/` | Collection-aware repository intelligence — query, analyze, maintain git repos | 0.10.0 |
-| **deets** | `deets/` | Personal metadata queries — identity, contact, academic, profiles | 1.0.0 |
 | **alex-confidential** | `locksmith/` | Confidentiality toolkit — cryptoid, pagevault, gpg encryption | 0.1.0 |
 | **kdp** | `kdp/` | Amazon KDP book publishing: manuscript audit, listing craft, submission workflow | 0.1.0 |
 | **jot** | `jot/` | Journal-aware sessions — surfaces tasks, ideas, and plans from your jot journal | 0.1.0 |
