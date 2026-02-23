@@ -85,6 +85,14 @@ grep -roh '\${CLAUDE_PLUGIN_ROOT}/[^`"]*' skills/ commands/ | sort -u | while re
 done
 ```
 
+## Version Bumps
+
+Versions live in **two places** that must stay in sync:
+1. `.claude-plugin/marketplace.json` — the marketplace catalog (drives update detection)
+2. Each plugin's `.claude-plugin/plugin.json` — the plugin manifest
+
+**Always update both.** If `marketplace.json` isn't bumped, Claude Code won't detect the update.
+
 ## Editing Guidelines
 
 - Each plugin has its own CLAUDE.md with plugin-specific conventions — read it before editing that plugin
