@@ -47,7 +47,7 @@ related_work: []
   # - type: "preprint"
   #   doi: "10.31219/osf.io/xxxxx"
   #   path: null
-  #   notes: "Submitted via /osf-preprint on 2026-01-15"
+  #   notes: "Preprint submitted 2026-01-15"
   # - type: "sibling-package"
   #   path: "../other-package/"
   #   doi: null

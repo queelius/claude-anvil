@@ -11,7 +11,7 @@
     {
       "name": "pub-pipeline",
       "source": "./pub-pipeline",
-      "description": "Unified publication pipeline: R packages (CRAN/JOSS/JSS), Python packages (PyPI), and academic preprints (OSF/MetaArXiv)",
+      "description": "Unified publication pipeline: R packages (CRAN/JOSS/JSS) and Python packages (PyPI)",
       "version": "0.5.0",
       "author": {
         "name": "Alexander Towell"

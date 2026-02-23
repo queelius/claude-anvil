@@ -4,10 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What This Is
 
-A Claude Code **plugin** (not a software project) that automates publication workflows across three ecosystems:
+A Claude Code **plugin** (not a software project) that automates publication workflows across two ecosystems:
 - **R packages**: CRAN → JOSS → JSS pipeline
 - **Python packages**: PyPI publishing
-- **Academic preprints**: OSF / MetaArXiv
 
 There is no build system, no test suite, no compiled code. The entire plugin is Markdown files with YAML frontmatter. "Development" means editing skills, commands, and reference docs.
 
@@ -17,8 +16,8 @@ There is no build system, no test suite, no compiled code. The entire plugin is 
 
 ```
 .claude-plugin/plugin.json    # Plugin manifest (name, version, metadata)
-skills/                       # 7 skill files — the core logic
-commands/                     # 6 slash commands — thin wrappers that trigger skills
+skills/                       # 6 skill files — the core logic
+commands/                     # 5 slash commands — thin wrappers that trigger skills
 docs/                         # Reference docs, config template, and design plans
 ```
 
@@ -37,7 +36,6 @@ Each skill has a corresponding slash command. Commands are minimal — just fron
 | `commands/joss-draft.md` | `skills/joss-draft/` | R |
 | `commands/r-publish.md` | `skills/r-pub-pipeline/` | R |
 | `commands/pypi-publish.md` | `skills/pypi-publish/` | Python |
-| `commands/osf-preprint.md` | `skills/osf-preprint/` | Academic preprints |
 
 The router skill (`skills/pub-pipeline/`) has no command — it triggers via natural language ("publish my package").
 
@@ -54,11 +52,10 @@ Skills reference detailed policy/requirements docs via `${CLAUDE_PLUGIN_ROOT}/do
 - `joss-reference.md` — JOSS reviewer checklist, paper format spec
 - `joss-exemplars.md` — Real JOSS paper examples (generalized, not package-specific)
 - `pypi-reference.md` — PyPI metadata requirements, trusted publishers
-- `osf-reference.md` — OSF API v2 endpoints, authentication, preprint providers, and common errors
 
 ### Design Plans
 
-`docs/plans/` contains historical design and implementation docs for features that have been built. These are not referenced at runtime — they capture rationale for past decisions (pub-pipeline initial design, KDP extraction, OSF preprint skill). KDP publishing was later extracted to a separate `kdp/` plugin in the parent repo.
+`docs/plans/` contains historical design and implementation docs for features that have been built. These are not referenced at runtime — they capture rationale for past decisions (pub-pipeline initial design, KDP extraction). KDP publishing was later extracted to a separate `kdp/` plugin in the parent repo.
 
 ### Cross-Plugin Dependencies
 

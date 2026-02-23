@@ -20,7 +20,7 @@ Claude Anvil is a plugin marketplace containing nine Claude Code plugins for aca
 |--------|-------------|---------|
 | [papermill](papermill/) | Academic paper lifecycle: thesis, lit survey, experiment, review, venue, submission | 0.3.0 |
 | [worldsmith](worldsmith/) | Documentation-first fiction worldbuilding (the "Silmarillion approach") | 0.2.0 |
-| [pub-pipeline](pub-pipeline/) | Publication workflows: R/CRAN/JOSS, Python/PyPI, books/KDP, preprints/OSF | 0.4.0 |
+| [pub-pipeline](pub-pipeline/) | Publication workflows: R/CRAN/JOSS, Python/PyPI | 0.5.0 |
 | [mf](mf/) | Metafunctor site management: blog architecture, content workflows, crier | 1.0.0 |
 | [repoindex](repoindex/) | Collection-aware repository intelligence — query, analyze, maintain git repos | 0.10.0 |
 | [deets](deets/) | Personal metadata queries — identity, contact, academic, profiles | 1.0.0 |
