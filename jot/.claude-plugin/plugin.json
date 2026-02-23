@@ -1,6 +1,6 @@
 {
   "name": "jot",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Journal-aware Claude Code sessions. Surfaces relevant tasks, ideas, and plans from your jot journal on session start. Provides slash commands and deep journal analysis.",
   "author": {
     "name": "Alexander Towell",
