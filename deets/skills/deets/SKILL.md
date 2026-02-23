@@ -23,9 +23,8 @@ Run this ONE command. It returns everything:
 deets show --format json
 ```
 
-Parse the JSON for whatever fields you need. That's it. Do not call
-`deets get`. Do not guess field paths. Do not call `deets search`.
-Just dump and parse.
+Parse the JSON for whatever fields you need. That's it.
+Do not guess field paths. Just dump and parse.
 
 ## Output Conventions
 
