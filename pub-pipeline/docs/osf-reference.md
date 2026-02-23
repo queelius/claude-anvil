@@ -9,14 +9,11 @@
 - Personal Access Token (PAT) via `OSF_TOKEN` environment variable
 - Header: `Authorization: Bearer $OSF_TOKEN`
 - Token creation: https://osf.io/settings/tokens
-- Required scope: `osf.full_write`
-
-## Rate Limits
-- Unauthenticated: 100 requests/hour
-- Authenticated: 10,000 requests/day
+- Required scopes: `osf.full_read`, `osf.full_write`
 
 ## Content Type
-- All requests use JSON:API format: `Content-Type: application/vnd.api+json`
+- OSF API requests: `Content-Type: application/vnd.api+json`
+- WaterButler uploads: `Content-Type: application/octet-stream`
 
 ## Preprint Providers
 | Provider | ID | URL |
@@ -24,51 +21,75 @@
 | OSF Preprints | `osf` | https://osf.io/preprints/ |
 | MetaArXiv | `metaarxiv` | https://osf.io/preprints/metaarxiv |
 
-## Key Endpoints
+## Correct Preprint Creation Workflow
 
-### Create Node (Project)
-- Method: `POST /v2/nodes/`
-- Required attributes: `title`, `category` ("project")
-- Optional: `description`, `public` (boolean), `tags`
-- Response: `.data.id` contains the node ID
+**Critical**: Files must be uploaded to the **preprint's own storage**, not a project node. The OSF backend validates `file.target == preprint` in `set_primary_file`.
 
-### Upload File (WaterButler)
-- Method: `PUT /v1/resources/{node_id}/providers/osfstorage/?kind=file&name={filename}`
-- Body: raw binary file content
-- Content-Type for PDFs: `application/pdf`
-- Response contains file metadata including the file ID
-- 409 Conflict if file with same name exists (upload new version instead)
+### Step 1: Create Preprint (Draft)
 
-### Create Preprint
-- Method: `POST /v2/preprints/`
-- Required attributes: `title`
-- Optional attributes: `description`, `tags`, `is_published`, `doi`
-- Required relationships: `node`, `primary_file`, `provider`
-- Set `is_published: false` to create as draft
+`POST /v2/preprints/` — minimal payload, no `primary_file`, no `is_published`:
 
-### Get Preprint
-- Method: `GET /v2/preprints/{preprint_id}/`
-- Returns full preprint metadata including links, DOI, review state
+```json
+{
+  "data": {
+    "type": "preprints",
+    "attributes": {"title": "...", "description": "...", "tags": ["..."]},
+    "relationships": {
+      "provider": {"data": {"type": "providers", "id": "metaarxiv"}}
+    }
+  }
+}
+```
 
-## Common Error Codes
+### Step 2: Upload File to Preprint Storage
+
+`PUT https://files.osf.io/v1/resources/{preprint_id}/providers/osfstorage/?kind=file&name=main.pdf`
+
+Then resolve OSF file ID: `GET /v2/preprints/{preprint_id}/files/osfstorage/`
+
+### Step 3: Set Primary File (PATCH)
+
+`PATCH /v2/preprints/{preprint_id}/` — set primary_file, license, data_links:
+
+```json
+{
+  "data": {
+    "type": "preprints", "id": "{preprint_id}",
+    "attributes": {"has_data_links": "available", "data_links": ["https://github.com/..."]},
+    "relationships": {
+      "primary_file": {"data": {"type": "primary_file", "id": "{file_id}"}},
+      "license": {"data": {"type": "licenses", "id": "{license_node_id}"}}
+    }
+  }
+}
+```
+
+## Provider License Validation
+
+Query accepted licenses: `GET /v2/preprint_providers/{provider_id}/licenses/`
+
+MetaArXiv accepts CC licenses but not MIT, GPL, etc.
+
+## Common License Node IDs
+
+| SPDX ID | OSF Node ID |
+|---------|-------------|
+| CC-BY-4.0 | `563c1cf88c5e4a3877f9e96a` |
+| CC-BY-SA-4.0 | `563c1cf88c5e4a3877f9e96c` |
+| CC0-1.0 | `563c1cf88c5e4a3877f9e965` |
+
+## Common Errors
+
 | Code | Meaning | Fix |
 |------|---------|-----|
-| 400 | Bad request / malformed JSON | Check JSON:API format, ensure relationships are correct |
-| 401 | Unauthorized | Token invalid, expired, or missing |
-| 403 | Forbidden | Token lacks required scope (`osf.full_write`) |
-| 404 | Not found | Check node/file/preprint ID |
-| 409 | Conflict | Resource already exists (e.g., duplicate file upload) |
-| 429 | Rate limited | Wait and retry |
-
-## Response Parsing
-- Node ID: `.data.id` from POST /v2/nodes/
-- File ID: parse from WaterButler PUT response
-- Preprint URL: `.data.links.html` from POST /v2/preprints/
-- DOI: `.data.attributes.doi` (only after publishing)
+| 400 "valid primary_file must be set" | `is_published` in creation payload | Omit `is_published` at creation |
+| 400 "not a valid primary file" | File target != preprint | Upload to preprint, not a node |
+| 400 "Invalid license" | Provider doesn't accept that license | Query provider licenses first |
+| 401 | Token invalid | Regenerate at OSF settings |
 
 ## Important Notes
-- JSON:API requires `"type"` field in all request data objects
-- Relationships use nested `{"data": {"type": "...", "id": "..."}}` format
-- WaterButler uses a different base URL than the main OSF API
-- Preprint subjects (taxonomy) cannot be set via API — must be added manually
-- License can be set via relationship to `/v2/licenses/` but is easier to set via web UI
+- **No node required**: Preprints have their own storage. Nodes are only for supplemental materials.
+- **Subjects**: Cannot be set via API — add via web UI.
+- **Relationship type**: Use `"primary_file"` (singular) for the primary_file relationship.
+- **DOI**: Minted only after publishing (~24 hours to resolve).
+- **CLI tool**: `osf-preprint-submit` at `~/.local/bin/` handles the full workflow.
