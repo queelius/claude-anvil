@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What This Is
 
-A Claude Code plugin that wraps the `deets` CLI (`~/github/golang/deets`) for personal metadata queries. Exposes a skill and a slash command for looking up identity, contact, academic, education, and cross-platform profile information.
+A Claude Code plugin that wraps the `deets` CLI (`~/github/golang/deets`) for personal metadata queries. Exposes a skill and a slash command for looking up identity, contact, academic, web, and cross-platform profile information.
 
 ## Structure
 
