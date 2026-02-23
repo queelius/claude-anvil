@@ -1,6 +1,8 @@
 ---
 name: cross-poster
 description: Autonomous cross-posting agent. Use when the user needs bulk publishing across multiple platforms — runs audit, publishes to API platforms, writes rewrites for short-form, and reports results.
+model: sonnet
+color: cyan
 tools:
   - Bash
   - Read
