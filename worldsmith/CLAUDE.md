@@ -13,7 +13,7 @@ Worldsmith is a Claude Code **plugin** for documentation-first fiction worldbuil
 skills/worldsmith-methodology/SKILL.md            # Editorial methodology skill
 skills/worldsmith-methodology/references/          # Deep reference docs (propagation, doc structure)
 skills/prose-craft/SKILL.md                      # Prose craft rules (show-don't-tell, dialogue, scene structure)
-commands/{init-world,change,check}.md             # 3 slash commands
+commands/{init-world,change,check,help}.md        # 4 slash commands
 agents/{lorekeeper,critic}.md                     # 2 agents (1 read-write, 1 read-only)
 hooks/hooks.json                                  # SessionStart + PostToolUse + Stop hooks
 hooks/scripts/detect-worldsmith-project.sh        # Ambient project detection
