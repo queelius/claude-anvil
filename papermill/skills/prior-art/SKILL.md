@@ -4,7 +4,7 @@ description: >-
   This skill should be used when the user asks to "survey related work",
   "find prior art", "literature review", "what papers are related to mine",
   "search for references", or needs to conduct a systematic literature
-  survey. Reads thesis from .papermill.md, searches academic sources,
+  survey. Reads thesis from .papermill/state.md, searches academic sources,
   classifies references, identifies gaps, generates BibTeX, and updates
   the state file. Can launch the surveyor agent for deep autonomous search.
 ---
@@ -17,12 +17,12 @@ Conduct a **collaborative, iterative** literature survey with the user. This is 
 
 Begin by gathering everything you need to understand the research context.
 
-1. **Read `.papermill.md`** in the project root (Read tool), if it exists. Extract:
+1. **Read `.papermill/state.md`** in the project root (Read tool), if it exists. Extract:
    - The thesis statement and core contribution.
    - Any existing `prior_art` entries (key references, gaps, last survey date).
    - The paper's target venue, discipline, and methodology.
 
-   If `.papermill.md` does not exist, the survey can still proceed — ask the user to describe their research topic and thesis directly. Suggest running `/papermill:init` afterward to persist the results.
+   If `.papermill/state.md` does not exist, the survey can still proceed — ask the user to describe their research topic and thesis directly. Suggest running `/papermill:init` afterward to persist the results.
 
 2. **Read existing `.bib` file(s)** (Glob/Read tools). Scan for all BibTeX files in the project (commonly `references.bib`, `paper/references.bib`, or similar). These are seed references. Parse out author names, titles, years, and keywords -- these seeds will anchor the search.
 
@@ -122,7 +122,7 @@ After approval, append the new entries to the appropriate `.bib` file (Edit tool
 
 ## Step 9: Update State File
 
-Update `.papermill.md` (Edit tool) with:
+Update `.papermill/state.md` (Edit tool) with:
 
 - **`prior_art.key_references`**: Add each confirmed reference with citation key, classification, and a one-sentence relation description.
 - **`prior_art.last_survey`**: Set to today's date.
@@ -150,7 +150,7 @@ The agent writes its results to `.papermill-survey-results.md` in the project ro
 2. Present a summary to the user (number of new references by category, updated gap analysis).
 3. Ask the user to confirm which new references to keep — present them in batches of 3-5, same as Step 6.
 4. Append confirmed BibTeX entries to the `.bib` file (Edit tool).
-5. Update `prior_art` in `.papermill.md` with any new key references and the refined gap analysis (Edit tool).
+5. Update `prior_art` in `.papermill/state.md` with any new key references and the refined gap analysis (Edit tool).
 
 ## Step 11: Final Summary
 

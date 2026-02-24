@@ -3,7 +3,7 @@ name: status
 description: >-
   This skill should be used when the user asks to "show paper status",
   "where am I on this paper", "what's the state of my paper", "papermill
-  dashboard", or needs orientation on a paper project. Reads .papermill.md
+  dashboard", or needs orientation on a paper project. Reads .papermill/state.md
   and presents a read-only dashboard showing stage, thesis, experiments,
   review history, venue, and suggested next actions.
 ---
@@ -14,11 +14,11 @@ Present a concise project status dashboard for an academic paper managed by Pape
 
 ## Step 1: Read the project file
 
-Read `.papermill.md` from the repository root (Read tool).
+Read `.papermill/state.md` from the repository root (Read tool).
 
 If the file does not exist, stop and display:
 
-> No `.papermill.md` found in this repository. Run `/papermill:init` to set up Papermill for this project.
+> No `.papermill/state.md` found in this repository. Run `/papermill:init` to set up Papermill for this project.
 
 Do not proceed further if the file is missing.
 
@@ -117,7 +117,7 @@ Display this under a **Suggested next step** heading.
 
 ## Step 5: Show recent activity
 
-Read the last 10 non-empty, non-heading lines from the markdown body of `.papermill.md` (the content below the frontmatter). These typically contain timestamped notes or activity logs.
+Read the last 10 non-empty, non-heading lines from the markdown body of `.papermill/state.md` (the content below the frontmatter). These typically contain timestamped notes or activity logs.
 
 Display them under a **Recent activity** heading. If the body is empty or contains no notes, show: "No activity logged yet."
 
@@ -126,4 +126,4 @@ Display them under a **Recent activity** heading. If the body is empty or contai
 - Use plain markdown throughout. No HTML.
 - Keep the dashboard compact. Each section should be a few lines at most.
 - Do not editorialize or add commentary beyond what is specified above.
-- Do not modify `.papermill.md` or any other file. This skill is read-only.
+- Do not modify `.papermill/state.md` or any other file. This skill is read-only.

@@ -6,7 +6,7 @@ description: >-
   "extract the thesis from my draft", "crystallize my contribution",
   or needs to refine the central claim and novelty of a research paper.
   Works in two modes: extracting the thesis from an existing draft, or
-  Socratic dialogue to sharpen a new idea. Updates .papermill.md.
+  Socratic dialogue to sharpen a new idea. Updates .papermill/state.md.
 ---
 
 # Thesis Extraction and Refinement
@@ -15,11 +15,11 @@ Act as a collaborative thinking partner helping the researcher crystallize the c
 
 ## Step 1: Read Context
 
-Start by reading `.papermill.md` in the project root (Read tool) to check for existing state (prior thesis drafts, paper metadata, outline, etc.). If the file does not exist, that is fine -- proceed without it.
+Start by reading `.papermill/state.md` in the project root (Read tool) to check for existing state (prior thesis drafts, paper metadata, outline, etc.). If the file does not exist, that is fine -- proceed without it.
 
 Then determine which mode to operate in:
 
-- **Existing draft mode**: The project contains paper content (`.tex`, `.md`, or other manuscript files). Identify the main manuscript by checking `.papermill.md` for a path, or by scanning for common names (Glob tool: `main.tex`, `paper.tex`, `draft.md`, etc.).
+- **Existing draft mode**: The project contains paper content (`.tex`, `.md`, or other manuscript files). Identify the main manuscript by checking `.papermill/state.md` for a path, or by scanning for common names (Glob tool: `main.tex`, `paper.tex`, `draft.md`, etc.).
 - **New idea mode**: No substantial paper content exists yet. The researcher is starting from scratch.
 
 ## Step 2a: Existing Draft Mode
@@ -87,7 +87,7 @@ If any check fails, raise it conversationally:
 
 ## Step 4: Update State File
 
-Once the researcher confirms the thesis, update `.papermill.md` with the refined thesis (Edit tool):
+Once the researcher confirms the thesis, update `.papermill/state.md` with the refined thesis (Edit tool):
 
 ```yaml
 thesis:
@@ -96,7 +96,7 @@ thesis:
   refined: true
 ```
 
-If `.papermill.md` does not exist, suggest running `/papermill:init` first, or create a minimal state file.
+If `.papermill/state.md` does not exist, suggest running `/papermill:init` first, or create a minimal state file.
 
 Append a timestamped note to the markdown body:
 

@@ -6,7 +6,7 @@ description: >-
   outline", "organize my argument", or needs to design or refine paper
   structure. Generates a section-by-section outline with purpose, key
   arguments, estimated length, and narrative arc. Adapts to the paper
-  type and venue conventions. Updates .papermill.md.
+  type and venue conventions. Updates .papermill/state.md.
 ---
 
 # Paper Outline
@@ -15,14 +15,14 @@ Help the researcher design the structure of their paper. A good outline is the s
 
 ## Step 1: Read Context
 
-Read `.papermill.md` (Read tool) for:
+Read `.papermill/state.md` (Read tool) for:
 - **Thesis**: The central claim and novelty (critical -- the outline serves the thesis).
 - **Prior art**: Key references and gaps (these shape the related work section).
 - **Format**: `latex`, `markdown`, or `rmarkdown` (affects section conventions).
 - **Stage**: Current progress.
 - **Venue**: Target venue (affects length, section naming, and emphasis).
 
-If `.papermill.md` does not exist, outlining can still proceed — ask the user to describe the thesis and intended contribution type directly. Suggest running `/papermill:init` afterward to persist the outline.
+If `.papermill/state.md` does not exist, outlining can still proceed — ask the user to describe the thesis and intended contribution type directly. Suggest running `/papermill:init` afterward to persist the outline.
 
 Also scan existing paper files (Glob/Read tools). If there is already a partial draft, read it to understand what exists.
 
@@ -89,7 +89,7 @@ Iterate until the user approves.
 
 ## Step 6: Update State File
 
-Once approved, update `.papermill.md` (Edit tool):
+Once approved, update `.papermill/state.md` (Edit tool):
 
 - Set `stage` to `outlining` (or `drafting` if progressing).
 - Append the outline to the markdown body under a `## Outline` heading.

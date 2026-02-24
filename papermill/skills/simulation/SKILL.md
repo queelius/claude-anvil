@@ -15,11 +15,11 @@ Help the researcher design rigorous Monte Carlo simulations to validate theoreti
 
 ## Step 1: Read Context
 
-Read `.papermill.md` (Read tool) for:
+Read `.papermill/state.md` (Read tool) for:
 - **Thesis**: What theoretical result needs validation.
 - **Experiments**: Any existing simulation experiments.
 
-If `.papermill.md` does not exist, ask the user which theoretical result needs validation. Simulation design can proceed without the state file — suggest running `/papermill:init` afterward.
+If `.papermill/state.md` does not exist, ask the user which theoretical result needs validation. Simulation design can proceed without the state file — suggest running `/papermill:init` afterward.
 
 Scan the repository for existing simulation code and results (Glob/Read tools).
 
@@ -101,7 +101,7 @@ Warn about:
 
 ## Step 7: Update State File
 
-If `.papermill.md` exists, register the simulation (Edit tool) under `experiments`. If it does not exist, skip registration and suggest running `/papermill:init`.
+If `.papermill/state.md` exists, register the simulation (Edit tool) under `experiments`. If it does not exist, skip registration and suggest running `/papermill:init`.
 
 The entry uses the standard experiment schema with an optional `config` block for simulation-specific parameters:
 

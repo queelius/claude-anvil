@@ -16,12 +16,12 @@ Perform a final quality check on a research paper before submission. This is the
 
 ## Step 1: Read Context
 
-Read `.papermill.md` (Read tool) for:
+Read `.papermill/state.md` (Read tool) for:
 - **Venue**: Target venue and its requirements.
 - **Format**: Paper format (latex, markdown, rmarkdown).
 - **Review history**: Outstanding issues from previous reviews.
 
-If `.papermill.md` does not exist, the pre-flight check can still run — infer the format from the manuscript files and ask the user for the target venue. The checklist works regardless. Suggest running `/papermill:init` to capture venue and format persistently.
+If `.papermill/state.md` does not exist, the pre-flight check can still run — infer the format from the manuscript files and ask the user for the target venue. The checklist works regardless. Suggest running `/papermill:init` to capture venue and format persistently.
 
 Read the complete manuscript (Read tool).
 
@@ -88,7 +88,7 @@ Work through each category systematically. Report issues as they are found.
 
 ## Step 3: Build Verification
 
-Run a clean build appropriate to the paper format (Bash tool). Use the manuscript path discovered in Step 1 (from `.papermill.md` or by scanning for `.tex`/`.md`/`.Rmd` files with Glob tool). Examples:
+Run a clean build appropriate to the paper format (Bash tool). Use the manuscript path discovered in Step 1 (from `.papermill/state.md` or by scanning for `.tex`/`.md`/`.Rmd` files with Glob tool). Examples:
 
 **LaTeX papers:**
 ```bash
@@ -137,7 +137,7 @@ Offer to fix issues directly:
 
 After all issues are resolved:
 
-- Set `stage` to `submission` in `.papermill.md` (Edit tool).
+- Set `stage` to `submission` in `.papermill/state.md` (Edit tool).
 - Append a timestamped note: "Pre-flight check passed. Ready for submission to [venue]."
 
 ## Step 7: Suggest Next Steps

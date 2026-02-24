@@ -15,12 +15,12 @@ Help the researcher design rigorous experiments or computational studies. Good e
 
 ## Step 1: Read Context
 
-Read `.papermill.md` (Read tool) for:
+Read `.papermill/state.md` (Read tool) for:
 - **Thesis**: The claim the experiments should support or test.
 - **Existing experiments**: Any previously registered experiments.
 - **Format and tools**: What languages/tools are in the repo (R, Python, C++, etc.).
 
-If `.papermill.md` does not exist, ask the user what claim the experiments should test. Experiment design can proceed without the state file — suggest running `/papermill:init` afterward to register experiments persistently.
+If `.papermill/state.md` does not exist, ask the user what claim the experiments should test. Experiment design can proceed without the state file — suggest running `/papermill:init` afterward to register experiments persistently.
 
 Scan the repository for existing code (Glob tool) in `research/`, `code/`, `scripts/`, `experiments/`, or `analysis/` directories.
 
@@ -78,7 +78,7 @@ Check for and warn about:
 
 ## Step 5: Register the Experiment
 
-If `.papermill.md` exists, update it (Edit tool) by adding to the `experiments` list. If it does not exist, skip registration and suggest running `/papermill:init` to persist the experiment.
+If `.papermill/state.md` exists, update it (Edit tool) by adding to the `experiments` list. If it does not exist, skip registration and suggest running `/papermill:init` to persist the experiment.
 
 ```yaml
 experiments:

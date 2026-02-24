@@ -15,9 +15,9 @@ Act as a mathematical collaborator helping the researcher develop, verify, and p
 
 ## Step 1: Read Context
 
-Read `.papermill.md` (Read tool) for the thesis and paper context, if it exists. Read any existing proofs in the manuscript (Read tool).
+Read `.papermill/state.md` (Read tool) for the thesis and paper context, if it exists. Read any existing proofs in the manuscript (Read tool).
 
-If `.papermill.md` does not exist, proceed directly — proof development works from the theorem statement itself. Suggest running `/papermill:init` afterward to track proof status.
+If `.papermill/state.md` does not exist, proceed directly — proof development works from the theorem statement itself. Suggest running `/papermill:init` afterward to track proof status.
 
 Understand what needs proving:
 - Is this a new proof to construct from scratch?
@@ -89,7 +89,7 @@ A correct proof that is hard to follow is almost as bad as an incorrect one. Hel
 
 ## Step 7: Update State File
 
-Append a note to `.papermill.md` (Edit tool) documenting the proof work:
+Append a note to `.papermill/state.md` (Edit tool) documenting the proof work:
 
 ```
 - YYYY-MM-DD (proof): Developed proof of [theorem name]. Strategy: [strategy]. Status: [draft/verified/complete].

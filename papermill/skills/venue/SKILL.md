@@ -15,12 +15,12 @@ Help the researcher identify the best publication venue for their paper. The rig
 
 ## Step 1: Read Context
 
-Read `.papermill.md` (Read tool) for:
+Read `.papermill/state.md` (Read tool) for:
 - **Thesis**: The core contribution (determines which communities care).
 - **Prior art**: Where key references are published (reveals relevant venues).
 - **Review history**: Paper quality assessment (determines venue tier).
 
-If `.papermill.md` does not exist, venue selection can still proceed from the manuscript alone, but results will be stronger with thesis and prior-art context. Suggest running `/papermill:init` first for best results.
+If `.papermill/state.md` does not exist, venue selection can still proceed from the manuscript alone, but results will be stronger with thesis and prior-art context. Suggest running `/papermill:init` first for best results.
 
 Read the manuscript (Read tool) to understand scope, length, and contribution type.
 
@@ -85,7 +85,7 @@ There is no universally correct strategy. Help the user think through the trade-
 
 ## Step 6: Update State File
 
-Update `.papermill.md` (Edit tool):
+Update `.papermill/state.md` (Edit tool):
 
 ```yaml
 venue:
