@@ -1,240 +1,246 @@
-# Multi-Agent Fiction Manuscript Reviewer
+# Multi-Agent Fiction Review and Writing System
 
 **Date:** 2026-02-24
 
 ## Summary
 
-A multi-agent manuscript review system for worldsmith, modeled on papermill's academic reviewer. An Opus orchestrator dispatches 5 Sonnet specialist critics in parallel, each evaluating the manuscript against a specific rubric, then synthesizes findings into a unified review report with cross-verification and hallucination detection.
-
-## Research basis
-
-Design informed by:
-- Anthropic's "Building Effective Agents" (orchestrator-workers pattern, start simple, add complexity only when it demonstrably improves outcomes)
-- Anthropic's multi-agent research system (3-5 subagents, selective context, lightweight references)
-- Single-agent-with-skills research (multi-agent justified only for genuine parallelism — review from independent perspectives qualifies)
-- Creative writing with AI best practices (selective context injection, 64K degradation threshold, evaluator-optimizer pattern, rubric-specific critique over vague feedback)
-- Papermill's proven orchestrator + parallel specialists + synthesis architecture
+Replace worldsmith's two single-purpose agents (critic, lorekeeper) with a multi-agent architecture modeled on papermill's reviewer/writer orchestrators. Two orchestrators spawn specialist agents in parallel for deep, focused analysis and generation. The reviewer orchestrator handles editorial critique; the writer orchestrator handles world-grounded content creation.
 
 ## Architecture
 
-```
-User: "/worldsmith:review [scope]"
-    │
-    ├─ review skill reads project CLAUDE.md, identifies manuscript + docs
-    │
-    ├─ [Phase 1] Orchestrator (Opus) reads manuscript + canonical docs
-    │            Produces structured comprehension summary
-    │            Builds context packets per specialist
-    │
-    ├─ [Phase 2] 5 specialist critics dispatched in PARALLEL (Sonnet)
-    │    ├─ continuity-checker
-    │    ├─ prose-analyst
-    │    ├─ voice-evaluator
-    │    ├─ pacing-analyst
-    │    └─ worldbuilding-validator
-    │
-    ├─ [Phase 3] Cross-verification of critical/low-confidence findings
-    │
-    ├─ [Phase 4] Synthesis — deduplicate, resolve conflicts, verify quotes
-    │
-    └─ [Phase 5] Write report to .worldsmith/reviews/YYYY-MM-DD/
-```
-
-### Key differences from papermill's reviewer
-
-- No literature scouts (fiction doesn't need web search for prior art)
-- Canonical docs replace literature context (specialists receive relevant lore/timeline/characters)
-- Voice evaluator is fiction-specific (no academic analog)
-- Reports go to `.worldsmith/reviews/` not `.papermill/reviews/`
-
-## The orchestrator
-
-**Agent: `reviewer`** — Opus, read-write
-
-**Tools:** Read, Write, Glob, Grep, Task, AskUserQuestion
-
-**Phases:**
-
-1. **Comprehend** — read the manuscript scope (chapter, section, or full manuscript) and extract relevant canonical docs using the project's CLAUDE.md document roles table.
-
-2. **Build context packets** — selective context injection per specialist. Each specialist gets the manuscript text + only the canonical docs relevant to their rubric. Never dump the full document ecosystem into every specialist.
-
-3. **Dispatch** — launch all 5 specialists in parallel via Task tool, each receiving their tailored context packet.
-
-4. **Cross-verify** — for any finding rated critical or low-confidence, route to a different specialist for a second opinion:
-   - Continuity issues → worldbuilding-validator
-   - Prose issues → voice-evaluator (is flat prose actually a voice problem?)
-   - Voice issues → prose-analyst (is voice drift actually a prose rhythm problem?)
-   - Pacing issues → continuity-checker (is the pacing issue caused by a timeline inconsistency?)
-   - Worldbuilding issues → continuity-checker (is the system violation also a factual contradiction?)
-
-5. **Synthesize** — deduplicate findings (multiple specialists flag same issue → keep most specific), resolve conflicts, verify all quoted manuscript text actually exists (hallucination check), calibrate severity.
-
-6. **Report** — write unified review + individual specialist reports.
-
-**Recommendation criteria:**
-- **polished** — no critical issues, minor polish only
-- **revision** — no critical, some major issues, addressable in a revision pass
-- **rework** — critical consistency/voice/worldbuilding issues, or multiple major across dimensions
-- **structural** — fundamental pacing/structure problems requiring outline-level changes
-
-## The five specialists
-
-All specialists: read-only (Read, Glob, Grep only), Sonnet 4.6, produce findings in shared format: severity (critical/major/minor/suggestion), confidence (high/medium/low), quoted evidence, location, concrete recommendation.
-
-### continuity-checker
-
-**Rubric:** Does the manuscript contradict established canon?
-
-- Timeline: dates, ages, event sequences, elapsed time within scenes
-- Character knowledge states: does a character act on information they shouldn't have yet?
-- Spatial consistency: distances, travel times, locations, architectural details
-- Factual consistency: canonical table values, system rules, established world facts
-- Cross-chapter continuity: details introduced in earlier chapters contradicted or forgotten
-
-**Context:** Timeline authority, character entries, system specs, outline.
-
-### prose-analyst
-
-**Rubric:** Is the prose craft sound?
-
-- Show vs tell: emotional labeling, stock body reactions, sensation naming
-- Sensory specificity: abstract vs concrete, vague adjectives vs precise detail
-- Sentence rhythm: monotonous patterns, paragraph-level pacing, varied length
-- Cliche density: dead metaphors, purple prose, AI-fiction stock phrases
-- Adverb/dialogue tag discipline: redundant adverbs, fancy tags, attribution vs physical beats
-- Scene structure: enter late/leave early, camera-pan openings, lingering exits
-
-**Context:** Style conventions doc. Works primarily from manuscript text.
-
-### voice-evaluator
-
-**Rubric:** Do characters sound like themselves and distinct from each other?
-
-- Voice distinctness: vocabulary, sentence length, world-noticing patterns per character
-- Dialogue authenticity: subtext vs statement, "As You Know Bob" exposition
-- Internal monologue consistency: POV character interiority matches documented personality
-- Voice drift: character starts sounding like narrator or other characters
-- Register appropriateness: education, background, profession reflected in speech
-
-**Context:** Character sheets (voice patterns, speech tics, background, education level).
-
-### pacing-analyst
-
-**Rubric:** Does the narrative maintain momentum and earn its length?
-
-- Scene tension: does every scene have tension (even quiet scenes)?
-- Scene turns: does something change by the end of each scene?
-- Information density: info dumps, lecture scenes, exposition that stops the plot
-- Balance: chapter length relative to narrative content, rushed vs draggy sections
-- Transition efficiency: transitions that are one sentence vs three pages
-- Opening/closing: chapter opens with action or camera pan? Ends on turn or lingers?
-
-**Context:** Outline (scene purposes, arc moments).
-
-### worldbuilding-validator
-
-**Rubric:** Is the world internally consistent and systems applied correctly?
-
-- System rule compliance: magic/technology/social systems used consistently with docs
-- Consequences: actions have plausible consequences given world's rules
-- Scale and logistics: army sizes, economic plausibility, political structures
-- Cultural consistency: characters from documented cultures behave consistently
-- Internal plausibility: would this work within the world as established
-
-**Context:** System specs, lore docs, relevant worldbuilding entries.
-
-## Invocation
-
-### Command: `/worldsmith:review [scope]`
-
-Scope can be:
-- A chapter reference: `/worldsmith:review chapter 7`
-- A file path: `/worldsmith:review chapters/07-the-crossing.md`
-- Full manuscript: `/worldsmith:review manuscript`
-- Default: asks what to review
-
-### Skill: `skills/review/SKILL.md`
-
-Entry point workflow:
-1. Read project CLAUDE.md, parse document roles
-2. Identify manuscript files matching the requested scope
-3. Ask for optional focus areas (e.g., "I'm worried about pacing in the second half")
-4. Dispatch reviewer orchestrator agent via Task tool
-5. Present results summary
-6. Suggest next steps
-
-### Context packet construction
-
-The orchestrator builds tailored context per specialist:
-
-**All specialists get:**
-- Manuscript text being reviewed
-- Style conventions (if they exist)
-
-**Additionally:**
-- continuity-checker: timeline authority, character entries, system specs, outline
-- prose-analyst: style conventions only
-- voice-evaluator: character sheets
-- pacing-analyst: outline
-- worldbuilding-validator: system specs, lore docs
-
-This is selective context injection — each specialist gets only what's relevant to their rubric.
-
-## Report output
-
-Reports go to `.worldsmith/reviews/YYYY-MM-DD/`:
+Two orchestrators + seven specialists = nine agents total.
 
 ```
-.worldsmith/reviews/2026-02-24/
-├── review.md                    # Unified report (orchestrator synthesis)
-├── continuity-checker.md        # Individual specialist reports
-├── prose-analyst.md
-├── voice-evaluator.md
-├── pacing-analyst.md
-└── worldbuilding-validator.md
+reviewer (orchestrator, opus, red)
+  ├── consistency-auditor (opus, green)
+  ├── craft-auditor (opus, magenta)
+  ├── voice-auditor (opus, cyan)
+  └── structure-auditor (opus, yellow)
+
+writer (orchestrator, opus, blue)
+  ├── lore-writer (opus, green)
+  ├── scene-writer (opus, magenta)
+  └── character-developer (opus, cyan)
 ```
 
-Unified report structure:
-- Recommendation (polished / revision / rework / structural)
-- Summary + strengths + weaknesses
-- Finding counts by severity
-- Detailed findings grouped by severity (critical → major → minor → suggestion)
-- Domain-specific summaries (one section per specialist)
-- Review metadata (scope reviewed, specialists used, cross-verifications, disagreements)
+Orchestrators spawn specialists in parallel via the Task tool, collect results, and synthesize/integrate. Specialists are independent — they don't communicate with each other, only with the orchestrator.
 
-## Integration with existing worldsmith
+## Reviewer Orchestrator
 
-**Doesn't replace anything:**
-- `/worldsmith:check` — quick single-agent diagnostics (daily driver)
-- Critic agent — lightweight read-only analysis
-- Lorekeeper agent — creative worldbuilding (read-write)
-- Prose-craft skill — real-time craft guardrails
-- Cliche detection hook — real-time enforcement
+**Replaces:** critic agent
+**Trigger:** "review my manuscript", "full editorial review", "critique chapters 3-5", "do a thorough review"
+**Tools:** Read, Write, Glob, Grep, Bash, Task
 
-**The reviewer is the deep analysis tool** — invoked deliberately for thorough feedback. The fiction equivalent of a developmental editor with a red pen.
+### Workflow
 
-## Files to create
+1. **Comprehension** — Read project CLAUDE.md, parse doc roles, read canonical docs (timeline, characters, style guide, themes), read manuscript being reviewed. Produce structured understanding.
 
-```
-agents/reviewer.md                    # Orchestrator (Opus)
-agents/continuity-checker.md          # Specialist (Sonnet)
-agents/prose-analyst.md               # Specialist (Sonnet)
-agents/voice-evaluator.md             # Specialist (Sonnet)
-agents/pacing-analyst.md              # Specialist (Sonnet)
-agents/worldbuilding-validator.md     # Specialist (Sonnet)
-skills/review/SKILL.md                # Review workflow skill
-commands/review.md                    # /worldsmith:review command
-```
+2. **Parallel Specialist Review** — Launch all 4 specialists in parallel via Task. Each receives XML context:
+   ```xml
+   <project_context>[CLAUDE.md, doc roles, canonical hierarchy]</project_context>
+   <canonical_docs>[timeline, characters, style, themes, lore, systems]</canonical_docs>
+   <manuscript>[chapters being reviewed]</manuscript>
+   <style_conventions>[style guide]</style_conventions>
+   <anti_cliche_rules>[themes/anti-cliche doc]</anti_cliche_rules>
+   ```
 
-**Files to update:** CLAUDE.md, commands/help.md, .claude-plugin/plugin.json (version bump to 0.4.0).
+3. **Cross-Verification** — For critical or low-confidence findings, route to a different specialist:
+   - Consistency → craft-auditor (prose problem masking a fact error?)
+   - Craft → voice-auditor (voice issue, not generic craft?)
+   - Voice → consistency-auditor (does character doc actually specify this?)
+   - Structure → craft-auditor (pacing issue actually prose density?)
 
-## Design decisions
+4. **Synthesis** — Deduplicate findings, resolve conflicts, verify quoted text exists in manuscript, calibrate severity.
 
-- **Sonnet for specialists, Opus for orchestrator**: 40-60% cost reduction per the research. Specialists have focused rubrics that Sonnet handles well; the orchestrator needs Opus-level judgment for synthesis, cross-verification, and hallucination detection.
-- **5 specialists, not more**: Research shows 3-5 is the sweet spot. Diminishing returns beyond that. Each specialist has a genuinely distinct lens.
-- **Selective context injection**: Each specialist gets only the canonical docs relevant to their rubric. Avoids the 64K degradation threshold. The orchestrator curates context packets.
-- **Read-only specialists**: Findings flow up to the orchestrator. No specialist writes to disk or sees other specialists' work. Prevents groupthink, enables independent assessment.
-- **Cross-verification for critical findings only**: Not every finding needs a second opinion. Only critical severity or low confidence findings are re-routed, keeping cost proportional.
-- **Reports in `.worldsmith/`**: Consistent with the new `.worldsmith/` convention. Reviews persist for future reference and can inform subsequent editing sessions.
-- **Separate from `/worldsmith:check`**: Check is fast diagnostics; review is deep analysis. Different tools for different moments in the workflow.
+5. **Self-Verification** — Re-read manuscript against critical findings. Verify every HIGH finding.
+
+6. **Report** — Write unified report to `.worldsmith/reviews/YYYY-MM-DD/` with severity-grouped findings (HIGH/MEDIUM/LOW).
+
+### Key difference from papermill reviewer
+
+No literature scouts — fiction's ground truth is the project's own canonical docs, not external literature. The orchestrator front-loads canonical doc reading and passes full project context to all specialists.
+
+## Reviewer Specialists
+
+### consistency-auditor
+
+**Mission:** Find objective contradictions between manuscript and canonical docs, and within the manuscript itself.
+
+**Tools:** Read, Glob, Grep (read-only)
+
+**Review dimensions:**
+- **Timeline** — dates, ages, event sequences, durations against timeline authority
+- **Factual** — canonical values (system rules, geography, history, culture) vs. manuscript
+- **Character state** — knowledge states, capabilities, emotional trajectory consistency
+- **Spatial** — locations, distances, travel times against established geography
+
+**Evidence standard:** Quote manuscript passage + quote canonical source + show contradiction + severity + confidence.
+
+### craft-auditor
+
+**Mission:** Find prose craft failures at manuscript scale.
+
+**Tools:** Read, Glob, Grep, Bash (runs `count_patterns.py`)
+
+**Review dimensions:**
+- **Show don't tell** — emotional labeling, stock body reactions, camera-pan openings
+- **Dialogue craft** — fancy tags, redundant adverbs, As-You-Know-Bob exposition
+- **Sentence craft** — flat rhythm, purple prose, cliche phrases, filter word accumulation
+- **Scene mechanics** — not entering late/leaving early, scenes without tension, no turn
+
+Bash access for `count_patterns.py` mechanical pattern counting. Layers analytical judgment on top of the counts.
+
+### voice-auditor
+
+**Mission:** Verify characters sound like themselves and like distinct people.
+
+**Tools:** Read, Glob, Grep (read-only)
+
+**Review dimensions:**
+- **Voice consistency** — dialogue/monologue vs. character doc voice patterns (speech tics, vocabulary, metaphor preferences)
+- **Voice distinctiveness** — interchangeable voices between characters
+- **POV consistency** — limited-third accidentally revealing unobservable thoughts
+- **Emotional authenticity** — emotional register matches arc position (references emotional flicker entries)
+
+Fiction-specific specialist with no academic analogue.
+
+### structure-auditor
+
+**Mission:** Evaluate whether the narrative works at scene and chapter level.
+
+**Tools:** Read, Glob, Grep (read-only)
+
+**Review dimensions:**
+- **Pacing** — scene balance, info dumps, rushed transitions, chapters that don't earn their length
+- **Tension** — every scene needs tension, quiet scenes doing work or filling space
+- **Scene turns** — something changes by end of each scene, turns are earned
+- **Thematic coherence** — manuscript vs. themes/anti-cliche doc, commitments honored
+- **Arc trajectory** — character arcs progressing as documented, beats hitting in order
+
+## Writer Orchestrator
+
+**Replaces:** lorekeeper agent
+**Trigger:** "write chapter 5", "draft the battle scene", "develop the Ashwalker culture", "flesh out Sera's backstory"
+**Tools:** Read, Write, Edit, Glob, Grep, Bash, Task, AskUserQuestion
+
+### Workflow
+
+1. **Comprehension** — Read project CLAUDE.md, canonical docs, relevant manuscript, outline entry. Identify assignment type: lore development, scene draft, or character work.
+
+2. **Assignment Planning** — Map request to specialists:
+   - Lore/worldbuilding/history/systems → lore-writer
+   - Scene/chapter prose → scene-writer
+   - Character voice/arc/relationships → character-developer
+   - Complex requests may need multiple specialists (e.g., "write the battle of Greymoor" → lore-writer for context + scene-writer for prose + character-developer for voices)
+
+3. **Parallel Specialist Drafting** — Launch assigned specialists in parallel via Task:
+   ```xml
+   <assignment>[what to write, scope, estimated length]</assignment>
+   <project_context>[CLAUDE.md, doc roles, canonical hierarchy]</project_context>
+   <canonical_docs>[relevant docs]</canonical_docs>
+   <manuscript_context>[surrounding chapters for continuity]</manuscript_context>
+   <style_conventions>[style guide]</style_conventions>
+   <character_docs>[relevant character entries with voice patterns]</character_docs>
+   <outline>[outline entry if it exists]</outline>
+   ```
+
+4. **Integration** — Merge specialist outputs:
+   - Weave lore context into scene prose
+   - Verify character voices match character-developer's patterns
+   - Unify prose style, smooth transitions
+   - Ensure canonical consistency
+
+5. **Propagation** — Update canonical docs for anything new established:
+   - New world facts → appropriate canonical doc
+   - Character moments → character tracking (emotional flickers, arc progression)
+   - Timeline implications → timeline authority
+   - New terms → glossary
+
+6. **Self-Verification** — Read integrated output end-to-end against style guide, prose-craft rules, character voices, continuity.
+
+7. **Output** — Write content to files. Summarize what was created, what docs were updated, what user should verify.
+
+### Key differences from papermill writer
+
+- **Propagation phase** — fiction has a canonical doc ecosystem that must be updated after writing, not just read before.
+- **AskUserQuestion** — creative writing needs user direction. Academic writing follows a spec.
+- **No format-validator** — no compilation step. Self-verification against style guide and prose-craft rules instead.
+
+## Writer Specialists
+
+### lore-writer
+
+**Mission:** Develop worldbuilding content with narrative prose quality and consequence chains.
+
+**Tools:** Read, Write, Edit, Glob, Grep, AskUserQuestion
+
+**Writing approach:**
+- Systems have consequences — derive implications through layers
+- Build in layers — geological → civilizational → political → personal
+- Internal diversity — no monolithic cultures
+- Narrative prose, not encyclopedia — history reads like mythology, culture reads like field notes
+
+**Output:** Canonical doc content + notes for integrator (what was established, what constrains other docs, what manuscript should know).
+
+### scene-writer
+
+**Mission:** Draft prose scenes with craft discipline — prose-craft rules applied during creation.
+
+**Tools:** Read, Glob, Grep (read-only — produces draft in output, orchestrator writes)
+
+**Writing approach:**
+- Show don't tell — physical detail over emotional labeling
+- Dialogue craft — "said" invisible, subtext, distinct voices, physical beats
+- Scene structure — enter late, leave early, tension, end on turn
+- Sensory and concrete — specific objects, sounds, textures
+- No AI-fiction failure modes — don't resolve ambiguity early, don't flatten voices, don't lecture
+
+**Output:** Scene/chapter prose + notes for integrator (new facts needing doc updates, character moments needing tracking, terms introduced).
+
+### character-developer
+
+**Mission:** Develop characters with behavioral specificity.
+
+**Tools:** Read, Glob, Grep, AskUserQuestion
+
+**Writing approach:**
+- Voice patterns — specific enough to recognize without tags
+- Emotional flickers — anchored moments tracking arc trajectory
+- Relationship mapping — bidirectional, evolving
+- Intellectual frameworks — ideas that shape decisions
+- Arc planning — trajectory between key moments
+
+**Output:** Character documentation + notes for integrator (arc implications for outline, voice patterns for scene-writer, relationship updates).
+
+Gets AskUserQuestion because character development is deeply collaborative.
+
+## Plugin Changes
+
+| Current | New | Change |
+|---|---|---|
+| `agents/critic.md` | `agents/reviewer.md` | Replace |
+| `agents/lorekeeper.md` | `agents/writer.md` | Replace |
+| — | `agents/consistency-auditor.md` | New |
+| — | `agents/craft-auditor.md` | New |
+| — | `agents/voice-auditor.md` | New |
+| — | `agents/structure-auditor.md` | New |
+| — | `agents/lore-writer.md` | New |
+| — | `agents/scene-writer.md` | New |
+| — | `agents/character-developer.md` | New |
+| `commands/help.md` | Update | Document new agents |
+| `CLAUDE.md` | Update | Document multi-agent architecture |
+| `.claude-plugin/plugin.json` | 0.4.0 → 0.5.0 | Major feature addition |
+
+Net: 2 agents deleted, 9 agents created (+7).
+
+## Design Decisions
+
+- **Approach A (lean specialists):** 4 reviewer + 3 writer specialists rather than further decomposition. Worldbuilding plausibility fits inside consistency-auditor (checks docs against docs). Thematic drift fits inside structure-auditor (narrative-level coherence). Systems design is the lore-writer's core strength. Can split later if overloaded.
+- **Replace, don't coexist:** The orchestrators subsume all critic and lorekeeper functionality. Keeping both would confuse which to use and double the maintenance.
+- **XML context passing (from papermill):** Orchestrator reads once, packages as XML tags, distributes to specialists. Structured input is cleaner and less ambiguous than prose instructions.
+- **Parallel spawning (from papermill):** Specialists are independent — spawn in parallel, collect results, synthesize/integrate. No sequential pipelines unless a specialist's output feeds another.
+- **Cross-verification (from papermill):** Only for critical/low-confidence findings, with intelligent routing based on finding type. Not systematic — that would be redundant.
+- **Propagation phase (fiction-specific):** Writer orchestrator updates canonical docs after writing. This is the key difference from academic writing — fiction has a living doc ecosystem.
+- **scene-writer is read-only:** Produces draft text in output; orchestrator decides where to write. This prevents specialists from making uncoordinated file changes.
+- **voice-auditor is fiction-specific:** No academic analogue. Character voice consistency is the hardest thing for AI to get right in fiction — it deserves its own specialist.
+- **All specialists opus:** Fiction analysis and generation require deep reasoning. No sonnet specialists — there's no equivalent of format-validator (mechanical checking) in this domain.
