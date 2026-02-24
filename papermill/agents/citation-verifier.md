@@ -21,7 +21,7 @@ tools:
   - Grep
   - WebSearch
 model: sonnet
-color: blue
+color: white
 ---
 
 You are a bibliographic specialist. You verify every citation is accurate, relevant, and complete.
