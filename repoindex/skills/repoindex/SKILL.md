@@ -17,6 +17,9 @@ Query and manage a local git repository collection. Database: `~/.repoindex/repo
 
 ```bash
 repoindex status                        # Dashboard overview
+repoindex digest                        # Activity summary (last 7 days)
+repoindex digest --since 30d --top 5    # Last 30 days, top 5 repos
+repoindex digest --json                 # Structured JSON
 repoindex show <name>                   # Detailed single-repo view
 repoindex show <name> --json            # JSON output for scripting
 repoindex query --language python       # Filter repos (pretty table)
@@ -65,6 +68,32 @@ repoindex show repoindex --json     # Full JSON with tags, publications, events
 
 Displays: core metadata, GitHub stats, publications, tags, recent events (10).
 
+## Digest Command
+
+Summarizes recent git activity grouped by project with commit type breakdowns, representative messages, and release highlights. Answers "what have I been working on?"
+
+```bash
+repoindex digest                     # Last 7 days, Rich table
+repoindex digest --since 30d         # Last 30 days
+repoindex digest --json              # Structured JSON for scripting
+repoindex digest --top 5             # Top 5 repos by commit count
+```
+
+JSON output structure:
+```json
+{
+  "period": {"since": "...", "until": "...", "days": 7},
+  "summary": {"repos_active": 39, "total_commits": 314, "total_tags": 4, "total_merges": 2},
+  "projects": [{"name": "...", "language": "...", "commits": 77,
+    "by_type": {"feat": 12, "fix": 8, "other": 54},
+    "scopes": ["papermill"], "recent_messages": ["..."], "tags": [], "is_dirty": true}],
+  "releases": [{"repo": "...", "tag": "v1.0.0", "timestamp": "..."}],
+  "languages": [["Python", 25], ["R", 5]]
+}
+```
+
+Conventional commit prefixes (feat, fix, docs, refactor, test, chore, ci, style, perf, build, revert) are detected and tallied. Freeform messages are classified as "other".
+
 ## SQL Data Model
 
 ### repos table
@@ -84,6 +113,14 @@ GitHub: `github_stars`, `github_forks`, `github_is_private`, `github_is_archived
 
 ### tags table
 `repo_id` (FK), `tag`, `source` ('user'|'implicit'|'github')
+
+### refresh_log table
+Tracks refresh metadata: `id`, `started_at`, `finished_at`, `full_scan` (bool), `sources` (JSON array: "git", "github", "pypi", etc.), `scan_roots` (JSON), `repos_total`, `repos_scanned`, `repos_skipped`, `repos_added`, `repos_removed`, `errors`, `duration_seconds`, `cli_version`
+
+```bash
+repoindex status --refresh-log          # Pretty table of recent refreshes
+repoindex status --refresh-log --json   # JSON output
+```
 
 ## Common SQL Queries
 

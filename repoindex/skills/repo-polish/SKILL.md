@@ -53,8 +53,11 @@ repoindex ops generate zenodo --dry-run "name == 'REPO'"
 repoindex ops generate codemeta --dry-run "name == 'REPO'"
 
 # Documentation scaffolding
+# mkdocs: scaffolds mkdocs.yml with Material theme, dark/light toggle, markdown extensions, auto-nav from docs/
 repoindex ops generate mkdocs --dry-run "name == 'REPO'"
+# gh-pages: creates .github/workflows/deploy-docs.yml for MkDocs → GitHub Pages via Actions
 repoindex ops generate gh-pages --dry-run "name == 'REPO'"
+# Both support --force to overwrite existing files
 
 # GitHub settings
 repoindex ops github set-topics --from-pyproject --dry-run "name == 'REPO'"

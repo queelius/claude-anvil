@@ -1,6 +1,6 @@
 {
   "name": "repoindex",
-  "version": "0.11.0",
+  "version": "0.12.0",
   "description": "Collection-aware repository intelligence for Claude Code. Query, analyze, and maintain your git repository collection.",
   "author": {
     "name": "Alexander Towell",

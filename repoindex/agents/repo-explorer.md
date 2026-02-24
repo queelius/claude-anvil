@@ -38,6 +38,7 @@ Use `repoindex` CLI commands for data access:
 - `repoindex query [flags]` — filter repos with convenience flags
 - `repoindex sql "SELECT ..."` — direct SQL for complex queries
 - `repoindex events --since <period>` — recent git activity
+- `repoindex digest --json --since <period>` — activity summary with commit type breakdowns
 - `repoindex ops audit --json` — metadata completeness audit
 - `repoindex show <name> --json` — detailed single-repo info
 
@@ -59,18 +60,9 @@ When asked about repo quality or maintenance:
 
 ## SQL Reference
 
-Key tables: `repos`, `publications`, `events`, `tags`
+See `${CLAUDE_PLUGIN_ROOT}/skills/repoindex/SKILL.md` for the full data model (tables, columns, common queries).
 
-```sql
--- Useful joins
-SELECT r.name, p.registry, p.package_name
-FROM publications p JOIN repos r ON p.repo_id = r.id
-WHERE p.published = 1
-
-SELECT r.name, COUNT(e.id) as activity
-FROM repos r LEFT JOIN events e ON r.id = e.repo_id
-GROUP BY r.id ORDER BY activity DESC
-```
+Key tables: `repos`, `publications`, `events`, `tags`. All joins go through `repo_id` foreign key.
 
 ## Output Style
 
