@@ -233,9 +233,15 @@ For JOSS format specifications and exemplar papers, consult:
 
 ## Delegation
 
-For substantial prose writing, consider delegating to the `academic-paper-writer` agent (if available) with format set to "Markdown (JOSS)". Provide the agent with the package analysis and any existing content from Steps 1-4 as context. Otherwise, draft inline.
+For autonomous multi-agent drafting, launch the `pub-pipeline:joss-writer` agent via the Task tool. It will:
+1. Read the full package (README, vignettes, source, DESCRIPTION)
+2. Spawn a `pub-pipeline:field-scout` agent to map competing packages
+3. Draft complete `paper.md` and `paper.bib` with all required JOSS sections
+4. Validate word count, citations, and frontmatter
 
-For critical review of the draft, use the `papermill:reviewer` agent (if available) with JOSS format. Otherwise, self-review against the checklist in `joss-audit`.
+For critical review of the draft, launch the `pub-pipeline:joss-reviewer` agent. It spawns `pub-pipeline:software-auditor`, `pub-pipeline:community-auditor`, and `pub-pipeline:field-scout` in parallel, then synthesizes a unified JOSS checklist report.
+
+For lighter-weight review, self-review against the checklist in `joss-audit`.
 
 ## Important Notes
 

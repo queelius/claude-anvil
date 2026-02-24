@@ -16,6 +16,7 @@ There is no build system, no test suite, no compiled code. The entire plugin is 
 
 ```
 .claude-plugin/plugin.json    # Plugin manifest (name, version, metadata)
+agents/                       # 5 autonomous agents — JOSS multi-agent system
 skills/                       # 6 skill files — the core logic
 commands/                     # 5 slash commands — thin wrappers that trigger skills
 docs/                         # Reference docs, config template, and design plans
@@ -24,6 +25,31 @@ docs/                         # Reference docs, config template, and design plan
 ### Routing Pattern
 
 The **pub-pipeline** skill (`skills/pub-pipeline/SKILL.md`) is a top-level router. It detects project type by looking for indicator files (`DESCRIPTION` → R, `pyproject.toml` → Python, `.tex`+`.pdf` → academic paper) and delegates to the ecosystem-specific skill. If ambiguous, it asks the user.
+
+### Multi-Agent Architecture (JOSS)
+
+The JOSS pipeline uses a multi-agent pattern inspired by papermill. Two orchestrators spawn specialist agents in parallel:
+
+```
+joss-writer (opus, blue)           joss-reviewer (opus, red)
+  │                                  │
+  ├─ field-scout (sonnet, cyan)      ├─ software-auditor (sonnet, yellow)
+  │                                  ├─ community-auditor (haiku, green)
+  └─ [writes paper.md + paper.bib]   ├─ field-scout (sonnet, cyan)
+                                     └─ [synthesizes JOSS checklist report]
+```
+
+**joss-writer**: Reads package → spawns field-scout → drafts paper.md and paper.bib with all required sections.
+
+**joss-reviewer**: Reads package + paper.md → spawns 3 specialists in parallel → merges findings into a unified JOSS checklist report.
+
+**field-scout**: Shared between writer and reviewer. Searches CRAN/PyPI, CRAN Task Views, and the web for competing packages. Output feeds "State of the Field" (writing) or identifies missing comparisons (review).
+
+**software-auditor**: Runs tests, checks coverage, validates installation, assesses API docs and CI.
+
+**community-auditor**: Checks LICENSE, CONTRIBUTING.md, CODE_OF_CONDUCT.md, issue tracker, development history.
+
+Agents pass context via XML tags in the Task prompt. The orchestrator collects specialist outputs and synthesizes a final report.
 
 ### Skill → Command Mapping
 
@@ -108,6 +134,9 @@ After making changes, verify:
 ```bash
 # All skill frontmatter has name and description
 for f in skills/*/SKILL.md; do echo "=== $f ===" && head -5 "$f" && echo; done
+
+# All agent frontmatter has name, description, tools, model
+for f in agents/*.md; do echo "=== $f ===" && head -10 "$f" && echo; done
 
 # All command frontmatter has description
 for f in commands/*.md; do echo "=== $f ===" && head -5 "$f" && echo; done

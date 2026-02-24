@@ -163,7 +163,7 @@ If JSS is appropriate, note that:
 - JSS papers are 20-50 pages and include mathematical exposition
 - JSS is indexed in Web of Science (Impact Factor ~5)
 - Review takes 6-18 months
-- The `academic-paper-writer` agent can help draft in RMarkdown format
+- The `papermill:writer` agent can help draft a full JSS paper (long-form academic writing)
 
 ## Decision Helpers
 

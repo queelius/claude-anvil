@@ -73,7 +73,10 @@ If `paper.md` exists, validate against JOSS format requirements.
 - `# Summary` — high-level for non-specialists
 - `# Statement of Need` or `# Statement of need` — research purpose, target audience
 - `# State of the Field` or `# State of the field` — comparison to existing packages
-- `# Software Design` or `# Software design` — architecture, trade-offs- `# Research Impact` or similar — evidence of impact- `# AI Usage Disclosure` or similar — generative AI transparency- `# References`
+- `# Software Design` or `# Software design` — architecture, trade-offs
+- `# Research Impact` or similar — evidence of impact
+- `# AI Usage Disclosure` or similar — generative AI transparency
+- `# References`
 
 **Bibliography** (Read/Grep tools):
 - `paper.bib` exists at expected path
@@ -169,12 +172,14 @@ Format the report following this structure:
 ### 6. Offer to Fix
 
 After presenting the report, offer to address gaps:
-- Create `paper.md` skeleton with correct YAML frontmatter (use `/joss-draft` skill)
-- Create `paper.bib` template
+- Create `paper.md` and `paper.bib` via the `pub-pipeline:joss-writer` agent (or `/joss-draft` skill)
 - Add `CONTRIBUTING.md`
+- Add `CODE_OF_CONDUCT.md`
 - Add missing ORCID fields
 - Fix YAML frontmatter formatting
 - Create AI usage disclosure section
+
+For a deeper multi-agent audit, launch the `pub-pipeline:joss-reviewer` agent which spawns `software-auditor`, `community-auditor`, and `field-scout` specialists in parallel.
 
 ## Reference Files
 

@@ -1,6 +1,6 @@
 {
   "name": "pub-pipeline",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Unified publication pipeline: R packages (CRAN/JOSS/JSS) and Python packages (PyPI)",
   "author": {
     "name": "Alexander Towell",
