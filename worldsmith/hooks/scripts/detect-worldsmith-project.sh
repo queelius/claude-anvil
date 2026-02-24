@@ -1,51 +1,37 @@
 #!/bin/bash
 # Detect if the current project is a worldsmith-managed worldbuilding project.
-# Runs on SessionStart to give Claude ambient awareness of the doc ecosystem.
-# Sets WORLDSMITH_PROJECT=1 via $CLAUDE_ENV_FILE so other hooks can gate on it.
+# A project is worldsmith-managed if it has a .worldsmith/ directory (created by
+# /worldsmith:init-world). Sets WORLDSMITH_PROJECT=1 via $CLAUDE_ENV_FILE so
+# other hooks can gate on it.
 
 set -euo pipefail
 
 PROJECT_DIR="${CLAUDE_PROJECT_DIR:-.}"
 
-# Default: not a worldsmith project
-IS_WORLDSMITH=0
+# Gate: .worldsmith/ directory is the canonical detection signal
+if [ ! -d "$PROJECT_DIR/.worldsmith" ]; then
+  if [ -n "${CLAUDE_ENV_FILE:-}" ]; then
+    echo "export WORLDSMITH_PROJECT=0" >> "$CLAUDE_ENV_FILE"
+  fi
+  exit 0
+fi
 
-# Look for docs/ or lore/ directory with markdown files
+# It's a worldsmith project — persist for other hooks
+if [ -n "${CLAUDE_ENV_FILE:-}" ]; then
+  echo "export WORLDSMITH_PROJECT=1" >> "$CLAUDE_ENV_FILE"
+fi
+
+# Output context for Claude
+echo "Worldsmith project detected."
+echo ""
+
+# Find docs directory
 DOCS_DIR=""
 if [ -d "$PROJECT_DIR/docs" ] && ls "$PROJECT_DIR/docs/"*.md &>/dev/null; then
   DOCS_DIR="$PROJECT_DIR/docs"
 elif [ -d "$PROJECT_DIR/lore" ] && ls "$PROJECT_DIR/lore/"*.md &>/dev/null; then
   DOCS_DIR="$PROJECT_DIR/lore"
 fi
-
-# Also check for CLAUDE.md with worldsmith markers
-HAS_WORLDSMITH_CONFIG=0
-if [ -f "$PROJECT_DIR/CLAUDE.md" ]; then
-  if grep -qi "document roles\|propagation\|canonical hierarchy\|doc.*ecosystem\|worldbuilding\|worldsmith" "$PROJECT_DIR/CLAUDE.md"; then
-    HAS_WORLDSMITH_CONFIG=1
-  fi
-fi
-
-# Need both a docs dir AND worldsmith config (or just config for projects with non-standard layouts)
-if [ -n "$DOCS_DIR" ] && [ "$HAS_WORLDSMITH_CONFIG" = "1" ]; then
-  IS_WORLDSMITH=1
-elif [ "$HAS_WORLDSMITH_CONFIG" = "1" ]; then
-  IS_WORLDSMITH=1
-fi
-
-# Persist detection result for PostToolUse and Stop hooks
-if [ -n "${CLAUDE_ENV_FILE:-}" ]; then
-  echo "export WORLDSMITH_PROJECT=$IS_WORLDSMITH" >> "$CLAUDE_ENV_FILE"
-fi
-
-# Not a worldsmith project — exit silently
-if [ "$IS_WORLDSMITH" = "0" ]; then
-  exit 0
-fi
-
-# It's a worldsmith project — output context for Claude
-echo "Worldsmith project detected."
-echo ""
 
 if [ -n "$DOCS_DIR" ]; then
   echo "Documentation directory: $DOCS_DIR"
