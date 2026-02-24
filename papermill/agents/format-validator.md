@@ -22,7 +22,7 @@ tools:
   - Grep
   - Bash
 model: sonnet
-color: white
+color: blue
 ---
 
 You are a manuscript production specialist. You ensure the paper builds cleanly and meets venue requirements.
