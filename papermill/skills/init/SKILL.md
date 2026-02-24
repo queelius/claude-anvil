@@ -4,10 +4,11 @@ description: >-
   This skill should be used when the user asks to "initialize a paper",
   "start a new paper project", "set up papermill", "onboard this repo",
   "refresh papermill", "update papermill state", or needs to create or
-  update the .papermill.md state file. On new repos: discovers structure,
-  infers format, gathers author info, creates state file. On existing
-  repos: offers refresh mode that adds missing schema fields and new
-  context without overwriting existing data.
+  update the .papermill/state.md state file. On new repos: discovers
+  structure, infers format, gathers author info, creates state file. On
+  existing repos: offers refresh mode that adds missing schema fields and
+  new context without overwriting existing data. Migrates old .papermill.md
+  files to .papermill/state.md automatically.
 ---
 
 # Papermill Init
@@ -18,10 +19,14 @@ Initialize a paper repository for use with papermill. Follow every step below in
 
 ## Step 1: Check for Existing State
 
-Look for a file called `.papermill.md` in the repository root (Read tool).
+Check for state files in this order (Read tool):
 
-- **If `.papermill.md` does not exist**: Continue to Step 2 (fresh initialization).
-- **If `.papermill.md` exists**: Read it, display a summary (title, stage, format, authors), then offer refresh:
+1. **`.papermill/state.md`** (current format)
+2. **`.papermill.md`** (legacy format — needs migration)
+
+### Case A: `.papermill/state.md` exists
+
+Read it, display a summary (title, stage, format, authors), then offer refresh:
 
   > This repository is already initialized. Current state is shown above.
   >
@@ -33,6 +38,24 @@ Look for a file called `.papermill.md` in the repository root (Read tool).
   > Nothing will be overwritten or removed. Or use `/papermill:status` for a quick look.
 
   If the user declines refresh, stop here. If they accept, proceed to **Refresh Mode** below.
+
+### Case B: `.papermill.md` exists (legacy)
+
+Migrate to the new directory structure:
+
+1. Create `.papermill/` directory and `.papermill/reviews/` subdirectory (Bash tool: `mkdir -p .papermill/reviews`)
+2. Read `.papermill.md` content
+3. Write it to `.papermill/state.md` (Write tool)
+4. Delete `.papermill.md` (Bash tool: `rm .papermill.md`)
+5. Tell the user:
+
+  > **Migrated state file.** Moved `.papermill.md` → `.papermill/state.md` and created `.papermill/reviews/` for review output. All existing data preserved.
+
+Then display the summary and offer refresh as in Case A.
+
+### Case C: No state file found
+
+Continue to Step 2 (fresh initialization).
 
 ---
 
@@ -200,7 +223,7 @@ This step is optional — if the user says "standalone" or skips it, proceed wit
 
 If the user describes relationships or software, do two things:
 
-1. **Freeform notes**: Note them verbatim for inclusion in the Notes section of `.papermill.md` (Step 7), under a `## Related Work and Software` heading. This preserves context for Claude in future sessions.
+1. **Freeform notes**: Note them verbatim for inclusion in the Notes section of `.papermill/state.md` (Step 7), under a `## Related Work and Software` heading. This preserves context for Claude in future sessions.
 
 2. **Structured entries**: For each relationship the user describes, create a `related_papers` entry. Ask the user to confirm for each:
    - The **path** to the related project (absolute or `~/`-relative).
@@ -232,7 +255,7 @@ After the manual question, check if `repoindex` is available (Bash tool: `comman
 1. Query for other papermill-tracked projects:
 
    ```bash
-   repoindex sql "SELECT name, path FROM repos WHERE path IN (SELECT repo_path FROM files WHERE name = '.papermill.md')" --json
+   repoindex sql "SELECT name, path FROM repos WHERE path IN (SELECT repo_path FROM files WHERE name = 'state.md' AND relative_path LIKE '.papermill/%')" --json
    ```
 
 2. Filter out the current project from results.
@@ -265,9 +288,12 @@ If any are found, mention them: "I noticed this repo contains a DESCRIPTION file
 
 ---
 
-## Step 7: Create `.papermill.md`
+## Step 7: Create `.papermill/state.md`
 
-Create the file `.papermill.md` in the repository root with the following structure (Write tool). Fill in all values gathered from the previous steps. Use the exact YAML schema shown below.
+Create the `.papermill/` directory structure and the state file (Bash tool + Write tool):
+
+1. `mkdir -p .papermill/reviews`
+2. Write `.papermill/state.md` with the following structure. Fill in all values gathered from the previous steps. Use the exact YAML schema shown below.
 
 ```markdown
 ---
@@ -366,7 +392,7 @@ related_papers:
 
 ## Step 8: Report and Suggest Next Steps
 
-After creating `.papermill.md`, display a summary:
+After creating `.papermill/state.md`, display a summary:
 
 > **Papermill initialized.**
 >
@@ -377,7 +403,7 @@ After creating `.papermill.md`, display a summary:
 > | Format  | <format>           |
 > | Author  | <name> (<email>)   |
 >
-> State file: `.papermill.md`
+> State file: `.papermill/state.md`
 
 Then suggest the next skill based on the inferred stage:
 
