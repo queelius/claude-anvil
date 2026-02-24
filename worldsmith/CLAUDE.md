@@ -16,7 +16,7 @@ skills/prose-craft/SKILL.md                      # Prose craft rules (show-don't
 commands/{init-world,change,check,help}.md        # 4 slash commands
 agents/{lorekeeper,critic}.md                     # 2 agents (1 read-write, 1 read-only)
 hooks/hooks.json                                  # SessionStart + PostToolUse + Stop hooks
-hooks/scripts/detect-worldsmith-project.sh        # Ambient project detection
+hooks/scripts/detect-worldsmith-project.sh        # Project detection (checks for .worldsmith/ directory)
 hooks/scripts/propagation-reminder.sh            # PostToolUse propagation reminders
 hooks/scripts/check-fiction-cliches.sh           # Cliche detection (stock reactions, dead metaphors, emotional labeling, redundant adverbs, fancy dialogue tags)
 hooks/scripts/completion-check.sh                # Stop hook: propagation verification
@@ -41,7 +41,7 @@ YAML frontmatter with `name`, `description` (with `<example>` blocks), `tools` (
 
 ### Hooks (`hooks/hooks.json`)
 Three event types:
-- **SessionStart** (command): Runs `detect-worldsmith-project.sh` for ambient awareness
+- **SessionStart** (command): Runs `detect-worldsmith-project.sh` — checks for `.worldsmith/` directory, sets `WORLDSMITH_PROJECT` env var, outputs doc inventory
 - **PostToolUse** (command, matcher: `Write|Edit`): Two hooks — propagation reminders for doc/manuscript edits, and cliche detection for stock body reactions, dead metaphors, emotional labeling, redundant adverbs, and fancy dialogue tags in fiction files (.tex, .md, .mdx, .txt)
 - **Stop** (prompt): Completion verification before session exit
 
