@@ -41,7 +41,7 @@ site_root: ~/github/repos/metafunctor
 
 # Content discovery
 content_paths:
-  - content
+  - content/post
 site_base_url: https://metafunctor.com
 exclude_patterns:
   - _index.md
@@ -102,6 +102,44 @@ crier summary --json
 # Check API keys are working
 crier doctor
 ```
+
+## Typical Workflow (Cross-Posting from Any Repo)
+
+The common pattern: you're working in a project repo (not the blog repo), write a blog post about it, then cross-post. Crier works globally via `site_root`, so no need to switch directories.
+
+```
+1. Write/update blog post in metafunctor repo
+2. Run audit to see what needs posting
+3. Publish to long-form platforms (devto, hashnode)
+4. Write short-form rewrites and publish (bluesky, mastodon)
+5. Link the content file to fix registry paths (if published from temp files)
+```
+
+### Step-by-step
+
+```bash
+# 1. Check what needs posting
+crier audit content/post/2026-02-13-my-article/index.md
+
+# 2. Publish to long-form (uses the actual content file)
+crier publish content/post/2026-02-13-my-article/index.md --to devto
+crier publish content/post/2026-02-13-my-article/index.md --to hashnode
+
+# 3. For short-form, Claude writes rewrites and publishes via --rewrite
+crier publish content/post/2026-02-13-my-article/index.md --to bluesky \
+  --rewrite "Hook text about the interesting insight" --rewrite-author "claude-code"
+crier publish content/post/2026-02-13-my-article/index.md --to mastodon \
+  --rewrite "Slightly longer summary with #hashtags" --rewrite-author "claude-code"
+
+# 4. If temp files were used for publishing, link the real content file
+crier link content/post/2026-02-13-my-article/index.md \
+  --url https://metafunctor.com/post/2026-02-13-my-article/
+
+# 5. Verify audit is clean
+crier audit content/post/2026-02-13-my-article/index.md
+```
+
+**When to use `crier link`:** If you published using temp files (e.g., `/tmp/claude/crier-devto.md` for platform-specific versions), the registry records those temp paths. `crier link` fixes the `source_file`, `content_hash`, and `section` to point at the real content file so audit works correctly.
 
 ## Complete Dialogue Examples
 
@@ -334,6 +372,10 @@ crier doctor
 # Manual registry management
 crier register <file> --platform <platform> [--url <url>]
 crier unregister <file> --platform <platform>
+
+# Link content file to registry (fix source_file after temp-file publishing)
+crier link <file> --url <canonical_url>
+crier link <file>  # uses canonical_url from front matter
 ```
 
 ## Bulk Operations
