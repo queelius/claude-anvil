@@ -4,132 +4,113 @@ description: >-
   This skill should be used when the user asks to "review my paper",
   "give me feedback on my draft", "editorial review", "is my paper
   ready to submit", "check my paper for issues", or needs structured
-  editorial feedback on a paper draft. Evaluates argument, correctness,
-  writing quality, and venue fit. Produces severity-ranked findings.
-  Updates .papermill.md. Can launch the reviewer agent for deeper
-  autonomous review.
+  editorial feedback on a paper draft. Launches a multi-agent review
+  system with 8 specialists (2 literature scouts + 6 domain reviewers)
+  orchestrated by an area chair agent. Produces a unified report in
+  .papermill/reviews/. Updates .papermill/state.md.
 ---
 
-# Editorial Review
+# Multi-Agent Editorial Review
 
-Conduct a thorough editorial review of a research paper. The goal is to provide actionable feedback that helps the author improve the paper before submission. Be honest, specific, and constructive.
+Launch a comprehensive multi-agent review of a research paper. The review system uses 8 specialist agents orchestrated by an area chair to evaluate logic, novelty, methodology, prose, citations, and formatting — grounded in literature context.
 
 ## Step 1: Read Context
 
-Read `.papermill.md` (Read tool) for:
-- **Thesis**: What the paper claims (the review should check if the paper delivers on this claim).
-- **Venue**: Target venue (review against its standards and conventions).
-- **Review history**: Any previous reviews and their findings.
+Read `.papermill/state.md` (Read tool) for:
+- **Thesis**: What the paper claims (the review checks if the paper delivers).
+- **Venue**: Target venue (review against its standards).
+- **Review history**: Previous reviews and their findings.
+- **Format**: Paper format (latex, markdown, rmarkdown).
 
-If `.papermill.md` does not exist, the review can still proceed by reading the manuscript directly — but the review will be less targeted without thesis and venue context. Note this limitation to the user and suggest running `/papermill:init` first for best results.
+If `.papermill/state.md` does not exist, the review can still proceed by reading the manuscript directly — but the review will be less targeted without thesis and venue context. Note this limitation to the user and suggest running `/papermill:init` first for best results.
 
-Read the complete manuscript (Read tool).
+## Step 2: Identify the Manuscript
 
-## Step 2: Review Dimensions
+Locate the manuscript files:
+1. Check `.papermill/state.md` for format and any recorded manuscript path.
+2. Scan for manuscript files (Glob tool): `*.tex`, `*.Rmd`, `paper.md`, `manuscript.md`.
+3. Identify the main file and any supporting files (bibliography, figures, included files).
 
-Evaluate the paper along these dimensions, in order:
+Read the manuscript to confirm it has enough content for review.
 
-### Argument and Logic
-- Is the main claim clearly stated and supported?
-- Does the paper deliver on its promises (abstract matches content)?
-- Is the logical flow from problem to method to results to conclusion sound?
-- Are all assumptions explicitly stated?
-- Are proofs correct? (Check key steps, not just skim.)
+## Step 3: Ask for Focus Areas
 
-### Technical Correctness
-- Are equations correct? Check dimensions, boundary cases, and signs.
-- Are statistical methods applied correctly?
-- Are experimental results reproducible from the description?
-- Are baselines appropriate and fairly compared?
+Before launching the review, ask the user:
 
-### Writing Quality
-- Is the abstract self-contained and informative?
-- Is the introduction motivating?
-- Are definitions introduced before use?
-- Is notation consistent throughout?
-- Are figures and tables clear and well-captioned?
-- Is the paper the right length for the venue?
-
-### Related Work
-- Is the literature coverage adequate?
-- Is the paper's contribution clearly differentiated from prior work?
-- Are citations accurate (right paper, right claim)?
-
-### Venue Fit
-- Does the paper match the venue's scope?
-- Does it follow the venue's formatting requirements?
-- Is the contribution significant enough for this venue?
-
-## Step 3: Present Findings
-
-Organize findings by severity:
-
-### Major Issues
-Problems that would likely cause rejection or require significant revision. These must be addressed.
-
-### Minor Issues
-Problems that should be fixed but do not undermine the paper's core contribution.
-
-### Suggestions
-Optional improvements that would strengthen the paper.
-
-For each finding:
-1. **Location**: Section, page, or line number.
-2. **Issue**: What the problem is.
-3. **Suggestion**: How to fix it.
-
-Example:
-
-> **[Major] Section 3.2, Theorem 3.1**: The proof assumes X is positive definite (line 4 of proof), but this was not established. Either add a lemma proving positive definiteness under the stated assumptions, or add it as an explicit condition.
-
-## Step 4: Summary Assessment
-
-Provide a brief overall assessment:
-
-> **Overall**: [1-2 sentence summary of paper quality]
+> I'll launch a multi-agent review with specialists covering:
+> - **Logic & proofs** — mathematical correctness and argument structure
+> - **Novelty** — contribution evaluation against the literature
+> - **Methodology** — experimental design and statistical rigor
+> - **Prose** — writing quality and narrative structure
+> - **Citations** — reference accuracy and completeness
+> - **Formatting** — build verification and venue compliance
 >
-> **Strengths**: [2-3 bullet points]
->
-> **Weaknesses**: [2-3 bullet points]
->
-> **Recommendation**: [ready for submission / needs minor revision / needs major revision / not ready]
+> Are there specific areas you want me to focus on, or should I run the full review?
 
-## Step 5: Update State File
+If the user specifies focus areas, note them for the orchestrator. If they want the full review, proceed with all specialists.
 
-Update `.papermill.md` (Edit tool):
+## Step 4: Launch the Reviewer Orchestrator
+
+Launch the **reviewer** agent (Task tool with `subagent_type: "papermill:reviewer"`).
+
+Pass the agent:
+- Path to the manuscript file(s)
+- Path to `.papermill/state.md` (if it exists)
+- Any user-specified focus areas or tone preferences
+- The thesis statement and target venue (if known)
+
+The agent will:
+1. Read the paper and produce a comprehension summary
+2. Spawn 2 literature scouts in parallel for field context
+3. Spawn 6 specialist reviewers in parallel
+4. Cross-verify critical findings
+5. Write individual specialist reports and a unified report to `.papermill/reviews/YYYY-MM-DD/`
+
+## Step 5: Present Results
+
+After the agent completes, read `.papermill/reviews/YYYY-MM-DD/review.md` (Read tool).
+
+Present a summary to the user:
+
+> **Review Complete**
+>
+> **Recommendation**: [ready | minor-revision | major-revision | not-ready]
+>
+> | Severity | Count |
+> |----------|-------|
+> | Critical | N |
+> | Major | M |
+> | Minor | P |
+> | Suggestions | Q |
+>
+> **Top findings:**
+> 1. [Most important finding]
+> 2. [Second most important finding]
+> 3. [Third most important finding]
+>
+> The full report is at `.papermill/reviews/YYYY-MM-DD/review.md`.
+> Individual specialist reports are in the same directory.
+
+Then ask: "Would you like to go through the findings in detail, or address the critical issues first?"
+
+## Step 6: Update State File
+
+Update `.papermill/state.md` (Edit tool):
 
 Add a review record to `review_history`:
 
 ```yaml
 review_history:
   - date: "YYYY-MM-DD"
-    type: "self-review"
+    type: "multi-agent-review"
     findings_major: N
     findings_minor: M
     recommendation: "ready | minor-revision | major-revision | not-ready"
     notes: "Brief summary of key findings"
+    report_path: ".papermill/reviews/YYYY-MM-DD/review.md"
 ```
 
 Append a timestamped note to the markdown body.
-
-## Step 6: Offer Deep Review
-
-For a more thorough autonomous review, offer to launch the **reviewer agent** (Task tool with `subagent_type: "papermill:reviewer"`):
-
-> I can launch the reviewer agent for a deeper review pass. It will systematically check every theorem, equation, and citation. Would you like me to launch it?
-
-When launching, pass the agent:
-- Path to the manuscript file(s)
-- The thesis statement from `.papermill.md`
-- The target venue (if known)
-- Any specific focus areas the user requested
-
-The agent writes its results to `.papermill-review-results.md` in the project root. After it completes:
-
-1. Read `.papermill-review-results.md` (Read tool).
-2. Present a summary of findings to the user (major issue count, minor issue count, recommendation).
-3. Merge the agent's findings into the review record in `.papermill.md` — update the `review_history` entry created in Step 5 with the combined counts and recommendation.
-4. Ask the user which issues to address first.
 
 ## Step 7: Suggest Next Steps
 
