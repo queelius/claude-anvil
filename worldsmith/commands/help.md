@@ -27,7 +27,7 @@ Display a quick-reference guide to the worldsmith plugin.
 
 **Starting a new project:**
 1. Navigate to your project directory
-2. `/worldsmith:init-world` — scaffolds docs and CLAUDE.md
+2. `/worldsmith:init-world` — creates `.worldsmith/`, scaffolds docs and CLAUDE.md
 
 **Writing a chapter:**
 1. The prose-craft skill auto-triggers with craft guardrails
@@ -48,7 +48,7 @@ Display a quick-reference guide to the worldsmith plugin.
 
 ## Automatic Guards
 
-These fire without you invoking anything (in worldsmith-detected projects):
+These fire automatically in any project with a `.worldsmith/` directory:
 
 - **Cliche detection** — blocks stock body reactions, dead metaphors, emotional labeling, redundant adverbs, and fancy dialogue tags on Write/Edit to fiction files
 - **Propagation reminders** — reminds you to check downstream docs when you edit a canonical source or manuscript
