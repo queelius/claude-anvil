@@ -110,7 +110,7 @@ Invoke `/joss-draft` (the `joss-draft` skill) to draft `paper.md` and `paper.bib
 After drafting:
 1. Present the draft to the user for review
 2. Iterate on feedback
-3. Optionally use the `academic-paper-reviewer` agent for critical review
+3. Optionally use the `papermill:reviewer` agent for critical review
 4. Commit the paper to the repository
 
 ### Phase 5: JOSS Submission

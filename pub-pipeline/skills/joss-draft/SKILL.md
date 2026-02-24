@@ -235,7 +235,7 @@ For JOSS format specifications and exemplar papers, consult:
 
 For substantial prose writing, consider delegating to the `academic-paper-writer` agent (if available) with format set to "Markdown (JOSS)". Provide the agent with the package analysis and any existing content from Steps 1-4 as context. Otherwise, draft inline.
 
-For critical review of the draft, use the `academic-paper-reviewer` agent (if available) with JOSS format. Otherwise, self-review against the checklist in `joss-audit`.
+For critical review of the draft, use the `papermill:reviewer` agent (if available) with JOSS format. Otherwise, self-review against the checklist in `joss-audit`.
 
 ## Important Notes
 
