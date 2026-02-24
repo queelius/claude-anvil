@@ -80,6 +80,7 @@ For EACH specialist, construct the prompt with XML-tagged context drawn from you
 <style_conventions>[style guide contents]</style_conventions>
 <anti_cliche_rules>[themes/anti-cliche doc contents]</anti_cliche_rules>
 <character_docs>[character tracking entries with voice patterns, emotional flickers, arc positions]</character_docs>
+<outline>[outline/structure doc — scene order, arc beats, chapter plan]</outline>
 ```
 
 Specialist-specific notes:

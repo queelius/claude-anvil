@@ -13,7 +13,7 @@ Worldsmith is a Claude Code **plugin** for documentation-first fiction worldbuil
 skills/worldsmith-methodology/SKILL.md            # Editorial methodology skill
 skills/worldsmith-methodology/references/          # Deep reference docs (propagation, doc structure)
 skills/prose-craft/SKILL.md                      # Prose craft rules (show-don't-tell, dialogue, scene structure)
-commands/{init-world,change,check,help}.md        # 4 slash commands
+commands/{init-world,change,check,review,help}.md  # 5 slash commands
 agents/reviewer.md                                # Review orchestrator (spawns specialist auditors)
 agents/writer.md                                  # Writer orchestrator (spawns specialist writers)
 agents/{consistency,craft,voice,structure}-auditor.md  # 4 review specialists (read-only)
@@ -100,8 +100,8 @@ grep -roh '\${CLAUDE_PLUGIN_ROOT}/[^`"]*' skills/ commands/ | sort -u | while re
   [ -f "$resolved" ] || echo "BROKEN: $ref"
 done
 
-# Scripts are executable
-ls -la scripts/*.sh hooks/scripts/*.sh
+# Hook scripts are executable
+ls -la hooks/scripts/*.sh
 ```
 
 ## Editing Guidelines

@@ -13,7 +13,8 @@ Display a quick-reference guide to the worldsmith plugin.
 |---------|---------|
 | `/worldsmith:init-world [name]` | Scaffold or adopt a worldbuilding doc ecosystem |
 | `/worldsmith:change [description]` | Apply a change — canonical edits, exploratory ideas, or promotions |
-| `/worldsmith:check [scope]` | Run diagnostics: `consistency`, `editorial`, `xref`, `status`, or `all` |
+| `/worldsmith:check [scope]` | Run diagnostics: `consistency`, `editorial`, `xref`, `status`, `all`, or `review` |
+| `/worldsmith:review [scope]` | Deep multi-agent editorial review (4 specialists in parallel) |
 | `/worldsmith:help` | This guide |
 
 ## Skills (auto-triggered)

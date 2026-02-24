@@ -21,6 +21,7 @@ Determine the mode from `$ARGUMENTS`. Default to **all** if no scope is specifie
 - `xref` -- Cross-reference health
 - `status` -- Project health overview
 - `all` -- Run all modes, unified report
+- `review` -- Launch the multi-agent **reviewer** orchestrator for a deep editorial review (4 specialist agents in parallel: consistency, craft, voice, structure). This is significantly more thorough than the single-pass `all` mode. Equivalent to `/worldsmith:review`.
 
 ## Consistency Diagnostics
 
