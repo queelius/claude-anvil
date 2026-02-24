@@ -23,6 +23,20 @@ Display a quick-reference guide to the worldsmith plugin.
 | **worldsmith-methodology** | You work on worldbuilding docs, lore, or editorial structure |
 | **prose-craft** | You write or edit fiction prose, scenes, or dialogue |
 
+## Agents
+
+| Agent | Role | Launched by |
+|-------|------|-------------|
+| **reviewer** | Multi-agent editorial review (consistency, craft, voice, structure) | `/worldsmith:check all` or direct |
+| **writer** | Multi-agent content generation (lore, scenes, characters) | Direct request |
+| **consistency-auditor** | Timeline, facts, character state, spatial | reviewer |
+| **craft-auditor** | Prose quality, cliches, scene mechanics | reviewer |
+| **voice-auditor** | Character voice, dialogue, POV | reviewer |
+| **structure-auditor** | Pacing, tension, scene turns, themes | reviewer |
+| **lore-writer** | History, mythology, cultures, systems | writer |
+| **scene-writer** | Prose scenes with craft discipline | writer |
+| **character-developer** | Voice patterns, arcs, relationships | writer |
+
 ## Typical Workflows
 
 **Starting a new project:**
