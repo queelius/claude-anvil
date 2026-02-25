@@ -110,12 +110,14 @@ The common pattern: you're working in a project repo (not the blog repo), write 
 ```
 1. Write/update blog post in metafunctor repo
 2. Run audit to see what needs posting
-3. Publish to long-form platforms (devto, hashnode)
-4. Write short-form rewrites and publish (bluesky, mastodon)
-5. Link the content file to fix registry paths (if published from temp files)
+3. Publish to long-form platforms (devto, hashnode) from the canonical file
+4. Write short-form rewrites and publish (bluesky, mastodon) using --rewrite
+5. Verify audit is clean
 ```
 
 ### Step-by-step
+
+**CRITICAL: Always publish from the canonical content file.** Never create temp files for different platforms. The registry tracks publications by source file path. Publishing from temp files breaks audit tracking.
 
 ```bash
 # 1. Check what needs posting
@@ -126,20 +128,17 @@ crier publish content/post/2026-02-13-my-article/index.md --to devto
 crier publish content/post/2026-02-13-my-article/index.md --to hashnode
 
 # 3. For short-form, Claude writes rewrites and publishes via --rewrite
+#    ALWAYS use --rewrite on the CANONICAL file — never publish temp files
 crier publish content/post/2026-02-13-my-article/index.md --to bluesky \
   --rewrite "Hook text about the interesting insight" --rewrite-author "claude-code"
 crier publish content/post/2026-02-13-my-article/index.md --to mastodon \
   --rewrite "Slightly longer summary with #hashtags" --rewrite-author "claude-code"
 
-# 4. If temp files were used for publishing, link the real content file
-crier link content/post/2026-02-13-my-article/index.md \
-  --url https://metafunctor.com/post/2026-02-13-my-article/
-
-# 5. Verify audit is clean
+# 4. Verify audit is clean
 crier audit content/post/2026-02-13-my-article/index.md
 ```
 
-**When to use `crier link`:** If you published using temp files (e.g., `/tmp/claude/crier-devto.md` for platform-specific versions), the registry records those temp paths. `crier link` fixes the `source_file`, `content_hash`, and `section` to point at the real content file so audit works correctly.
+**Never use temp files.** The `--rewrite` flag exists precisely so you can publish platform-specific content while keeping the registry pointed at the canonical source file. If you write to `/tmp/claude/crier-bluesky.md` and publish that, the registry records the temp path and audit breaks.
 
 ## Complete Dialogue Examples
 
