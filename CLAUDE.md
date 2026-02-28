@@ -12,7 +12,7 @@ A Claude Code **plugin marketplace** (`queelius`). All plugins are distributed a
 | Plugin | Dir | Purpose | Version |
 |--------|-----|---------|---------|
 | **papermill** | `papermill/` | Academic paper lifecycle: thesis, lit survey, experiment, review, venue, submission | 0.6.0 |
-| **worldsmith** | `worldsmith/` | Documentation-first fiction worldbuilding (the "Silmarillion approach") | 0.5.1 |
+| **worldsmith** | `worldsmith/` | Documentation-first fiction worldbuilding (the "Silmarillion approach") | 0.6.0 |
 | **pub-pipeline** | `pub-pipeline/` | Publication workflows: R/CRAN/JOSS, Python/PyPI | 0.6.0 |
 | **mf** | `mf/` | Metafunctor site management: blog architecture, content workflows, crier | 1.1.0 |
 | **repoindex** | `repoindex/` | Collection-aware repository intelligence — query, analyze, maintain git repos | 0.12.0 |

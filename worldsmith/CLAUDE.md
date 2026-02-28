@@ -16,6 +16,7 @@ skills/prose-craft/SKILL.md                      # Prose craft rules (show-don't
 commands/{init-world,change,check,review,help}.md  # 5 slash commands
 agents/reviewer.md                                # Review orchestrator (spawns specialist auditors)
 agents/writer.md                                  # Writer orchestrator (spawns specialist writers)
+agents/rewriter.md                                # Rewriter orchestrator (fix-then-verify loop)
 agents/{consistency,craft,voice,structure}-auditor.md  # 4 review specialists (read-only)
 agents/{lore-writer,scene-writer,character-developer}.md  # 3 writing specialists
 hooks/hooks.json                                  # SessionStart + PostToolUse + Stop hooks
@@ -40,11 +41,12 @@ Two skills, independently triggered:
 YAML frontmatter with `name`, `description` (trigger phrases for auto-detection), and `version`. Body is lean methodology with references to detailed docs via `${CLAUDE_PLUGIN_ROOT}`. When adding references, verify the target file exists.
 
 ### Agents (`agents/*.md`)
-Two orchestrators and seven specialists. YAML frontmatter with `name`, `description` (with `<example>` blocks), `tools` (list), `model: opus`, and `color`.
+Three orchestrators and seven specialists. YAML frontmatter with `name`, `description` (with `<example>` blocks), `tools` (list), `model: opus`, and `color`.
 
 **Orchestrators** (spawn specialists via Task tool):
 - **reviewer** — Multi-agent editorial review. Reads project context, launches 4 auditors in parallel, cross-verifies critical findings, synthesizes unified report to `.worldsmith/reviews/`.
 - **writer** — Multi-agent content generation. Plans assignments, launches specialists, integrates output, handles doc propagation.
+- **rewriter** — Multi-agent revision. Reads review findings, dispatches writer specialists to fix, then reviewer specialists to verify. Fix-then-verify feedback loop.
 
 **Review specialists** (read-only, launched by reviewer):
 - **consistency-auditor** — Timeline, facts, character state, spatial contradictions

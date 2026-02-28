@@ -30,6 +30,7 @@ Display a quick-reference guide to the worldsmith plugin.
 |-------|------|-------------|
 | **reviewer** | Multi-agent editorial review (consistency, craft, voice, structure) | `/worldsmith:check all` or direct |
 | **writer** | Multi-agent content generation (lore, scenes, characters) | Direct request |
+| **rewriter** | Fix-then-verify revision (reads review, fixes issues, verifies fixes) | `/worldsmith:review` output or direct |
 | **consistency-auditor** | Timeline, facts, character state, spatial | reviewer |
 | **craft-auditor** | Prose quality, cliches, scene mechanics | reviewer |
 | **voice-auditor** | Character voice, dialogue, POV | reviewer |
