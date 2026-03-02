@@ -30,7 +30,7 @@
       "name": "worldsmith",
       "source": "./worldsmith",
       "description": "Documentation-first worldbuilding methodology for fiction projects. The Silmarillion approach: docs ARE the world, story text derives from them.",
-      "version": "0.6.0",
+      "version": "0.6.1",
       "author": {
         "name": "Alexander Towell"
       }
