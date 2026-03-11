@@ -21,6 +21,57 @@ if [ -n "${CLAUDE_ENV_FILE:-}" ]; then
   echo "export WORLDSMITH_PROJECT=1" >> "$CLAUDE_ENV_FILE"
 fi
 
+# Resolve path to the parser script (sibling of this script)
+PARSER="${CLAUDE_PLUGIN_ROOT:+${CLAUDE_PLUGIN_ROOT}/hooks/scripts/parse-project-yaml.py}"
+PARSER="${PARSER:-$(dirname "$0")/parse-project-yaml.py}"
+
+# Multi-work path: project.yaml exists
+if [ -f "$PROJECT_DIR/.worldsmith/project.yaml" ]; then
+  # Eval env vars from parser so we can use them in this script
+  eval "$(python3 "$PARSER" "$PROJECT_DIR/.worldsmith/project.yaml" --env 2>/dev/null)" || true
+
+  # Export multi-work variables for other hooks
+  if [ -n "${CLAUDE_ENV_FILE:-}" ]; then
+    python3 "$PARSER" "$PROJECT_DIR/.worldsmith/project.yaml" --env 2>/dev/null \
+      | sed 's/^/export /' >> "$CLAUDE_ENV_FILE" || true
+  fi
+
+  # Use lore dir from project.yaml
+  DOCS_DIR="${WORLDSMITH_LORE_DIR:-}"
+  if [ -n "$DOCS_DIR" ]; then
+    DOCS_DIR="$PROJECT_DIR/$DOCS_DIR"
+  fi
+
+  # Output context for Claude
+  echo "Worldsmith project detected."
+  echo ""
+  echo "This is a multi-work worldsmith project with ${WORLDSMITH_WORK_COUNT:-?} work(s) sharing ${WORLDSMITH_LORE_DIR:-lore}."
+  echo ""
+  python3 "$PARSER" "$PROJECT_DIR/.worldsmith/project.yaml" --human 2>/dev/null || true
+
+  if [ -n "$DOCS_DIR" ] && [ -d "$DOCS_DIR" ]; then
+    echo ""
+    echo "Lore documents found:"
+    for f in "$DOCS_DIR"/*.md; do
+      [ -f "$f" ] && echo "  - $(basename "$f") ($(wc -l < "$f") lines)"
+    done
+    for subdir in feedback future; do
+      if [ -d "$DOCS_DIR/$subdir" ]; then
+        count=$(find "$DOCS_DIR/$subdir" -name "*.md" 2>/dev/null | wc -l)
+        echo "  - $subdir/ ($count files)"
+      fi
+    done
+  fi
+
+  echo ""
+  echo "This is a worldsmith project. The worldsmith-methodology skill provides"
+  echo "documentation-first editorial rules. Read the project's CLAUDE.md for"
+  echo "document roles and propagation rules before editing docs or manuscript."
+  exit 0
+fi
+
+# Single-work path (no project.yaml) — original behavior unchanged
+
 # Output context for Claude
 echo "Worldsmith project detected."
 echo ""
