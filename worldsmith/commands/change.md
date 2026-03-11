@@ -29,6 +29,7 @@ If the mode is unclear from `$ARGUMENTS`, ask.
 3. Think about what else is affected. Consult the project's CLAUDE.md for the doc structure and propagation notes. Consider: does this change affect character ages, event references, system plausibility, scene logistics, cross-references, or thematic commitments?
 4. Update affected docs. Update manuscript passages where the old fact appears.
 5. If project-level facts changed (world structure, canonical tables, character conventions, anti-cliche rules, series relationships), update CLAUDE.md.
+6. If `.worldsmith/project.yaml` exists with multiple works, grep EACH work's manuscript directory for references to the changed fact. A character name change in shared lore affects every work that character appears in.
 
 ## Exploratory Idea
 
@@ -51,5 +52,6 @@ If the mode is unclear from `$ARGUMENTS`, ask.
 - Bidirectional updates between docs and manuscript are OK. A scene may introduce a detail that flows back to docs, or a doc revision may require manuscript changes.
 - CLAUDE.md is a living document. Update it when project-level facts change.
 - For series projects, if a shared world fact changes, note which related projects may need checking. Do not modify other projects' files without explicit direction.
+- For multi-work projects, propagation crosses work boundaries. A lore change that affects the novel may also affect the short story. Check all works' manuscript directories, not just the one you're currently editing.
 - After completing, summarize what changed and what the user might want to verify. List the files modified and any downstream effects that were not addressed.
 - Consult `${CLAUDE_PLUGIN_ROOT}/skills/worldsmith-methodology/references/propagation-awareness.md` for guidance on how changes ripple through interconnected docs.
