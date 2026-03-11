@@ -1,7 +1,7 @@
 ---
 description: Run diagnostics — consistency, editorial, cross-references, or project status
 allowed-tools: Read, Grep, Glob, Bash, AskUserQuestion
-argument-hint: [scope: all|consistency|editorial|xref|status]
+argument-hint: [work-name] [scope: all|consistency|editorial|xref|status]
 ---
 
 # /worldsmith:check
@@ -21,6 +21,19 @@ Determine the mode from `$ARGUMENTS`. Default to **all** if no scope is specifie
 - `xref` -- Cross-reference health
 - `status` -- Project health overview
 - `all` -- Run all modes, unified report
+
+## Multi-Work Awareness
+
+If `.worldsmith/project.yaml` exists, this project contains multiple works.
+
+**Work selection:** Same rules as `/worldsmith:review` — if a work name appears in `$ARGUMENTS`, scope diagnostics to that work. If omitted, use the primary work (first in `project.yaml`).
+
+**Mode-specific scoping:**
+- `consistency` — Always checks against shared lore, regardless of which work is scoped. Flags contradictions between the scoped work's manuscript and canonical docs.
+- `editorial` — Scoped to the selected work's manuscript files. Run `count_patterns.py` on that work's manuscript glob only.
+- `xref` — Checks within the scoped work AND cross-work references (e.g., does a character mentioned in the short story match their entry in the shared lore?).
+- `status` — Reports ALL works and their health, regardless of scoping. This is the one mode that always shows the full picture.
+- `all` — Runs all modes with the above scoping rules.
 
 ## Consistency Diagnostics
 
