@@ -1,6 +1,6 @@
 ---
 description: Scaffold or adopt a worldbuilding documentation ecosystem
-allowed-tools: Read, Write, Edit, Bash(mkdir:*), Grep, Glob, AskUserQuestion
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob, AskUserQuestion
 argument-hint: [project-name]
 ---
 
@@ -38,9 +38,10 @@ Existing docs need a CLAUDE.md to make them work with the worldsmith methodology
 2. For each file, determine which worldsmith role it serves: timeline authority, lore/history, systems/mechanics, character tracking, style conventions, outline/diagnostic hub, editorial backlog, themes/anti-cliche, feedback. A single file may serve multiple roles.
 3. Present the mapping to the user. Ask for corrections.
 4. Look for manuscript files (chapters/, manuscript/, or similar). Note what exists.
-5. Draft CLAUDE.md content following the structure described in `${CLAUDE_PLUGIN_ROOT}/skills/worldsmith-methodology/references/doc-structure-guide.md` (see the "CLAUDE.md for Worldbuilding Projects" section): project overview, document roles table, consistency rules, world structure summary, character conventions, propagation awareness notes.
-6. Present the draft. Ask the user before writing or modifying anything. Create `.worldsmith/` (`mkdir -p .worldsmith`) when the user approves.
-7. If the user has an existing CLAUDE.md, merge the worldsmith doc-awareness content into it rather than replacing it.
+5. If multiple manuscript-like directories exist (e.g., both `chapters/` and `stories/`), ask whether this is a multi-work project. If yes, generate `.worldsmith/project.yaml` with the detected works.
+6. Draft CLAUDE.md content following the structure described in `${CLAUDE_PLUGIN_ROOT}/skills/worldsmith-methodology/references/doc-structure-guide.md` (see the "CLAUDE.md for Worldbuilding Projects" section): project overview, document roles table, consistency rules, world structure summary, character conventions, propagation awareness notes.
+7. Present the draft. Ask the user before writing or modifying anything. Create `.worldsmith/` (`mkdir -p .worldsmith`) when the user approves.
+8. If the user has an existing CLAUDE.md, merge the worldsmith doc-awareness content into it rather than replacing it.
 
 ## Scaffold Mode
 
@@ -53,15 +54,18 @@ Nothing exists. Build from scratch.
    - Premise (one or two sentences)
    - Manuscript format if any preference (chapter files, single file, etc.)
 2. Ask about related projects -- is this part of a series or shared universe? If so, get paths to related projects.
-3. Create `.worldsmith/` and `docs/` directories.
-4. Generate lightweight starter docs -- not comprehensive schemas, just enough to begin working. Each doc should have:
+3. Ask whether this project will contain multiple works (e.g., a novel and short stories sharing the same world). If yes:
+   - Ask for each work's name, type (novel/novella/short-story/collection), and manuscript directory path.
+   - Generate `.worldsmith/project.yaml` with the universe name, lore directory, and works list.
+4. Create `.worldsmith/` and `docs/` directories.
+5. Generate lightweight starter docs -- not comprehensive schemas, just enough to begin working. Each doc should have:
    - A title and brief description of its role
    - A canonical section (mostly empty, with a few placeholder entries if the premise suggests them)
    - An exploratory section where appropriate (lore, systems, backlog, themes)
    - Use `${CLAUDE_PLUGIN_ROOT}/skills/worldsmith-methodology/references/doc-structure-guide.md` as guidance for content and tone
-5. Which docs to create depends on the project. At minimum: timeline, characters, and outline. For longer projects (novel, series): also lore, systems, style guide, themes. Always create a backlog. Only create a feedback doc if the user mentions existing feedback.
-6. Generate the project's CLAUDE.md with: project overview, document roles table mapping roles to the files just created, the canonical hierarchy, world structure summary (from what the user described), character conventions section (initially brief), series references if applicable, propagation awareness notes relevant to this project's structure.
-7. If a CLAUDE.md already exists (with non-worldbuilding content), append the worldsmith sections rather than replacing the file.
+6. Which docs to create depends on the project. At minimum: timeline, characters, and outline. For longer projects (novel, series): also lore, systems, style guide, themes. Always create a backlog. Only create a feedback doc if the user mentions existing feedback.
+7. Generate the project's CLAUDE.md with: project overview, document roles table mapping roles to the files just created, the canonical hierarchy, world structure summary (from what the user described), character conventions section (initially brief), series references if applicable, propagation awareness notes relevant to this project's structure.
+8. If a CLAUDE.md already exists (with non-worldbuilding content), append the worldsmith sections rather than replacing the file.
 
 ## Series Awareness
 
