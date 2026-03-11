@@ -29,7 +29,7 @@ is_manuscript=0
 
 case "$dirname" in
   docs|lore|worldbuilding) is_doc=1 ;;
-  chapters|manuscript|scenes) is_manuscript=1 ;;
+  chapters|manuscript|scenes|stories) is_manuscript=1 ;;
 esac
 
 # Also check by filename patterns
@@ -37,6 +37,13 @@ case "$basename" in
   lore.md|worldbuilding.md|characters.md|timeline.md|themes.md|style-guide.md|outline.md|future-ideas.md)
     is_doc=1 ;;
 esac
+
+# Also catch files in subdirectories of manuscript-like parents
+if [ "$is_manuscript" = "0" ] && [ "$is_doc" = "0" ]; then
+  case "$dirpath" in
+    */chapters/*|*/manuscript/*|*/scenes/*|*/stories/*) is_manuscript=1 ;;
+  esac
+fi
 
 # Not a worldbuilding file — exit silently
 if [ "$is_doc" = "0" ] && [ "$is_manuscript" = "0" ]; then
