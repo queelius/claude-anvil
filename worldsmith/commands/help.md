@@ -13,8 +13,8 @@ Display a quick-reference guide to the worldsmith plugin.
 |---------|---------|
 | `/worldsmith:init-world [name]` | Scaffold or adopt a worldbuilding doc ecosystem |
 | `/worldsmith:change [description]` | Apply a change — canonical edits, exploratory ideas, or promotions |
-| `/worldsmith:check [scope]` | Run diagnostics: `consistency`, `editorial`, `xref`, `status`, `all` |
-| `/worldsmith:review [scope]` | Deep multi-agent editorial review (4 specialists in parallel) |
+| `/worldsmith:check [work] [scope]` | Run diagnostics: `consistency`, `editorial`, `xref`, `status`, `all` |
+| `/worldsmith:review [work] [scope]` | Deep multi-agent editorial review (4 specialists in parallel) |
 | `/worldsmith:help` | This guide |
 
 ## Skills (auto-triggered)
@@ -61,6 +61,12 @@ Display a quick-reference guide to the worldsmith plugin.
 
 **After a big revision:**
 1. `/worldsmith:check all` — full diagnostic sweep
+
+**Multi-work universe:**
+1. Place a `project.yaml` in `.worldsmith/` declaring the universe and its works
+2. `/worldsmith:review WorkName` — review a specific work
+3. `/worldsmith:check status` — see all works and their health
+4. Shared lore propagation automatically checks all works
 
 ## Automatic Guards
 

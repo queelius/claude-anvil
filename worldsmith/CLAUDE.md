@@ -24,6 +24,7 @@ hooks/scripts/detect-worldsmith-project.sh        # Project detection (checks fo
 hooks/scripts/propagation-reminder.sh            # PostToolUse propagation reminders
 hooks/scripts/check-fiction-cliches.sh           # Cliche detection (stock reactions, dead metaphors, emotional labeling, redundant adverbs, fancy dialogue tags)
 hooks/scripts/completion-check.sh                # Stop hook: propagation verification
+hooks/scripts/parse-project-yaml.py              # Parse .worldsmith/project.yaml for multi-work projects
 scripts/count_patterns.py                         # Prose pattern counting (reads patterns.md)
 scripts/patterns.md                               # Default pattern definitions (overridable per project)
 ```
@@ -61,7 +62,7 @@ Three orchestrators and seven specialists. YAML frontmatter with `name`, `descri
 
 ### Hooks (`hooks/hooks.json`)
 Three event types:
-- **SessionStart** (command): Runs `detect-worldsmith-project.sh` — checks for `.worldsmith/` directory, sets `WORLDSMITH_PROJECT` env var, outputs doc inventory
+- **SessionStart** (command): Runs `detect-worldsmith-project.sh` — checks for `.worldsmith/` directory, reads `project.yaml` for multi-work projects, sets `WORLDSMITH_PROJECT` env var and work metadata, outputs doc/work inventory
 - **PostToolUse** (command, matcher: `Write|Edit`): Two hooks — propagation reminders for doc/manuscript edits, and cliche detection for stock body reactions, dead metaphors, emotional labeling, redundant adverbs, and fancy dialogue tags in fiction files (.tex, .md, .mdx, .txt)
 - **Stop** (prompt): Completion verification before session exit
 
@@ -83,6 +84,8 @@ Three event types:
 **Propagation awareness.** Every change has a blast radius. Claude traces changes through the doc graph using awareness (not rigid matrices). Details in `references/propagation-awareness.md`.
 
 **Series awareness.** Projects can reference related projects (prequels, sequels, shared-world companions) in their CLAUDE.md. Shared world facts propagate across projects; project-local facts don't.
+
+**Multi-work projects.** A universe can contain multiple works sharing canonical lore. Configured via `.worldsmith/project.yaml`. If absent, worldsmith infers a single work (backward compatible). Commands, agents, and hooks all respect work scoping when project.yaml is present.
 
 ## Validation
 
