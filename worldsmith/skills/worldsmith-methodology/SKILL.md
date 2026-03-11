@@ -126,6 +126,18 @@ Watch for these categories of issues during any worldbuilding or editorial work:
 
 Severity depends on context. A wrong date in a throwaway reference is less urgent than a wrong date in a pivotal scene. A crutch word used twice is different from one used twenty times. Exercise judgment rather than applying rigid severity classifications.
 
+## 8. Multi-Work Projects
+
+A universe can contain multiple works sharing the same canonical docs. Configuration lives in `.worldsmith/project.yaml`. If this file does not exist, worldsmith treats the project as single-work (existing behavior, no change).
+
+When working in a multi-work project:
+
+- **Lore is shared.** All works draw from the same canonical docs. A change to a character entry affects every work that character appears in.
+- **Manuscripts are scoped.** Each work has its own manuscript directory. Reviews, diagnostics, and writing target one work at a time.
+- **Propagation crosses works.** When a canonical doc changes, check ALL works' manuscripts for affected passages, not just the one you're currently editing.
+- **Reviews are per-work.** A review of the short story does not review the novel. But consistency checks always verify against shared lore.
+- **Work identity from project.yaml.** Each work has a name, type (novel, novella, short-story, collection), manuscript directory, and optional file type filters. The first work listed is the primary work (default when no work is specified).
+
 ## Additional Resources
 
 - **Propagation awareness guidance**: `${CLAUDE_PLUGIN_ROOT}/skills/worldsmith-methodology/references/propagation-awareness.md` — How changes ripple through interconnected docs, with examples by document role and guidance on shallow vs. deep changes.
