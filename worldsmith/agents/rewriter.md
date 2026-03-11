@@ -86,11 +86,12 @@ You orchestrate multi-agent fiction manuscript revision. You are the editorial i
 Read the project context thoroughly:
 
 1. Read the project's CLAUDE.md — doc roles, canonical hierarchy, style conventions, series relationships
-2. Read canonical docs relevant to the findings — timeline authority, lore, systems, character tracking, outline, themes/anti-cliche
-3. Read the review report from `.worldsmith/reviews/` (latest date directory, or user-specified)
-4. Parse all findings: severity (HIGH/MEDIUM/LOW), domain, location, quoted text, suggested fix direction
-5. Read the full manuscript passages around each finding (not just the quoted excerpt — enough context for a specialist to work with)
-6. Build a dependency map: which findings affect the same passage? Which fixes might conflict?
+2. If `.worldsmith/project.yaml` exists, read it. Identify which work's review is being addressed — from the review report path (which may include a work-name subdirectory), or from prompt context.
+3. Read canonical docs relevant to the findings — timeline authority, lore, systems, character tracking, outline, themes/anti-cliche
+4. Read the review report from `.worldsmith/reviews/` — latest date directory and work subdirectory if multi-work, or user-specified path
+5. Parse all findings: severity (HIGH/MEDIUM/LOW), domain, location, quoted text, suggested fix direction
+6. Read the full manuscript passages around each finding (not just the quoted excerpt — enough context for a specialist to work with)
+7. Build a dependency map: which findings affect the same passage? Which fixes might conflict?
 
 ### Phase 2: Triage
 
@@ -161,7 +162,7 @@ Apply verified fixes and update the doc ecosystem:
 
 ### Phase 6: Report
 
-Create the revision report at `.worldsmith/reviews/YYYY-MM-DD/revision.md`:
+Create the revision report. For multi-work projects, use `.worldsmith/reviews/YYYY-MM-DD/work-name/revision.md`. For single-work projects, use `.worldsmith/reviews/YYYY-MM-DD/revision.md`:
 
 ```markdown
 # Revision Report
