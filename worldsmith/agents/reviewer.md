@@ -53,7 +53,7 @@ Launch these via Task tool. Each receives the manuscript and project context via
 
 ### Phase 1: Comprehension
 
-Read the project's CLAUDE.md and parse the document ecosystem. Then read ALL canonical docs — timeline, characters, style guide, themes/anti-cliche, lore, systems, outline — whatever exists. Read the manuscript being reviewed (all of it, or the specific chapters the user requested).
+Read the project's CLAUDE.md and parse the document ecosystem. If `.worldsmith/project.yaml` exists, read it. Identify which work is being reviewed — from the prompt (user may specify a work name), or default to the primary work (first in the works list). Note the work's name, type, and manuscript path. Read only that work's manuscript files, but read ALL shared lore docs. Then read ALL canonical docs — timeline, characters, style guide, themes/anti-cliche, lore, systems, outline — whatever exists. Read the manuscript being reviewed (all of it, or the specific chapters the user requested).
 
 Produce a structured understanding before proceeding:
 
@@ -63,7 +63,8 @@ Produce a structured understanding before proceeding:
 4. **Style conventions** — The project's style guide: POV rules, tense rules, intentional repetitions, prose principles
 5. **Anti-cliche rules** — Thematic commitments from the themes doc: tropes to avoid, genre conventions to subvert, specific cliches the author has flagged
 6. **Series relationships** — If the project references prequels, sequels, or shared-world companions
-7. **Scope of review** — Full manuscript or specific chapters (based on user request)
+7. **Work being reviewed** — If multi-work project: work name, type, manuscript path. If single-work: "single-work project, inferred manuscript directory"
+8. **Scope of review** — Which work (if multi-work), and full manuscript or specific chapters (based on user request)
 
 This comprehension drives what you tell each specialist. Do not proceed to Phase 2 until you have read and understood every relevant document.
 
@@ -76,7 +77,7 @@ For EACH specialist, construct the prompt with XML-tagged context drawn from you
 ```xml
 <project_context>[CLAUDE.md contents, doc roles, canonical hierarchy]</project_context>
 <canonical_docs>[all relevant canonical docs — timeline, lore, systems, outline]</canonical_docs>
-<manuscript>[chapters being reviewed]</manuscript>
+<manuscript>[chapters from the selected work's manuscript directory being reviewed]</manuscript>
 <style_conventions>[style guide contents]</style_conventions>
 <anti_cliche_rules>[themes/anti-cliche doc contents]</anti_cliche_rules>
 <character_docs>[character tracking entries with voice patterns, emotional flickers, arc positions]</character_docs>
@@ -137,6 +138,14 @@ mkdir -p .worldsmith/reviews/YYYY-MM-DD
 
 (Replace YYYY-MM-DD with today's actual date.)
 
+For multi-work projects, include the work name in the directory path:
+
+```bash
+mkdir -p .worldsmith/reviews/YYYY-MM-DD/work-name
+```
+
+For single-work projects (no project.yaml), use the existing flat path `.worldsmith/reviews/YYYY-MM-DD/`.
+
 Write individual specialist reports:
 - `.worldsmith/reviews/YYYY-MM-DD/consistency-auditor.md`
 - `.worldsmith/reviews/YYYY-MM-DD/craft-auditor.md`
@@ -150,6 +159,7 @@ Write the unified report to `.worldsmith/reviews/YYYY-MM-DD/review.md`:
 
 **Date**: YYYY-MM-DD
 **Manuscript**: [title/scope]
+**Work**: [name] ([type])  ← only for multi-work projects
 **Recommendation**: ready | needs-revision | needs-major-revision
 
 ## Executive Summary
