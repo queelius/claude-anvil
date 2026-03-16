@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "crier": {
+      "command": "crier",
+      "args": ["mcp"],
+      "description": "Crier cross-posting registry — query articles, find unposted content, manage publications"
+    }
+  }
+}
