@@ -49,8 +49,8 @@ Generate a complete front cover image with artwork, title, and author name.
 - `author_name` (string, required): author/pen name
 - `genre` (string, required): e.g., "epic fantasy", "thriller", "technical"
 - `art_direction` (string, optional): user's description of desired cover art (e.g., "dark moody forest with a glowing rune"). If omitted, a genre-appropriate prompt is constructed.
-- `width` (number, default 2560): pixel width
-- `height` (number, default 4096): pixel height (1.6:1 ratio for eBook)
+- `width` (number, default 1600): pixel width (portrait orientation)
+- `height` (number, default 2560): pixel height. Default produces a 1.6:1 height-to-width ratio (KDP eBook standard). All dimensions are width x height in portrait orientation.
 
 **Output**: `{ path: string }`, path to generated cover image (PNG)
 
@@ -73,7 +73,7 @@ Composite a full paperback cover: front + spine + back.
 - `isbn` (string, optional): if provided, barcode zone is marked on back cover
 - `back_color` (string, optional): hex color for back cover background. If omitted, extracted from front cover dominant color.
 
-**Output**: `{ path: string, specs: CoverSpecs }`, path to full-wrap PDF + dimension details
+**Output**: `{ pdf_path: string, preview_path: string, specs: CoverSpecs }`. Returns both the full-wrap PDF (for KDP upload) and a rasterized PNG preview (for quick visual verification in the terminal).
 
 **Implementation**:
 1. Parse trim size into width/height in inches
@@ -81,8 +81,8 @@ Composite a full paperback cover: front + spine + back.
 3. Calculate total cover dimensions at 300 DPI with 0.125" bleed on all sides
 4. Layout zones: back cover (left) | spine (center) | front cover (right)
 5. Place front cover image in the front zone, scaled to fit
-6. Render spine text (title + author, rotated 90 degrees) if page count >= 130 (spine width >= 0.3")
-7. Render back cover: solid background color, blurb text (centered, readable font), barcode zone rectangle in lower-right
+6. Render spine text (title + author, rotated 90 degrees clockwise per US publishing convention, reading top-to-bottom) if page count >= 130 (spine width >= 0.3"). For narrow spines (0.3"-0.5"), use title only (no author name) at a small font size.
+7. Render back cover using `pdf-lib` for text layout: solid background color, blurb text (centered, readable serif font bundled with the package). If the auto-extracted back color has insufficient contrast with white text (WCAG AA ratio < 4.5:1), darken it automatically. Barcode zone: 2" x 1.2" clear rectangle in lower-right corner (KDP overlays the barcode here when using free ISBN). Blurb text is truncated with ellipsis if it exceeds the available space after accounting for margins and barcode zone.
 8. Output as PDF at exact calculated dimensions
 
 Uses `sharp` for image processing and `pdf-lib` for PDF generation.
@@ -116,7 +116,7 @@ Useful for checking dimensions before generating, or verifying an existing cover
 1. Check if cover already exists (saved path in config or cover file in project)
 2. If no cover → ask user for art direction (or use genre + title to suggest a direction)
 3. Call `kdp_generate_cover` with the inputs
-4. Show the generated cover to the user, iterate ("like it? try another style?")
+4. Show the generated cover to the user by reading the image file (Claude Code renders images inline in the terminal). Iterate ("like it? try another style?")
 5. Once approved, save front cover path to config
 6. If paperback target → call `kdp_cover_specs` to show dimensions, then `kdp_generate_full_wrap`
 7. Save full-wrap path to config
@@ -134,8 +134,8 @@ Useful for checking dimensions before generating, or verifying an existing cover
 6. `browser_file_upload` for manuscript file and cover image
 7. Navigate through to the review/preview page
 8. **Stop**. Tell user: "Everything's filled in. Review and click publish when ready."
-9. After user publishes, scrape the ASIN from the confirmation/bookshelf page
-10. Write ASIN back to `.claude/kdp.local.md`
+9. After user publishes, attempt to capture the ASIN from the confirmation or bookshelf page. If the ASIN is not yet available (books enter a 24-72 hour review queue), note this and instruct the user to run `/kdp-publish` again later to capture it.
+10. Write ASIN back to `.claude/kdp.local.md` when available.
 
 ### Phase 8 (Pricing), semi-automated
 
@@ -209,6 +209,8 @@ kdp:
 
 The `user-config-template.md` is updated to include these fields with documentation.
 
+**Migration**: Existing `kdp.local.md` files without the new fields work without changes. The skill treats missing fields as null/empty and offers to populate them during the workflow. No explicit migration step needed.
+
 ## Dependencies
 
 **Runtime**:
@@ -223,6 +225,33 @@ The `user-config-template.md` is updated to include these fields with documentat
 - Playwright MCP : already installed in user's Claude Code setup
 
 **No build step**: The MCP server runs via `npx tsx`, no compilation needed. This keeps the plugin simple. `npm install` in `mcp/` is the only setup.
+
+### Setup and Installation
+
+This is the first plugin in the marketplace with runtime dependencies. The setup workflow:
+
+1. After plugin installation, the `kdp-publish` skill checks for `node_modules` in the MCP directory on first use
+2. If missing, the skill runs `npm install` in the `mcp/` directory automatically (with user confirmation)
+3. If Node.js is not available, the skill falls back to the manual workflow (Phases 6-8 revert to instructions) and tells the user what to install
+
+The `.mcp.json` config uses `${CLAUDE_PLUGIN_ROOT}` for the server path. This variable must be verified to expand correctly in `.mcp.json` files during implementation. If it does not expand, the fallback is to use a wrapper script (`mcp/run.sh`) that resolves the path relative to its own location:
+
+```bash
+#!/bin/bash
+DIR="$(cd "$(dirname "$0")" && pwd)"
+exec npx tsx "$DIR/src/index.ts"
+```
+
+And `.mcp.json` would reference: `"args": ["${CLAUDE_PLUGIN_ROOT}/mcp/run.sh"]`
+
+### Error Handling
+
+**OpenAI API**:
+- Missing or invalid `OPENAI_API_KEY`: tool returns a structured error with a message explaining how to set the key
+- Content policy rejection: tool returns the rejection reason so the skill can suggest modified art direction
+- Misspelled title text in generated image: the skill shows the image and asks the user to verify text accuracy before proceeding. If text is wrong, regenerate.
+
+**Cost transparency**: The skill informs the user of approximate cost per generation before the first `kdp_generate_cover` call (currently ~$0.04-0.08 per image for GPT-image-1). Each iteration is a separate API call.
 
 ## Scope Boundaries
 
