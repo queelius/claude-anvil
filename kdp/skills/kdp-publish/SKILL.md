@@ -119,69 +119,131 @@ Ensure the manuscript is in final publishable form.
 
 ### Phase 6: Cover Preparation
 
-Verify cover files meet KDP specifications. See `${CLAUDE_PLUGIN_ROOT}/docs/kdp-reference.md` for full cover requirements (dimensions, DPI, spine width calculation, bleed).
+Generate or verify cover files for the book. See `${CLAUDE_PLUGIN_ROOT}/docs/kdp-reference.md` for full cover requirements (dimensions, DPI, spine width calculation, bleed).
 
-**Quick checks**:
-- eBook cover: minimum 2560x1600 pixels, 1.6:1 aspect ratio, JPEG or TIFF, under 50MB
-- Paperback cover: 300 DPI minimum, full wraparound PDF with bleed (0.125" each side)
+**Fallback note**: This phase uses the `kdp-cover` MCP server for AI cover generation. If the MCP tools are not available (Node.js not installed, `OPENAI_API_KEY` not set, or the server is not configured), fall back to manual cover preparation: verify existing cover dimensions with `identify` or `file` (Bash tool), direct the user to the KDP Cover Calculator at https://kdp.amazon.com/en_US/cover-calculator, and recommend hiring a designer or using KDP Cover Creator if no cover exists.
 
-**Verify dimensions** (Bash tool): Use `identify -format "%wx%h" cover.jpg` (ImageMagick) or `file cover.jpg` to check actual dimensions.
+1. **Check for existing cover** (Read tool, Glob tool): Look for an existing cover path in `kdp.cover.front` from the config. If not set, glob for `cover*`, `front-cover*`, and `*-cover.*` files in the project. If a cover file exists, show it to the user (Read tool on the image file) and ask whether to use it or generate a new one.
 
-Direct the user to the **KDP Cover Calculator**: https://kdp.amazon.com/en_US/cover-calculator
+2. **Gather art direction**: If no cover exists (or user wants a new one), ask the user for art direction preferences: visual style, mood, color palette, imagery. If the user has no strong preference, suggest a direction based on the genre from `kdp.genre` and the book title. Check `kdp.cover.art_direction` in the config for any previously saved preferences.
 
-If cover files do not exist, pause and recommend hiring a designer or using KDP Cover Creator.
+3. **Inform about cost**: Tell the user that each cover generation costs approximately $0.04-$0.08 via OpenAI image generation. Multiple iterations are normal (2-4 attempts to get a cover the user likes).
+
+4. **Generate front cover** (kdp_generate_cover MCP tool): Call `kdp_generate_cover` with:
+   - `title`: from the book title
+   - `subtitle`: if applicable
+   - `author_name`: from `kdp.pen_name` or `author.name`
+   - `genre`: from `kdp.genre`
+   - `art_direction`: from the user's preferences or suggested direction
+   - `width`: 1600 (default)
+   - `height`: 2560 (default)
+
+5. **Show the cover** (Read tool): Read the generated image file to display it inline. Ask the user to verify:
+   - Is the title text spelled correctly?
+   - Does the overall look match the genre and tone?
+   - Are the colors and composition appealing?
+
+6. **Iterate if needed**: If the user wants changes ("try a different style", "make it darker", "more minimalist"), adjust the `art_direction` and call `kdp_generate_cover` again. Repeat steps 5-6 until the user approves.
+
+7. **Save approved cover** (Edit tool): Save the approved front cover file path to `.claude/kdp.local.md` under `kdp.cover.front`. Also save the art direction used under `kdp.cover.art_direction` for future reference.
+
+8. **Full-wrap cover for paperback** (if `kdp.target` is "paperback" or "both"):
+
+   a. **Calculate dimensions** (kdp_cover_specs MCP tool): Call `kdp_cover_specs` with `page_count` (from manuscript), `trim_size` (from `kdp.trim_size`), and `paper_type` (from `kdp.paper_type`). Display the spine width, total dimensions, and zone layout to the user.
+
+   b. **Generate full wrap** (kdp_generate_full_wrap MCP tool): Call `kdp_generate_full_wrap` with:
+      - `front_cover_path`: the approved front cover
+      - `title` and `author_name`: for spine text
+      - `blurb`: from `kdp.blurb` (for back cover text)
+      - `page_count`, `trim_size`, `paper_type`: from config
+      - `isbn`: if the user has one
+      - `back_color`: from `kdp.cover.color_scheme`, or let the tool auto-extract from the front cover
+
+   c. **Show the full-wrap preview** (Read tool): Read the preview PNG file to display the complete wraparound cover. Ask the user to verify spine text, back cover blurb readability, and overall composition.
+
+   d. **Save full-wrap path** (Edit tool): Save the full-wrap PDF path to `.claude/kdp.local.md` under `kdp.cover.full_wrap`.
 
 ### Phase 7: KDP Dashboard Submission
 
-Walk the user through the KDP dashboard "Create a New Title" process. This phase reads listing artifacts from the config (populated by `/kdp-listing` in Phase 3).
+Automate the KDP dashboard submission using browser automation. This phase reads listing artifacts from the config (populated by `/kdp-listing` in Phase 3) and fills in the dashboard forms.
 
-**KDP Account Setup** (first-time publishers only): Complete account setup at https://kdp.amazon.com — tax interview, bank details, email verification. See `${CLAUDE_PLUGIN_ROOT}/docs/kdp-reference.md` for the account setup walkthrough.
+**KDP Account Setup** (first-time publishers only): Complete account setup at https://kdp.amazon.com (tax interview, bank details, email verification). See `${CLAUDE_PLUGIN_ROOT}/docs/kdp-reference.md` for the account setup walkthrough.
 
-**Book Details** (step through dashboard fields):
+**Pre-submission check** (Read tool): Re-read `.claude/kdp.local.md` and verify all required fields are populated: `kdp.blurb`, `kdp.keywords` (7 entries), `kdp.categories`, `kdp.cover.front`, and `kdp.manuscript.path`. If any are missing, stop and direct the user to the appropriate earlier phase.
 
-1. **Language and Title**: Select language. Enter title (max 200 chars), subtitle (optional), series name and number (if applicable), edition number (if revised edition).
+**Dashboard automation**:
 
-2. **Author and Contributors**: Use `kdp.pen_name` from config (or `author.name` if no pen name). Add co-authors, editors, illustrators, translators as contributors.
+1. **Open KDP** (Playwright MCP: browser_navigate): Navigate to `https://kdp.amazon.com`.
 
-3. **Description**: Paste the blurb from `kdp.blurb` in the config. Verify HTML formatting renders correctly in the preview. If `kdp.blurb` is empty, stop and run `/kdp-listing` first.
+2. **Check login state** (Playwright MCP: browser_snapshot): Take a snapshot of the page. If the user is not logged in, tell them to log in using the browser window that opened. Wait for the dashboard to become visible (Playwright MCP: browser_wait_for).
 
-4. **Publishing Rights**: Ask the user:
-   - "I own the copyright" (original works)
-   - "This is a public domain work" (classics, expired copyright)
-   - Rights holder confirmation (licensed content)
+3. **Navigate to the correct page** (Playwright MCP: browser_snapshot, browser_click):
+   - For a new title: find and click the "Create" button or equivalent, then select the format (Kindle eBook or Paperback). If publishing both, start with eBook.
+   - For an update to an existing title: if `kdp.asin` or `kdp.asin_paperback` is set in the config, navigate to that title's detail page. Otherwise, search the bookshelf by title name and select it.
 
-5. **Keywords**: Enter the 7 keywords from `kdp.keywords` in the config. If empty, stop and run `/kdp-listing` first.
+4. **Fill Book Details** (Playwright MCP: browser_snapshot, browser_fill_form, browser_click): On each form page, take a snapshot first to understand the current layout, then fill fields adaptively:
+   - Language: select the appropriate language
+   - Title, subtitle: from the book metadata
+   - Series name and volume number: from `kdp.series` if set
+   - Author/pen name: from `kdp.pen_name` or `author.name`
+   - Contributors: add any co-authors, editors, illustrators
+   - Description: paste `kdp.blurb` from config
+   - Publishing rights: select "I own the copyright" (confirm with user if uncertain)
+   - Keywords: fill the 7 keyword slots from `kdp.keywords`
+   - Categories: select the BISAC categories from `kdp.categories`
+   - Age/grade range: skip for adult books, fill for children's/YA
 
-6. **Categories**: Select the BISAC categories from `kdp.categories` in the config. If empty, stop and run `/kdp-listing` first.
+5. **Upload manuscript** (Playwright MCP: browser_snapshot, browser_file_upload): Upload the manuscript file from `kdp.manuscript.path`. Take a snapshot to locate the upload control, then use file upload. Wait for the upload and conversion to complete (this may take 30 seconds to 5 minutes).
 
-7. **Age and Grade Range**: Required for children's books. Optional for YA (select 12-18). Skip for adult books.
+6. **Upload cover** (Playwright MCP: browser_snapshot, browser_file_upload): Upload the cover file:
+   - eBook: front cover image from `kdp.cover.front`
+   - Paperback: full-wrap PDF from `kdp.cover.full_wrap`, or front cover if no full-wrap exists
 
-8. **Upload Manuscript**: eBook accepts EPUB, DOCX, or PDF. Paperback accepts PDF only (PDF/X-1a:2001 recommended). Wait for conversion (30 seconds to 5 minutes).
+7. **Navigate to preview/review** (Playwright MCP: browser_snapshot, browser_click): Find and click the button to proceed to the preview or review page. Take a snapshot to confirm the page loaded.
 
-9. **Upload Cover**: eBook: single front cover image (JPEG/TIFF). Paperback: full wraparound cover PDF or use KDP Cover Creator.
+8. **Stop and hand off to user**: Tell the user: "Everything is filled in. Review the details in the browser and click publish when you are ready." Do NOT click the publish button. The user must make this final decision.
 
-10. **KDP Previewer**: Review the book in Kindle, tablet, and phone views. Check for text overflow, broken images, TOC links, page breaks, extra blank pages, and font substitution.
+9. **Capture ASIN after publish** (Playwright MCP: browser_snapshot): After the user confirms they have published, take a snapshot of the bookshelf page to look for the newly assigned ASIN. If the ASIN is not yet visible (KDP review takes 24-72 hours), note this and tell the user to run `/kdp-publish` again later to capture it.
+
+10. **Save ASIN** (Edit tool): If an ASIN was captured, save it to `.claude/kdp.local.md` under `kdp.asin` (for eBook) or `kdp.asin_paperback` (for paperback).
 
 **Multi-format coordination** (if publishing both eBook and paperback):
 - Create the eBook first, then add paperback as a linked format (shared product page, reviews, "Look Inside")
 - Metadata must match exactly across formats; cover files differ (front-only for eBook, full wrap for paperback)
+- After the eBook is submitted, repeat steps 3-10 for the paperback format
+
+**Important**: These instructions describe goals, not exact selectors. The KDP dashboard layout may change. Use browser_snapshot to read each page and determine the correct elements to interact with. Adapt to whatever layout is present.
 
 ### Phase 8: Pricing
 
-Interactive decisions made during the workflow, not pre-populated from config.
+Semi-automated pricing setup. Present options conversationally, then fill the pricing form via browser automation.
 
-**eBook royalty tiers**:
-- **70% royalty**: Price must be $2.99-$9.99. Delivery cost deducted (~$0.10-$0.30 per download based on file size). Best for most books.
-- **35% royalty**: Any price $0.99+. No delivery cost. Use for short works, loss leaders, or prices outside the $2.99-$9.99 range.
+1. **Present pricing options** (Read tool): Load genre-specific price recommendations from `${CLAUDE_PLUGIN_ROOT}/docs/kdp-reference.md`. Present the user with a conversational summary:
 
-**KDP Select enrollment**:
-- Exclusive to Amazon for 90 days (auto-renews). Cannot sell eBook on other platforms during enrollment.
-- Benefits: Kindle Unlimited (readers borrow, author earns per page read), Kindle Countdown Deals, Free Book Promotions.
-- Trade-off: No wide distribution (Apple Books, Kobo, Barnes & Noble). Good for debut authors building readership on Amazon. Not ideal with existing sales channels elsewhere.
+   - **Royalty tier choice** (eBook only):
+     - 70% royalty: price must be $2.99-$9.99, delivery cost deducted (~$0.10-$0.30 based on file size). Best for most books.
+     - 35% royalty: any price $0.99+, no delivery cost. Use for short works, loss leaders, or prices outside the 70% range.
 
-**Genre-aware price recommendations**: See `${CLAUDE_PLUGIN_ROOT}/docs/kdp-reference.md` for genre-specific price ranges, paperback printing cost calculations, and royalty examples.
+   - **KDP Select enrollment**:
+     - Exclusive to Amazon for 90 days (auto-renews). Cannot sell eBook on other platforms during enrollment.
+     - Benefits: Kindle Unlimited page reads, Kindle Countdown Deals, Free Book Promotions.
+     - Trade-off: no wide distribution (Apple Books, Kobo, Barnes & Noble). Good for debut authors building readership on Amazon. Not ideal if the author has existing sales channels elsewhere.
 
-**Territories**: Choose "Worldwide rights" if the author holds global rights, or select specific countries.
+   - **Suggested price**: Based on genre from `kdp.genre`, manuscript type, and the pricing tables in the reference doc, suggest a specific price point. For paperback, note that the price must cover printing costs plus Amazon's share.
+
+   - **Territories**: recommend "Worldwide rights" if the author holds global rights, or ask about specific country restrictions.
+
+2. **Confirm with user**: Ask the user to decide on: price, royalty tier (eBook), KDP Select enrollment (yes/no), and territories. Wait for confirmation before proceeding.
+
+3. **Fill pricing form** (Playwright MCP: browser_snapshot, browser_fill_form, browser_click): Once the user has decided:
+   - Take a snapshot to understand the pricing page layout
+   - Select the royalty tier (eBook)
+   - Enter the price in the appropriate currency fields
+   - Select or deselect KDP Select enrollment
+   - Set territory rights
+   - For paperback: enter the list price (verify it meets the minimum shown on the page)
+
+4. **Verify pricing summary** (Playwright MCP: browser_snapshot): Take a snapshot of the pricing summary. Show the user the estimated royalty per sale and confirm everything looks correct before proceeding to Phase 9.
 
 ### Phase 9: Publish
 
