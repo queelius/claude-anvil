@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What This Is
 
-A Claude Code **plugin** (not a software project) that automates Amazon KDP (Kindle Direct Publishing) workflows for book authors — manuscript auditing, listing craft, and the full publishing pipeline. It handles technical books (LaTeX, math-heavy), fiction, and general nonfiction.
+A Claude Code **plugin** (not a software project) that automates Amazon KDP (Kindle Direct Publishing) workflows for book authors: manuscript auditing, listing craft, and the full publishing pipeline. It handles technical books (LaTeX, math-heavy), fiction, and general nonfiction.
 
 There is no build system, no test suite, no compiled code. The entire plugin is Markdown files with YAML frontmatter. "Development" means editing skills, commands, and reference docs.
 
@@ -14,14 +14,35 @@ There is no build system, no test suite, no compiled code. The entire plugin is 
 
 ```
 .claude-plugin/plugin.json    # Plugin manifest (name, version, metadata)
-skills/                       # 3 skill files — the core logic
-commands/                     # 3 slash commands — thin wrappers that trigger skills
+skills/                       # 3 skill files (the core logic)
+commands/                     # 3 slash commands (thin wrappers that trigger skills)
 docs/                         # Reference docs and config template
+mcp/                          # TypeScript MCP server for cover generation
+.mcp.json                     # MCP server registration for Claude Code
 ```
+
+### MCP Component
+
+The `mcp/` directory contains a TypeScript MCP server (`kdp-cover`) that generates book cover images using the OpenAI image generation API. This is the first plugin in the marketplace with runtime dependencies.
+
+**Setup** (required before first use):
+```bash
+cd mcp/
+npm install
+```
+
+**Environment variable required**: `OPENAI_API_KEY` must be set in the shell environment.
+
+**Tools exposed by the MCP server**:
+- `kdp_cover_specs`: compute KDP cover dimensions and bleed from trim size and page count
+- `kdp_generate_cover`: generate a front cover image via DALL-E given art direction and specs
+- `kdp_generate_full_wrap`: generate a full-wrap paperback cover PDF (front + spine + back)
+
+The `.mcp.json` file at the plugin root registers the server so Claude Code starts it automatically when the plugin is active. The server is launched via `mcp/run.sh`, which handles `npm` invocation.
 
 ### Skill → Command Mapping
 
-Each skill has a corresponding slash command. Commands are minimal — just frontmatter with `description:` and a one-line instruction that triggers the skill. The mapping:
+Each skill has a corresponding slash command. Commands are minimal: just frontmatter with `description:` and a one-line instruction that triggers the skill. The mapping:
 
 | Command file | Skill directory | Purpose |
 |---|---|---|
@@ -38,8 +59,8 @@ Every skill includes a "Load user config" step early in its workflow. If the con
 ### Reference Docs
 
 Skills reference detailed requirements docs via `${CLAUDE_PLUGIN_ROOT}/docs/`:
-- `kdp-reference.md` — KDP formatting, pricing, submission guide
-- `kdp-exemplars.md` — Fiction blurb examples, keyword strategies, category tactics
+- `kdp-reference.md`: KDP formatting, pricing, submission guide
+- `kdp-exemplars.md`: Fiction blurb examples, keyword strategies, category tactics
 
 ## Conventions
 

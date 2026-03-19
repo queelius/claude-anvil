@@ -23,6 +23,15 @@ kdp:
   keywords: []                         # up to 7 phrases (populated by /kdp-listing)
   blurb: ""                            # Amazon description (populated by /kdp-listing)
   author_bio: ""                       # genre-appropriate bio (populated by /kdp-listing)
+  asin: null                           # eBook ASIN (saved after first publish)
+  asin_paperback: null                 # paperback ASIN (saved after first publish)
+  cover:
+    front: null                        # path to approved front cover image
+    full_wrap: null                    # path to full-wrap PDF (paperback)
+    art_direction: ""                  # description of desired cover art style
+    color_scheme: null                 # back cover color (hex), or auto-extracted from front
+  manuscript:
+    path: null                         # path to final manuscript file for upload
 ---
 
 ## Additional Context

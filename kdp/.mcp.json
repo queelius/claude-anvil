@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "kdp-cover": {
+      "command": "bash",
+      "args": ["${CLAUDE_PLUGIN_ROOT}/mcp/run.sh"],
+      "env": {
+        "OPENAI_API_KEY": "${OPENAI_API_KEY}"
+      }
+    }
+  }
+}
