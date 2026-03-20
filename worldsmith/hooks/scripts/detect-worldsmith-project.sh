@@ -51,7 +51,7 @@ if [ -f "$PROJECT_DIR/.worldsmith/project.yaml" ]; then
 
   if [ -n "$DOCS_DIR" ] && [ -d "$DOCS_DIR" ]; then
     echo ""
-    echo "Lore documents found:"
+    echo "Shared lore documents:"
     for f in "$DOCS_DIR"/*.md; do
       [ -f "$f" ] && echo "  - $(basename "$f") ($(wc -l < "$f") lines)"
     done
@@ -62,6 +62,21 @@ if [ -f "$PROJECT_DIR/.worldsmith/project.yaml" ]; then
       fi
     done
   fi
+
+  # Report per-work local lore directories
+  for i in $(seq 0 $((${WORLDSMITH_WORK_COUNT:-1} - 1))); do
+    lore_var="WORLDSMITH_WORK_${i}_LORE"
+    name_var="WORLDSMITH_WORK_${i}_NAME"
+    work_lore="${!lore_var:-}"
+    work_name="${!name_var:-}"
+    if [ -n "$work_lore" ] && [ -d "$PROJECT_DIR/$work_lore" ]; then
+      echo ""
+      echo "Local lore for $work_name ($work_lore):"
+      for f in "$PROJECT_DIR/$work_lore"/*.md; do
+        [ -f "$f" ] && echo "  - $(basename "$f") ($(wc -l < "$f") lines)"
+      done
+    fi
+  done
 
   echo ""
   echo "This is a worldsmith project. The worldsmith-methodology skill provides"

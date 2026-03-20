@@ -85,7 +85,7 @@ Three event types:
 
 **Series awareness.** Projects can reference related projects (prequels, sequels, shared-world companions) in their CLAUDE.md. Shared world facts propagate across projects; project-local facts don't.
 
-**Multi-work projects.** A universe can contain multiple works sharing canonical lore. Configured via `.worldsmith/project.yaml`. If absent, worldsmith infers a single work (backward compatible). Commands, agents, and hooks all respect work scoping when project.yaml is present.
+**Multi-work projects.** A universe can contain multiple works sharing canonical lore. Configured via `.worldsmith/project.yaml`. If absent, worldsmith infers a single work (backward compatible). Commands, agents, and hooks all respect work scoping when project.yaml is present. Each work can optionally have its own local lore directory for work-specific docs. Hierarchy: shared lore > local lore > manuscript.
 
 ## Validation
 

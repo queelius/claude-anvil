@@ -58,7 +58,7 @@ Launch these via Task tool. Each receives assignments and context via XML tags i
 Read the project context thoroughly:
 
 1. Read the project's CLAUDE.md — doc roles, canonical hierarchy, style conventions, series relationships, project-specific rules
-2. If `.worldsmith/project.yaml` exists, read it. Identify which work is being written for — from the prompt, or ask via AskUserQuestion if ambiguous in a multi-work project. Note the work's name, type, and manuscript path. Read that work's existing manuscript for continuity context, and read shared lore from the lore directory specified in project.yaml.
+2. If `.worldsmith/project.yaml` exists, read it. Identify which work is being written for — from the prompt, or ask via AskUserQuestion if ambiguous in a multi-work project. Note the work's name, type, and manuscript path. Read that work's existing manuscript for continuity context, and read shared lore from the lore directory specified in project.yaml, plus the work's local lore directory if it has one.
 3. Read canonical docs relevant to the request — timeline authority, lore, systems, character tracking, outline, themes/anti-cliche
 4. Read relevant manuscript content — surrounding chapters, prior scenes, anything that establishes continuity
 5. Read the outline entry if one exists for the requested content

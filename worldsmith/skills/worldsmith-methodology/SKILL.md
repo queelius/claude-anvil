@@ -132,11 +132,13 @@ A universe can contain multiple works sharing the same canonical docs. Configura
 
 When working in a multi-work project:
 
-- **Lore is shared.** All works draw from the same canonical docs. A change to a character entry affects every work that character appears in.
+- **Shared lore is universe-level.** The top-level `lore` directory in project.yaml contains canonical docs that apply to all works. A change to a character entry here affects every work that character appears in.
+- **Local lore is work-level.** Each work can optionally declare its own `lore` directory for work-specific docs (characters unique to that story, locations only relevant to that novella). Local lore does not affect other works.
+- **Lore hierarchy.** Shared lore > local lore > manuscript. When shared and local lore conflict, shared lore wins (it represents universe-level truth). When reviewing or writing for a specific work, agents read shared lore plus that work's local lore.
 - **Manuscripts are scoped.** Each work has its own manuscript directory. Reviews, diagnostics, and writing target one work at a time.
-- **Propagation crosses works.** When a canonical doc changes, check ALL works' manuscripts for affected passages, not just the one you're currently editing.
+- **Propagation crosses works.** When shared lore changes, check ALL works' manuscripts for affected passages. When local lore changes, only that work's manuscript needs checking.
 - **Reviews are per-work.** A review of the short story does not review the novel. But consistency checks always verify against shared lore.
-- **Work identity from project.yaml.** Each work has a name, type (novel, novella, short-story, collection), manuscript directory, and optional file type filters. The first work listed is the primary work (default when no work is specified).
+- **Work identity from project.yaml.** Each work has a name, type (novel, novella, short-story, collection), manuscript directory, optional local lore directory, and optional file type filters. The first work listed is the primary work (default when no work is specified).
 
 ## Additional Resources
 

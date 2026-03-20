@@ -87,7 +87,7 @@ Read the project context thoroughly:
 
 1. Read the project's CLAUDE.md — doc roles, canonical hierarchy, style conventions, series relationships
 2. If `.worldsmith/project.yaml` exists, read it. Identify which work's review is being addressed — from the review report path (which may include a work-name subdirectory), or from prompt context.
-3. Read canonical docs relevant to the findings — timeline authority, lore, systems, character tracking, outline, themes/anti-cliche
+3. Read canonical docs relevant to the findings: shared lore, the work's local lore (if it has one), timeline authority, systems, character tracking, outline, themes/anti-cliche
 4. Read the review report from `.worldsmith/reviews/` — latest date directory and work subdirectory if multi-work, or user-specified path
 5. Parse all findings: severity (HIGH/MEDIUM/LOW), domain, location, quoted text, suggested fix direction
 6. Read the full manuscript passages around each finding (not just the quoted excerpt — enough context for a specialist to work with)

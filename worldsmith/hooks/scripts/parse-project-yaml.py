@@ -94,12 +94,18 @@ def validate(data: dict) -> tuple[str, str, list[dict]]:
             file_types = [str(t).lstrip(".") for t in raw_ft]
         else:
             die(f"works[{i}] 'file_types' must be a list")
+        work_lore = w.get("lore", "")
+        if work_lore is None:
+            work_lore = ""
+        if not isinstance(work_lore, str):
+            die(f"works[{i}] 'lore' must be a string path")
         works.append({
             "name": name,
             "type": work_type,
             "manuscript": manuscript,
             "master": master,
             "file_types": file_types,
+            "lore": work_lore,
         })
 
     return universe, lore_dir, works
@@ -138,6 +144,7 @@ def output_env(universe: str, lore_dir: str, works: list[dict]) -> None:
         lines.append(f"{prefix}_MANUSCRIPT={shell_quote(w['manuscript'])}")
         lines.append(f"{prefix}_MASTER={shell_quote(w['master'])}")
         lines.append(f"{prefix}_FILETYPES={shell_quote(','.join(w['file_types']))}")
+        lines.append(f"{prefix}_LORE={shell_quote(w['lore'])}")
     print("\n".join(lines))
 
 
@@ -151,7 +158,8 @@ def output_human(universe: str, lore_dir: str, works: list[dict], project_dir: P
         n_files = count_files(project_dir, w["manuscript"], w["file_types"])
         file_label = f"{n_files} file{'s' if n_files != 1 else ''}"
         ms = w["manuscript"] or "(no manuscript)"
-        print(f"  - {w['name']} [{w['type']}] — {ms} ({file_label})")
+        lore_label = f", lore: {w['lore']}" if w["lore"] else ""
+        print(f"  - {w['name']} [{w['type']}] — {ms} ({file_label}{lore_label})")
 
 
 def main() -> None:

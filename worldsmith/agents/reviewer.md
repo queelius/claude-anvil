@@ -53,7 +53,7 @@ Launch these via Task tool. Each receives the manuscript and project context via
 
 ### Phase 1: Comprehension
 
-Read the project's CLAUDE.md and parse the document ecosystem. If `.worldsmith/project.yaml` exists, read it. Identify which work is being reviewed — from the prompt (user may specify a work name), or default to the primary work (first in the works list). Note the work's name, type, and manuscript path. Read only that work's manuscript files, but read ALL shared lore docs. Then read ALL canonical docs — timeline, characters, style guide, themes/anti-cliche, lore, systems, outline — whatever exists. Read the manuscript being reviewed (all of it, or the specific chapters the user requested).
+Read the project's CLAUDE.md and parse the document ecosystem. If `.worldsmith/project.yaml` exists, read it. Identify which work is being reviewed — from the prompt (user may specify a work name), or default to the primary work (first in the works list). Note the work's name, type, and manuscript path. Read only that work's manuscript files, but read ALL shared lore docs plus the work's local lore (if the work has a `lore` field in project.yaml). Then read ALL canonical docs — timeline, characters, style guide, themes/anti-cliche, lore, systems, outline — whatever exists. Read the manuscript being reviewed (all of it, or the specific chapters the user requested).
 
 Produce a structured understanding before proceeding:
 
