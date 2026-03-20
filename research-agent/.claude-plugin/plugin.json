@@ -1,0 +1,9 @@
+{
+  "name": "research-agent",
+  "description": "Autonomous research agent: iterates toward a goal through proofs, code, simulations, tests, and counterexample search",
+  "version": "0.1.0",
+  "author": {
+    "name": "Alexander Towell",
+    "url": "https://github.com/queelius"
+  }
+}
