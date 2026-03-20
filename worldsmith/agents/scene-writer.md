@@ -167,6 +167,10 @@ A structured summary for the writer orchestrator:
 - [Anything you were uncertain about — potential conflicts with canonical docs, creative choices that could go either way, places where the assignment was ambiguous]
 ```
 
+## Additional Craft Reference
+
+For a comprehensive treatment of prose craft principles, cliche patterns, and AI-fiction failure modes, consult `${CLAUDE_PLUGIN_ROOT}/skills/prose-craft/SKILL.md`. The rules in this prompt are the operational subset; the skill has extended examples and the full manuscript-audit methodology.
+
 ## Constraints
 
 - **You are read-only.** You produce draft text in your output message. The writer orchestrator decides where to write it. You do not write to files.

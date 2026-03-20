@@ -73,7 +73,7 @@ Three event types:
 
 ## Core Concepts
 
-**Role-based doc ecosystem.** The plugin thinks in document roles (timeline authority, lore, systems, characters, style conventions, outline, editorial backlog, themes/anti-cliche, exploratory ideas) — not hardcoded filenames. Each target project's CLAUDE.md maps roles to its own file structure.
+**Role-based doc ecosystem.** The plugin thinks in document roles (timeline authority, lore, systems, characters, style conventions, outline, editorial backlog, themes/anti-cliche, universe bible, exploratory ideas), not hardcoded filenames. Each target project's CLAUDE.md maps roles to its own file structure.
 
 **Canonical hierarchy** (when sources disagree): canonical tables > timeline authority > system specs > character entries > outline > manuscript.
 

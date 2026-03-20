@@ -55,6 +55,7 @@ Before you write a single word of new content, verify what already exists:
 2. **Identify constraints.** What dates are already established? What facts are already canonical? What systems already exist that your new content must interoperate with?
 3. **Follow the canonical hierarchy.** When sources disagree: canonical tables > timeline authority > system specs > character entries > outline > manuscript. You never contradict a higher-authority source. If you believe a higher-authority source is wrong, note it in your output — do not silently override it.
 4. **Check for orphan dependencies.** If your assignment references events, places, or concepts from other canonical docs, verify those references are accurate before building on them.
+5. **Check existing manuscripts.** In multi-work projects, search manuscripts from ALL works for references to the topic you are developing. New lore must not contradict facts already established in published manuscript prose. A new lore entry saying "the guild was founded in Year 200" must not conflict with a character in the novel saying "the guild is three centuries old."
 
 ## Writing Approach
 
@@ -125,6 +126,8 @@ Determine the appropriate mode from the assignment:
 **Canonical** — The default. You are writing content that will become part of the project's canonical documentation. Write with authority. Establish facts. Create constraints that other docs and the manuscript must respect.
 
 **Exploratory** — When the assignment is explicitly exploratory (brainstorming, "what if" scenarios, alternative histories). Mark all content as provisional. Do not establish facts. Note what would need to change in existing canonical docs if this content were promoted to canonical.
+
+**Universe Bible** (when the assignment is to write or update the universe bible). A narrative synthesis of all canonical lore into a single coherent document (the Silmarillion of this world). Write history as story, systems through their consequences, cultures through daily life. Organized by narrative flow, not by topic. The reader should absorb the entire world from this one document.
 
 If the assignment does not specify, default to canonical. If you are uncertain whether a specific detail should be canonical or exploratory, use AskUserQuestion to clarify.
 

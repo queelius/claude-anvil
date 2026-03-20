@@ -115,9 +115,12 @@ The control panel for the entire project. Scene-by-scene or chapter-by-chapter b
 - Character tracking across scenes (who appears where, what state they're in)
 - Plot thread tracking (where threads open, develop, and resolve)
 - Pacing notes (scene type, emotional weight, information density)
+- Reader-knowledge tracking (what information is revealed to the reader in each chapter)
 
 **What makes it useful:**
 Dense cross-referencing. An outline entry for Chapter 8 that says "Battle scene, Sera and Kael" is less useful than one that says "Battle of Greymoor. Timeline: Year 412, day 3. Characters: Sera (first combat, arc moment — see flicker entry), Kael (tactical mode, commanding), Maren (absent — traveling, arrives Ch. 9). Systems: extended ley-line casting, exhaustion rules apply. Threads: Sera's confidence arc (escalation), Kael's leadership burden (complication), border conflict (climax of Act II). Status: drafted, needs revision for pacing in second half."
+
+**Reader-knowledge tracking** is particularly valuable for multi-work universes. Each chapter entry should note: what world facts the reader learns, what character secrets are revealed, what dramatic irony is in play (what the reader knows that characters do not). This prevents re-exposition (telling the reader what they already know), ensures reveals land (the reader should not already know the "surprise"), and tracks dramatic irony intentionally rather than accidentally. For a shared universe, also track which facts the reader of Work A knows that a reader of Work B might not.
 
 **Anti-pattern:** A simple plot summary that could be written from reading the manuscript. The outline's value is in connections the manuscript doesn't make explicit.
 
@@ -136,6 +139,26 @@ The project's aesthetic and intellectual commitments. What makes this story itse
 Specificity about what to avoid and why. Not "avoid fantasy cliches" but "avoid: the Chosen One who reluctantly accepts destiny (this story is about collective action, not individual exceptionalism), evil races (cultures in this world have internal diversity and historical reasons for conflict), prophecy as plot engine (characters make choices, the future isn't written)." The "why" matters — it helps apply the rule to edge cases.
 
 **Anti-pattern:** A list of themes without guidance on how they manifest in editorial decisions. "Theme: identity" tells nothing about what to do differently.
+
+### Universe Bible
+
+The Silmarillion of the project. A narrative-form synthesis of all canonical lore into a single coherent document. Optional for single-work projects. Recommended for multi-work universes.
+
+**What it typically contains:**
+- The world's history told as narrative (not database entries)
+- Systems and mechanics explained through their consequences for people's lives
+- Cultures described through daily experience, not abstract taxonomies
+- Geography as it shapes civilizations, not just as coordinates on a map
+- The connections between all of the above: how the magic system shaped the political structure that caused the war that defines the cultural divide
+
+**What makes it useful:**
+A new writing session (or a new work in the universe) can read one document and understand the entire world. With Opus 4.6's 1M context, the universe bible + all canonical docs + an entire manuscript can fit simultaneously, giving agents complete world knowledge.
+
+The universe bible is derived from canonical docs, not the other way around. When canonical docs change, the relevant section of the universe bible should be regenerated. The lore-writer specialist is responsible for maintaining it.
+
+The difference between the universe bible and the lore/history doc: the lore doc is organized by topic (mythology section, cultures section, geography section). The universe bible is organized by narrative flow (the world's story from creation to present, with systems, cultures, and characters woven in as they become relevant). The lore doc is a reference. The universe bible is a read.
+
+**Anti-pattern:** An encyclopedia that catalogues everything but tells no story. If the universe bible reads like a wiki, it has failed. It should read like a history book written by someone who cares about the people in it.
 
 ### Editorial Backlog
 

@@ -1,7 +1,7 @@
 ---
 description: Run diagnostics — consistency, editorial, cross-references, or project status
 allowed-tools: Read, Grep, Glob, Bash, AskUserQuestion
-argument-hint: [work-name] [scope: all|consistency|editorial|xref|status]
+argument-hint: [work-name] [scope: all|consistency|editorial|xref|status|cross-work]
 ---
 
 # /worldsmith:check
@@ -20,6 +20,7 @@ Determine the mode from `$ARGUMENTS`. Default to **all** if no scope is specifie
 - `editorial` -- Prose patterns and style analysis
 - `xref` -- Cross-reference health
 - `status` -- Project health overview
+- `cross-work` -- Inter-work consistency (multi-work projects only)
 - `all` -- Run all modes, unified report
 
 ## Multi-Work Awareness
@@ -60,6 +61,22 @@ Analyze prose patterns and style adherence. Use `python3 ${CLAUDE_PLUGIN_ROOT}/s
 **Thematic drift** -- Compare manuscript content against the themes/anti-cliche doc. Are thematic commitments being honored? Are anti-cliche rules being violated? Are philosophical positions being maintained or contradicted?
 
 **Character voice** -- Compare character dialogue and internal monologue against character doc voice patterns. Are speech tics consistent? Do characters sound distinct from each other? Does voice evolve along the documented trajectory?
+
+## Cross-Work Diagnostics
+
+Only available in multi-work projects (`.worldsmith/project.yaml` must exist). Reads manuscripts from ALL works and checks for inter-work contradictions. This mode ignores work-name scoping since it examines the universe as a whole.
+
+**Shared character consistency** -- Characters appearing in multiple works must be described consistently. Search all manuscripts for each character in the shared lore character docs. Compare physical descriptions, personality traits, speech patterns, and knowledge states across works. Flag discrepancies.
+
+**Shared fact consistency** -- World facts (geography, system rules, historical events, cultural details) referenced in multiple works must agree. Search all manuscripts for references to canonical facts and compare across works. If the novel says the river flows north and the short story says south, flag it.
+
+**Timeline cross-work** -- Events referenced across works must have consistent dates, sequences, and durations. A character's age must be consistent with the timeline regardless of which work mentions them. Travel times between the same locations must agree across works.
+
+**Character knowledge coherence** -- If two works share a timeline, verify that characters know appropriate things at appropriate times. A character in the short story (set after the novel) should not be ignorant of events they witnessed in the novel. A character in the prequel should not know things that have not happened yet.
+
+**Local vs. shared lore boundary** -- Verify that facts in one work's local lore do not contradict shared lore. Verify that facts established only in one work's manuscript and not yet promoted to shared lore are flagged as candidates for promotion (they may affect other works).
+
+Report cross-work findings in their own section, grouped by type, with exact quotes from both works.
 
 ## Cross-Reference Diagnostics
 

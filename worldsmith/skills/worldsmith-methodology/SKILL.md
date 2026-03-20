@@ -40,6 +40,8 @@ Worldbuilding projects organize their editorial knowledge across documents that 
 
 - **Feedback** — Date-stamped editorial reviews, reader feedback, revision notes with priorities. Progress tracking across revision cycles. A historical record of editorial decisions.
 
+- **Universe Bible** (optional, recommended for multi-work projects). A narrative-form synthesis of all canonical lore: history told as story, systems explained through their consequences, cultures described through the lives of the people in them. Think of it as the Silmarillion for this world. Not a database, but a readable document that tells the story of the world itself. Generated and maintained from canonical docs by the lore-writer. Updated when canonical lore changes. For single-work projects the lore docs themselves may suffice, but for a shared universe with multiple works, the universe bible is the single document that synthesizes everything into one coherent narrative.
+
 ### Canonical Hierarchy
 
 When sources disagree, resolve conflicts using this hierarchy (highest authority first):
@@ -53,15 +55,27 @@ When sources disagree, resolve conflicts using this hierarchy (highest authority
 
 Not every project will have all roles populated. Some projects may combine roles into fewer files. The hierarchy applies regardless of how many files exist.
 
-## 3. Dual Workflow
+## 3. Lore-First Workflow
+
+The Silmarillion approach: you do not write a novel and then document what you wrote. You build a world and then the novel emerges from it. The documentation IS the world. The manuscript is one expression of it.
+
+In practice, this means a specific creation order:
+
+1. **Build lore first.** Before writing a scene, ensure the world it takes place in exists in canonical docs. The geography, the cultural context, the relevant systems, the political situation. If they do not exist yet, develop them before drafting prose.
+2. **Derive the outline from lore.** The plot should follow from world constraints and character motivations, not be imposed on the world. If the outline requires something the lore does not support, update the lore first (or change the outline).
+3. **Draft scenes grounded in lore.** Every scene draws on what the canonical docs establish. Characters speak from their documented voice patterns. Locations match their documented geography. Systems follow their documented rules.
+4. **Verify scenes against lore.** After drafting, check that the scene does not contradict canonical docs. If it does, fix the scene (not the docs) unless the scene reveals a genuine lore error.
+5. **Flow new facts back to lore.** A scene may introduce details that are not yet canonical (a character's offhand mention of a place name, a system interaction the docs did not anticipate). These flow back into the docs as canonical additions.
+
+This is the default workflow for new content. The bidirectional flow in step 5 is natural and expected. The discipline is in steps 1-2: build the world before you tell stories in it.
 
 ### Canonical Changes
 
-When modifying established facts — correcting a date, updating a character's arc after a chapter is written, revising a system rule — treat the change as canonical. Update the authoritative source doc first, then reconcile affected docs and manuscript passages. Follow the canonical hierarchy: if the change originates in a lower-authority source, verify it against higher-authority sources before propagating.
+When modifying established facts (correcting a date, updating a character's arc after a chapter is written, revising a system rule), treat the change as canonical. Update the authoritative source doc first, then reconcile affected docs and manuscript passages. Follow the canonical hierarchy: if the change originates in a lower-authority source, verify it against higher-authority sources before propagating.
 
 ### Exploratory Ideas
 
-When developing new material — drafting mythology, sketching a future plot thread, experimenting with a system extension — treat it as exploratory. Write to exploratory or provisional sections of the appropriate doc. Mark the content as provisional or speculative. Do not update the manuscript based on exploratory content. Do not propagate exploratory content to other canonical sections.
+When developing new material (drafting mythology, sketching a future plot thread, experimenting with a system extension), treat it as exploratory. Write to exploratory or provisional sections of the appropriate doc. Mark the content as provisional or speculative. Do not update the manuscript based on exploratory content. Do not propagate exploratory content to other canonical sections.
 
 ### Promotion
 

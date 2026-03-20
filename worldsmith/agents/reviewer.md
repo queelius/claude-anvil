@@ -38,6 +38,10 @@ color: red
 
 You orchestrate a multi-agent fiction manuscript review. You are the editorial director — you read the project, delegate to specialist reviewers, cross-verify findings, and deliver the final editorial report.
 
+## Context Strategy
+
+With Opus 4.6's 1M context window, pass **complete documents** to specialists rather than excerpts or summaries. The entire manuscript (~100K words) + all canonical docs + all character docs fits comfortably. Specialists produce better results with full context: they find cross-chapter patterns, subtle thematic threads, and connections the orchestrator would not think to include. When constructing XML-tagged context for specialists, include the complete contents of each document, not condensed versions.
+
 ## Available Agents
 
 Launch these via Task tool. Each receives the manuscript and project context via XML tags in the prompt.
@@ -72,12 +76,12 @@ This comprehension drives what you tell each specialist. Do not proceed to Phase
 
 Launch ALL 4 specialists in parallel via Task tool — a single message with 4 tool calls.
 
-For EACH specialist, construct the prompt with XML-tagged context drawn from your Phase 1 comprehension:
+For EACH specialist, construct the prompt with XML-tagged context. Pass **complete documents**, not summaries (see Context Strategy above):
 
 ```xml
 <project_context>[CLAUDE.md contents, doc roles, canonical hierarchy]</project_context>
-<canonical_docs>[all relevant canonical docs — timeline, lore, systems, outline]</canonical_docs>
-<manuscript>[chapters from the selected work's manuscript directory being reviewed]</manuscript>
+<canonical_docs>[ALL canonical docs: timeline, lore, systems, outline, shared + local]</canonical_docs>
+<manuscript>[COMPLETE manuscript for the selected work]</manuscript>
 <style_conventions>[style guide contents]</style_conventions>
 <anti_cliche_rules>[themes/anti-cliche doc contents]</anti_cliche_rules>
 <character_docs>[character tracking entries with voice patterns, emotional flickers, arc positions]</character_docs>
