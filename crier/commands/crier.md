@@ -1,15 +1,15 @@
 ---
 name: crier
-description: Cross-post blog content to platforms. Runs audit, shows what needs publishing, and guides through the workflow.
+description: Cross-post blog content to platforms. Audits what needs publishing and guides through the workflow using MCP tools.
 ---
 
-# /crier — Cross-Post Content
+# /crier
 
 Run a cross-posting workflow for blog content.
 
 ## Steps
 
-1. **Check status**: Run `crier audit --since 1m` to see what needs publishing recently. If the user provided arguments (like a file path or `--since 2w`), use those instead.
+1. **Check status**: Use `crier_search(since="1m")` and `crier_missing(platforms=["devto","hashnode","bluesky","mastodon"])` to find what needs publishing. If the user provided arguments (like a date range or platform), adjust accordingly.
 
 2. **Summarize**: Show the user what needs publishing, grouped by content item and platform. Highlight:
    - How many items are unposted
@@ -20,19 +20,20 @@ Run a cross-posting workflow for blog content.
    - Everything shown?
    - A specific file?
    - Only certain platforms?
-   - Only API platforms? (`--only-api`)
+   - Only long-form? Only short-form?
 
 4. **Execute**: For the chosen scope:
-   - **API long-form** (devto, hashnode): `crier publish <file> --to <platform> --yes`
-   - **API short-form** (bluesky, mastodon): Read the article, write a rewrite, then `crier publish <file> --to <platform> --rewrite "<text>" --rewrite-author "claude-code" --yes`
-   - **Import** (medium): `crier publish <file> --to medium --yes`, show the canonical URL and import link
-   - **Paste** (twitter, threads, linkedin): `crier publish <file> --to <platform> --yes`, tell user to paste
+   - **API long-form** (devto, hashnode): `crier_publish(file, platform)` with confirmation
+   - **API short-form** (bluesky, mastodon): Read article, write a rewrite, then `crier_publish(file, platform, rewrite_content=..., rewrite_author="claude-code")`
+   - **Import** (medium): Note the canonical URL for manual import
+   - **Paste** (twitter, threads, linkedin): Use CLI `crier publish --to <platform> --yes`
 
-5. **Report**: Show results for all platforms. Ask about manual/import platforms if applicable.
+5. **Report**: Show results for all platforms.
 
 ## Tips
 
-- Use the `crier` skill for platform reference (limits, modes, rewrite guidelines)
-- For bulk operations with many items, consider dispatching the `cross-poster` agent
-- When writing rewrites, lead with the most interesting insight — don't just summarize
-- Crier appends the canonical URL automatically — don't include it in rewrites
+- Use the `crier` skill for rewrite guidelines and platform voice
+- For bulk operations with many items, dispatch the **cross-poster** agent
+- For analysis (gap analysis, performance review), dispatch the **auditor** agent
+- When writing rewrites, lead with the most interesting insight
+- Crier appends the canonical URL automatically
