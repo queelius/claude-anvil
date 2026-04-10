@@ -1,37 +1,56 @@
-# repoindex — Claude Code Plugin
+# repoindex: Claude Code Plugin
 
-Collection-aware repository intelligence for Claude Code. Query, analyze, and
-maintain your git repository collection from within Claude Code conversations.
+Agent-driven repository intelligence for Claude Code. Multi-step analysis and release preparation workflows backed by the [repoindex](https://github.com/queelius/repoindex) MCP server.
 
-**Requires**: [repoindex](https://github.com/queelius/repoindex) CLI installed and on PATH.
+**Requires**: [repoindex](https://github.com/queelius/repoindex) v0.15.0 or newer with MCP extra:
+```bash
+pip install repoindex[mcp]
+repoindex refresh --external
+```
 
-## Components
+And the repoindex MCP server configured in `~/.claude.json`:
+```json
+{
+  "mcpServers": {
+    "repoindex": {
+      "type": "stdio",
+      "command": "/path/to/repoindex",
+      "args": ["mcp"]
+    }
+  }
+}
+```
 
-| Type | Name | Purpose |
-|------|------|---------|
-| Skill | `repoindex` | CLI reference — query flags, SQL data model, operations |
-| Skill | `repo-polish` | Audit-driven release preparation workflow |
-| Command | `/repo-status` | Quick collection dashboard |
-| Command | `/repo-query` | Natural language repo search |
-| Agent | `repo-explorer` | Deep collection analysis and reporting |
+## Agents
+
+| Name | Purpose | Model |
+|------|---------|-------|
+| `repo-doctor` | Collection health triage. "What needs attention?" | sonnet |
+| `repo-polish` | Single-repo release preparation (audit, generate, improve) | opus |
+| `repo-explorer` | Open-ended collection analysis with custom SQL | sonnet |
+
+All three agents access repoindex data via MCP tools. The plugin has no skills or slash commands. Single queries are handled by Claude Code's built-in MCP tool invocation.
 
 ## Install
 
 ```bash
-# Local — point Claude Code at the plugin directory
-claude plugin add /path/to/repoindex/claude-plugin
-
-# Or symlink into your plugins workspace
-ln -s /path/to/repoindex/claude-plugin ~/github/alex-claude-plugins/repoindex
+# Symlink into your plugins workspace
+ln -s /path/to/this/repo ~/github/alex-claude-plugins/repoindex
 ```
 
-## Prerequisites
+## Usage
 
-```bash
-pip install repoindex
-repoindex refresh          # Populate the database
-repoindex refresh --github # Optional: add GitHub metadata
-```
+Trigger the agents by describing what you want:
+
+- "What needs attention across my repos?" will invoke `repo-doctor`
+- "Polish repoindex for release" will invoke `repo-polish`
+- "Which of my Python repos are published on PyPI?" will invoke `repo-explorer`
+
+Or ask direct questions that Claude Code will answer via MCP tools without invoking an agent:
+
+- "Show me dirty repos"
+- "How many Python repos do I have?"
+- "What are my most starred repos?"
 
 ## License
 
