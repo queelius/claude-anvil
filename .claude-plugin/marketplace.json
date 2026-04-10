@@ -20,7 +20,7 @@
     {
       "name": "papermill",
       "source": "./papermill",
-      "description": "Research paper lifecycle management — thesis refinement, literature surveys, experimental design, multi-agent drafting, editorial review, and publication venue matching",
+      "description": "Research paper lifecycle management \u2014 thesis refinement, literature surveys, experimental design, multi-agent drafting, editorial review, and publication venue matching",
       "version": "0.6.0",
       "author": {
         "name": "Alexander Towell"
@@ -38,7 +38,7 @@
     {
       "name": "mf",
       "source": "./mf",
-      "description": "Metafunctor site management — blog architecture, content workflows, and mf CLI",
+      "description": "Metafunctor site management \u2014 blog architecture, content workflows, and mf CLI",
       "version": "1.1.0",
       "author": {
         "name": "Alexander Towell"
@@ -47,8 +47,8 @@
     {
       "name": "repoindex",
       "source": "./repoindex",
-      "description": "Collection-aware repository intelligence — query, analyze, and maintain your git repository collection",
-      "version": "0.12.0",
+      "description": "Agent-driven repository intelligence. MCP-first with repo-doctor, repo-polish, repo-explorer agents.",
+      "version": "0.15.0",
       "author": {
         "name": "Alexander Towell"
       }
@@ -56,7 +56,7 @@
     {
       "name": "alex-confidential",
       "source": "./locksmith",
-      "description": "Confidentiality toolkit — smart routing across cryptoid, pagevault, and gpg encryption tools",
+      "description": "Confidentiality toolkit \u2014 smart routing across cryptoid, pagevault, and gpg encryption tools",
       "version": "0.2.0",
       "author": {
         "name": "Alexander Towell"
@@ -74,7 +74,7 @@
     {
       "name": "jot",
       "source": "./jot",
-      "description": "Journal-aware Claude Code sessions — surfaces relevant tasks, ideas, and plans from your jot journal",
+      "description": "Journal-aware Claude Code sessions \u2014 surfaces relevant tasks, ideas, and plans from your jot journal",
       "version": "0.3.0",
       "author": {
         "name": "Alexander Towell"
@@ -83,7 +83,7 @@
     {
       "name": "crier",
       "source": "./crier",
-      "description": "Cross-post blog content to multiple platforms — audit, publish, rewrite, and track content distribution via the crier CLI",
+      "description": "Cross-post blog content to multiple platforms \u2014 audit, publish, rewrite, and track content distribution via the crier CLI",
       "version": "1.1.0",
       "author": {
         "name": "Alexander Towell"
@@ -93,6 +93,15 @@
       "name": "research-agent",
       "source": "./research-agent",
       "description": "Autonomous research agent: iterates toward a goal through proofs, code, simulations, tests, and counterexample search",
+      "version": "0.1.0",
+      "author": {
+        "name": "Alexander Towell"
+      }
+    },
+    {
+      "name": "profiler",
+      "source": "./profiler",
+      "description": "Biographical profiler \u2014 research, interview, and write curated portraits of people",
       "version": "0.1.0",
       "author": {
         "name": "Alexander Towell"

@@ -1,7 +1,7 @@
 {
   "name": "repoindex",
-  "version": "0.12.0",
-  "description": "Collection-aware repository intelligence for Claude Code. Query, analyze, and maintain your git repository collection.",
+  "version": "0.15.0",
+  "description": "Agent-driven repository intelligence for Claude Code. MCP-first architecture with three specialized agents: repo-doctor (triage), repo-polish (release prep), repo-explorer (analysis).",
   "author": {
     "name": "Alexander Towell",
     "email": "lex@metafunctor.com",
