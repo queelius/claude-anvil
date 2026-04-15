@@ -1,0 +1,12 @@
+[   21251ms] Error: Jele already registered by JeleAmazonUI, reregistered by JeleAmazonUI
+    at B.error (https://kdp.amazon.com/en_US/:29:283)
+    at Object.register (https://kdp.amazon.com/en_US/:24:497)
+    at https://m.media-amazon.com/images/I/31s4bLv314L._RC%7C21ZMwVh4T0L.js,517BxxVSpbL.js,01R8r6JC4OL.js,41BHSS6dnyL.js,31LyIpRGJTL.js,51SqHM3FH2L.js,11AXlAWzdGL.js,01M2am43i8L.js,01BGO-FYlKL.js,01ZGBYvP+3L.js,51ZALfP9j8L.js,21L6doYy5FL.js,31pr8EYKCwL.js_.js?AUIClients/KDPIndiePublishingWebsiteUI:1:217
+    at https://kdp.amazon.com/en_US/:26:98
+    at https://m.media-amazon.com/images/I/31s4bLv314L._RC%7C21ZMwVh4T0L.js,517BxxVSpbL.js,01R8r6JC4OL.js,41BHSS6dnyL.js,31LyIpRGJTL.js,51SqHM3FH2L.js,11AXlAWzdGL.js,01M2am43i8L.js,01BGO-FYlKL.js,01ZGBYvP+3L.js,51ZALfP9j8L.js,21L6doYy5FL.js,31pr8EYKCwL.js_.js?AUIClients/KDPIndiePublishingWebsiteUI:1:141
+    at https://m.media-amazon.com/images/I/31s4bLv314L._RC%7C21ZMwVh4T0L.js,517BxxVSpbL.js,01R8r6JC4OL.js,41BHSS6dnyL.js,31LyIpRGJTL.js,51SqHM3FH2L.js,11AXlAWzdGL.js,01M2am43i8L.js,01BGO-FYlKL.js,01ZGBYvP+3L.js,51ZALfP9j8L.js,21L6doYy5FL.js,31pr8EYKCwL.js_.js?AUIClients/KDPIndiePublishingWebsiteUI:1:188
+[   22810ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ https://kdp.amazon.com/1/batch/2/OE/mid=ATVPDKIKX0DER:sid=132-1481981-8408364:rid=2AAR7V4K06E3RQPX8XBD:sn=kdp.amazon.com:0
+[   23767ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ https://kdp.amazon.com/1/batch/2/OE/mid=ATVPDKIKX0DER:sid=132-1481981-8408364:rid=2AAR7V4K06E3RQPX8XBD:sn=kdp.amazon.com:0
+[   24385ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ https://kdp.amazon.com/1/batch/2/OE/mid=ATVPDKIKX0DER:sid=132-1481981-8408364:rid=2AAR7V4K06E3RQPX8XBD:sn=kdp.amazon.com:0
+[   25152ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ https://kdp.amazon.com/1/batch/2/OE/mid=ATVPDKIKX0DER:sid=132-1481981-8408364:rid=2AAR7V4K06E3RQPX8XBD:sn=kdp.amazon.com:0
+[   29603ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ https://kdp.amazon.com/1/batch/2/OE/mid=ATVPDKIKX0DER:sid=132-1481981-8408364:rid=2AAR7V4K06E3RQPX8XBD:sn=kdp.amazon.com:0
