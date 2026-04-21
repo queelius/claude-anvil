@@ -97,15 +97,6 @@
       "author": {
         "name": "Alexander Towell"
       }
-    },
-    {
-      "name": "profiler",
-      "source": "./profiler",
-      "description": "Biographical profiler: research, interview, and write curated portraits of people",
-      "version": "0.1.0",
-      "author": {
-        "name": "Alexander Towell"
-      }
     }
   ]
 }

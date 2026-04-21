@@ -286,103 +286,20 @@ If any are found, mention them: "I noticed this repo contains a DESCRIPTION file
 
 ## Step 7: Create `.papermill/state.md`
 
-Create the `.papermill/` directory structure and the state file (Bash tool + Write tool):
+Create the `.papermill/` directory structure and the state file.
 
-1. `mkdir -p .papermill/reviews`
-2. Write `.papermill/state.md` with the following structure. Fill in all values gathered from the previous steps. Use the exact YAML schema shown below.
+1. **Read the canonical schema** (Read tool): `${CLAUDE_PLUGIN_ROOT}/docs/state-schema.md`. This is the single source of truth for the state file structure, field constraints, and list field shapes.
 
-```markdown
----
-title: "<title from Step 4>"
-stage: <stage from Step 5>
-format: <format from Step 2>
-authors:
-  - name: "<name from Step 3>"
-    email: "<email from Step 3>"
-    orcid: "<orcid from Step 3, or empty string if not available>"
+2. **Create the directory** (Bash tool): `mkdir -p .papermill/reviews`
 
-thesis:
-  claim: ""
-  novelty: ""
-  refined: null
+3. **Write `.papermill/state.md`** (Write tool) using the template from the schema doc. Populate placeholder values from earlier steps:
+   - `title` from Step 4
+   - `stage` from Step 5
+   - `format` from Step 2
+   - `authors[0].{name, email, orcid}` from Step 3
+   - Leave the other structured fields at their empty defaults (they will be filled by thesis, prior-art, experiment, review, venue skills over time)
 
-prior_art:
-  last_survey: null
-  key_references: []
-  gaps: ""
-
-experiments: []
-
-venue:
-  target: null
-  candidates: []
-
-review_history: []
-
-related_papers: []
----
-
-## Notes
-
-Initialized by papermill on <today's date in YYYY-MM-DD format>.
-```
-
-If the user described related papers or software in Step 6, append them to the Notes section as a natural-language entry:
-
-```markdown
-## Related Work and Software
-
-<whatever the user said, in their words -- e.g., "This is Part II of the
-reliability series. Part I is in ../reliability-foundations/ and covers the
-asymptotic theory. This paper extends those results to finite samples.
-The R package `reliabilitytools` on CRAN implements the methods from both
-papers. DOI: 10.5281/zenodo.XXXXXXX">
-```
-
-**Schema notes:**
-- `stage` must be one of: `idea`, `thesis`, `literature`, `outlining`, `drafting`, `review`, `submission`
-- `format` must be one of: `latex`, `markdown`, `rmarkdown`
-- `orcid` should be the bare identifier (e.g., `0000-0002-1234-5678`), not a URL
-- `thesis.refined` starts as `null` and is set to `true` by the thesis skill
-- `prior_art.last_survey` is a date string (`YYYY-MM-DD`) or `null`
-- Leave empty fields as empty strings `""`, not `null`, unless the schema above specifies `null`
-- `related_papers[].rel` must be one of: `extends`, `extended-by`, `implements`, `implemented-by`, `companion`, `series`, `merged-into`, `supersedes`
-- `related_papers[].path` should be absolute or `~/`-relative
-
-**List field structures** (populated by their respective skills — empty at init):
-
-```yaml
-# Each entry in experiments[] (added by experiment/simulation skills):
-experiments:
-  - name: "descriptive-name"
-    type: "simulation | benchmark | case-study | ablation"
-    hypothesis: "Expected outcome in one sentence"
-    status: "planned | running | completed | failed"
-    script: "path/to/script.R"
-    last_run: null  # YYYY-MM-DD when last executed
-
-# Each entry in review_history[] (added by review skill):
-review_history:
-  - date: "YYYY-MM-DD"
-    type: "self-review"
-    findings_major: 0
-    findings_minor: 0
-    recommendation: "ready | minor-revision | major-revision | not-ready"
-    notes: "Brief summary of key findings"
-
-# Each entry in venue.candidates[] (added by venue skill):
-venue:
-  candidates:
-    - name: "Journal or Conference Name"
-      fit: "high | good | moderate"
-      deadline: "YYYY-MM-DD or rolling"
-
-# Each entry in related_papers[] (added by init or refresh):
-related_papers:
-  - path: "~/github/path/to/related-project"
-    rel: "extends | extended-by | implements | implemented-by | companion | series | merged-into | supersedes"
-    label: "One-line description of the relationship"
-```
+4. **Append related-work context** (if the user described related papers or software in Step 6): add a `## Related Work and Software` section below the `## Notes` section with the user's description in their own words. Preserve this verbatim; it is context for future Claude sessions.
 
 ---
 

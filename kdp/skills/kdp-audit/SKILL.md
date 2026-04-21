@@ -53,89 +53,42 @@ If the file is missing, inform the user and offer to create one from the templat
 
 ### 2. Check Interior Formatting
 
-**Trim size validation**:
-- Common sizes for nonfiction: 6×9 inches
-- Common sizes for fiction: 5.5×8.5 inches (also 5×8, 5.25×8)
-- Common sizes for textbooks: 7×10, 7.5×9.25, 8×10, 8.25×11, 8.5×11 inches
-- Verify manuscript trim size matches KDP supported sizes
+Verify the manuscript meets KDP interior requirements. Full specs are in `${CLAUDE_PLUGIN_ROOT}/docs/kdp-reference.md` (Interior Formatting section); read it and check the manuscript against:
 
-**Margin requirements** (varies by page count):
-- Inside margin formula: 0.375" + (page_count / 1000) * 0.125"
-- Outside margin: 0.25" minimum
-- Top/bottom margins: 0.25" minimum
-- Gutter (spine side) must accommodate binding: 0.5"+ for 150+ pages
-- Check if LaTeX geometry package or Word margins are set correctly
-
-**Font requirements**:
-- Fonts must be embedded (verify in PDF metadata)
-- Standard fonts preferred: Times New Roman, Garamond, Arial, Courier
-- Minimum 7pt font size (10-12pt body text recommended)
-- Check LaTeX preamble or Word styles for font declarations
-
-**Page numbers and headers/footers**:
-- Page numbers should start after front matter (after TOC)
-- Headers/footers optional but should be consistent
-- Verify no page numbers on blank pages or chapter openers (style preference)
-
-**Table of Contents** (Read/Grep tools):
-- TOC must be present and functional (hyperlinked in eBook)
-- Verify chapter titles match TOC entries
-- Check depth (typically 2-3 levels)
+- **Trim size**: look for margin or geometry declarations (Grep tool); verify it matches a KDP-supported size (common for nonfiction 6x9, fiction 5.5x8.5 or 5x8, textbooks 7x10 or 8.5x11)
+- **Margins**: inside margin grows with page count (formula `0.375" + page_count / 1000 * 0.125"`), outside at least 0.25", gutter at least 0.5" for 150+ pages
+- **Fonts**: must be embedded; standard fonts preferred (Times New Roman, Garamond, Arial, Courier); minimum 7pt
+- **Page numbers**: start after front matter, consistent placement
+- **Table of Contents**: present and functional, hyperlinked in eBook, typically 2 to 3 levels deep
 
 ### 3. Check Cover Specifications
 
-**Kindle eBook cover** (file check via Glob tool):
-- Minimum resolution: 2560×1600 pixels
-- Aspect ratio: 1.6:1 (portrait)
-- Color mode: RGB
-- Format: JPEG or TIFF
-- File size: <50MB
-- Look for files matching: `cover*.jpg`, `cover*.jpeg`, `cover*.tiff`, `ebook-cover.*`
+Verify covers meet KDP requirements. Full specs are in `${CLAUDE_PLUGIN_ROOT}/docs/kdp-reference.md` (Cover Requirements section).
 
-**Paperback cover** (if applicable):
-- Resolution: 300 DPI minimum
-- Color mode: CMYK for print, RGB for PDF preview
-- Format: PDF preferred (flattened layers)
-- Spine width calculation: page_count × 0.002252 inches (for white paper)
-- Spine width calculation: page_count × 0.0025 inches (for cream paper)
-- Full cover width: (trim_width × 2) + spine_width + 0.25" bleed
-- Full cover height: trim_height + 0.25" bleed
-- Look for files matching: `paperback-cover.pdf`, `full-cover.pdf`, `cover-print.*`
+**Find cover files** (Glob tool): `cover*.jpg`, `cover*.jpeg`, `cover*.tiff`, `ebook-cover.*` for eBook; `paperback-cover.pdf`, `full-cover.pdf`, `cover-print.*` for paperback.
 
-**Actual dimension verification** (Bash tool):
+**Verify dimensions** (Bash tool):
 - If `identify` (ImageMagick) is available: `identify -format "%wx%h" cover.jpg`
-- Otherwise fall back to `file cover.jpg` which often reports dimensions
-- For eBook cover: verify dimensions are at least 2560x1600, verify aspect ratio is approximately 1.6:1
-- For paperback cover PDF: verify resolution is at least 300 DPI
-- Report actual vs required dimensions in the audit output
+- Otherwise: `file cover.jpg` often reports dimensions
+- eBook cover: minimum 2560x1600 pixels, aspect ratio approximately 1.6:1, RGB, JPEG or TIFF, under 50MB
+- Paperback cover PDF: minimum 300 DPI, spine width `page_count * 0.002252"` (white paper) or `0.0025"` (cream)
 
-**Cover content requirements**:
-- Title must be clearly readable at thumbnail size
-- Author name present
-- High contrast, professional design
-- No prohibited content (pornographic, violent, misleading)
-
-If cover files don't exist, note as a critical gap.
+**Cover content requirements**: title readable at thumbnail size, author name present, high contrast, no prohibited content. Report actual vs. required dimensions. If cover files are absent, flag as a critical gap.
 
 ### 4. Check Metadata Readiness
 
-**Required metadata**:
-- **Title**: Descriptive, not misleading (max 200 chars)
-- **Subtitle**: Optional but recommended (max 200 chars)
-- **Series info**: Series name and number if applicable
-- **Description/blurb**: Up to 4000 characters, HTML formatting allowed
-- **Categories**: Up to 3 BISAC codes (Browse Subject Headings)
-- **Keywords**: Up to 7 keywords/phrases for discoverability
-- **Author bio**: Brief professional bio (100-200 words recommended)
-- **Language**: Primary language of manuscript
+Verify all required listing metadata exists in the manuscript or in `.claude/kdp.local.md`. Full field specs and constraints are in `${CLAUDE_PLUGIN_ROOT}/docs/kdp-reference.md` (Metadata section).
 
-**Pricing and rights**:
-- ISBN: Optional (KDP provides free ASIN for eBooks, offers free ISBN for paperback)
-- Publication date: Can be set to auto-publish or scheduled
-- Territories: Where distribution rights are held
-- DRM: Recommended to enable for eBooks
+Grep manuscript front matter and the user config for:
 
-Grep for metadata in manuscript front matter or config. If missing, list what needs to be provided via KDP dashboard.
+- Title, subtitle (each up to 200 chars), series info
+- Description or blurb (up to 4000 chars, HTML allowed)
+- Up to 3 BISAC categories
+- Up to 7 keywords
+- Author bio (100 to 200 words recommended)
+- Language, pricing, territories, DRM setting, ISBN decision
+
+Flag missing fields so the user can provide them via the KDP dashboard.
 
 ### 5. Technical Books Only
 
@@ -237,63 +190,7 @@ If manuscript is fiction or narrative nonfiction:
 
 ### 7. Produce Gap Report
 
-Format the report as:
-
-```markdown
-# KDP Audit Report: {book title}
-
-## Summary
-- **Status**: READY / NEEDS WORK / NOT READY
-- **Manuscript type**: Technical / Fiction / Nonfiction
-- **Format**: LaTeX / DOCX / EPUB / PDF
-- **Target**: eBook only / Paperback only / Both
-
-## Critical Gaps (Must Fix)
-1. [Issue description] — [file:line] — [how to fix]
-
-## Warnings (Should Fix)
-1. [Issue description] — [recommendation]
-
-## Interior Formatting
-- [ ] or [x] Trim size: {size} (supported: yes/no)
-- [ ] or [x] Margins: inside {calc}, outside {val}, top {val}, bottom {val}
-- [ ] or [x] Fonts embedded and standard
-- [ ] or [x] Page numbers start after front matter
-- [ ] or [x] Table of Contents present and functional
-
-## Cover Specifications
-- [ ] or [x] eBook cover: {resolution}, {ratio}, {format}
-- [ ] or [x] Paperback cover: {resolution}, spine width {calc}
-- [ ] or [x] Cover dimensions verified: {actual} (required: {minimum})
-
-## Metadata
-- [ ] or [x] Title and subtitle
-- [ ] or [x] Description/blurb (<4000 chars)
-- [ ] or [x] Categories (up to 3 BISAC codes)
-- [ ] or [x] Keywords (up to 7)
-- [ ] or [x] Author bio present
-
-## Technical Books Only
-- [ ] or [x] LaTeX compiles successfully
-- [ ] or [x] Math rendering correct
-- [ ] or [x] Code listings formatted
-- [ ] or [x] Index and bibliography present
-
-## Fiction Only
-- [ ] or [x] Front matter order: title -> copyright -> dedication -> TOC
-- [ ] or [x] Back matter includes About the Author
-- [ ] or [x] Scene breaks use consistent markers
-- [ ] or [x] Scene breaks clearly marked
-- [ ] or [x] Dialog formatting consistent
-- [ ] or [x] Paragraph indentation correct
-
-## eBook Validation
-- [ ] or [x] EPUB validates (epubcheck)
-- [ ] or [x] No Kindle-breaking issues (footnotes, wide tables, complex CSS)
-
-## Recommended Next Steps
-1. [Ordered list of actions to reach READY status]
-```
+Use the template at `${CLAUDE_PLUGIN_ROOT}/docs/audit-report-template.md` as the skeleton. Populate findings from the preceding steps. Omit sections that do not apply (for example, the Fiction checklist for a technical book).
 
 ### 8. Offer to Fix
 
@@ -308,8 +205,9 @@ After presenting the report, offer to fix issues that can be automated:
 
 ## Reference Files
 
-For complete KDP requirements and submission workflow, consult:
-- **`${CLAUDE_PLUGIN_ROOT}/docs/kdp-reference.md`** — Full KDP formatting requirements, cover templates, metadata guidelines, and submission checklist
+For complete KDP requirements and the audit output structure:
+- `${CLAUDE_PLUGIN_ROOT}/docs/kdp-reference.md` for KDP formatting, cover, metadata, and submission specifications
+- `${CLAUDE_PLUGIN_ROOT}/docs/audit-report-template.md` for the gap report skeleton
 
 ## Important Notes
 
