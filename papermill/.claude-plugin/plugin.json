@@ -1,7 +1,9 @@
 {
   "name": "papermill",
-  "description": "Research paper lifecycle management — thesis refinement, literature surveys, experimental design, multi-agent drafting, editorial review, and publication venue matching",
+  "description": "Research paper lifecycle management: thesis refinement, literature surveys, experimental design, multi-agent drafting, editorial review, and publication venue matching",
   "version": "0.6.0",
+  "repository": "https://github.com/queelius/claude-anvil",
+  "license": "MIT",
   "author": {
     "name": "Alexander Towell",
     "url": "https://github.com/queelius"

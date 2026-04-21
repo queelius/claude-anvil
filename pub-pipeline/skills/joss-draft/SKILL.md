@@ -1,6 +1,10 @@
 ---
 name: joss-draft
-description: "This skill should be used when the user asks to \"draft a JOSS paper\", \"write paper.md\", \"create JOSS paper\", \"write JOSS submission\", \"draft paper.md for JOSS\", \"convert paper to JOSS format\", or mentions writing a JOSS software paper. It discovers existing manuscripts and package content, then drafts a complete paper.md and paper.bib following JOSS format requirements."
+description: >-
+  Draft a JOSS paper.md and paper.bib. Discovers existing manuscripts
+  first, then synthesizes package analysis, competing packages, and the
+  required sections (Summary, Statement of Need, State of the Field,
+  Software Design, Research Impact, AI Disclosure).
 ---
 
 # JOSS Paper Drafting

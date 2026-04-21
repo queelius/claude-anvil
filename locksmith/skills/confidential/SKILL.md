@@ -1,11 +1,10 @@
 ---
 name: confidential
 description: >-
-  This skill should be used when the user asks to "encrypt", "decrypt", "lock", "unlock",
-  "sign", "verify", "protect", "make confidential", "password-protect", or manage encryption
-  for any content. Covers Hugo site encryption (cryptoid), HTML/file encryption (pagevault),
-  and file-level encryption/signing (gpg). Provides smart routing to pick the right tool
-  based on context.
+  Use when encrypting, decrypting, signing, or managing confidential
+  content. Smart routing across three tools: cryptoid for Hugo site
+  encryption, pagevault for HTML and file encryption, and gpg for
+  file-level encryption and signing.
 ---
 
 # Confidentiality Toolkit

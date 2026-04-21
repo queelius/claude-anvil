@@ -15,11 +15,14 @@ A Claude Code **plugin marketplace** (`queelius`). All plugins are distributed a
 | **worldsmith** | `worldsmith/` | Documentation-first fiction worldbuilding (the "Silmarillion approach") | 0.8.0 |
 | **pub-pipeline** | `pub-pipeline/` | Publication workflows: R/CRAN/JOSS, Python/PyPI | 0.6.0 |
 | **mf** | `mf/` | Metafunctor site management: blog architecture, content workflows, crier | 1.1.0 |
-| **repoindex** | `repoindex/` | Collection-aware repository intelligence — query, analyze, maintain git repos | 0.12.0 |
-| **alex-confidential** | `locksmith/` | Confidentiality toolkit — cryptoid, pagevault, gpg encryption | 0.2.0 |
-| **kdp** | `kdp/` | Amazon KDP book publishing: manuscript audit, listing craft, submission workflow | 0.2.0 |
-| **jot** | `jot/` | Journal-aware sessions — surfaces tasks, ideas, and plans from your jot journal | 0.3.0 |
+| **repoindex** | `repoindex/` | Agent-driven repository intelligence. MCP-first with repo-doctor, repo-polish, repo-explorer agents | 0.15.0 |
+| **alex-confidential** | `locksmith/` | Confidentiality toolkit: cryptoid, pagevault, gpg encryption | 0.2.0 |
+| **kdp** | `kdp/` | Amazon KDP book publishing: manuscript audit, listing craft, submission workflow | 0.3.0 |
+| **jot** | `jot/` | Journal-aware sessions that surface tasks, ideas, and plans from your jot journal | 0.3.0 |
 | **crier** | `crier/` | Cross-post blog content to multiple platforms via the crier CLI | 1.1.0 |
+| **research-agent** | `research-agent/` | Autonomous research agent: iterates toward a goal through proofs, code, simulations, tests | 0.1.0 |
+
+> **Note**: `marketplace.json` also declares `profiler` (0.1.0), but its directory is not yet present in the repo. Treat it as reserved or in-flight until scaffolded.
 
 ## Plugin Anatomy
 

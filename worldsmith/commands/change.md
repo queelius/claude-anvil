@@ -1,5 +1,5 @@
 ---
-description: Apply a change to the worldbuilding project — edits, new ideas, or promotions
+description: Apply a change to the worldbuilding project (edits, new ideas, or promotions)
 allowed-tools: Read, Write, Edit, Grep, Glob, AskUserQuestion
 argument-hint: [description of change or idea]
 ---

@@ -7,6 +7,12 @@ tools:
   - Bash
   - Read
   - AskUserQuestion
+  - mcp__crier__crier_search
+  - mcp__crier__crier_missing
+  - mcp__crier__crier_check
+  - mcp__crier__crier_publish
+  - mcp__crier__crier_article
+  - mcp__crier__crier_query
 ---
 
 # Cross-Poster Agent

@@ -1,7 +1,7 @@
 ---
 name: formal-writer
 description: >-
-  Specialist writer for mathematical content — definitions, theorems, proofs,
+  Specialist writer for mathematical content: definitions, theorems, proofs,
   derivations, and formal analysis. Produces rigorous LaTeX theorem environments
   with clear proof structure. Launched by the writer orchestrator during
   multi-agent drafting.

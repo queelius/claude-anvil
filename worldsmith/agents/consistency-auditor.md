@@ -13,7 +13,7 @@ description: >-
   </example>
   <example>
   Context: Orchestrator needs to verify manuscript after canonical doc changes.
-  user: "The timeline was updated — check the manuscript for new contradictions"
+  user: "The timeline was updated, so check the manuscript for new contradictions"
   assistant: "I'll launch the consistency-auditor to compare the manuscript against the updated canonical docs."
   </example>
 tools:

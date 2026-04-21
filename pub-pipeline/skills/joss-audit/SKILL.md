@@ -1,6 +1,10 @@
 ---
 name: joss-audit
-description: "This skill should be used when the user asks to \"audit for JOSS\", \"check JOSS readiness\", \"JOSS reviewer checklist\", \"prepare for JOSS submission\", \"is my package JOSS ready\", \"JOSS requirements\", or mentions JOSS submission compliance. It evaluates an R package and its paper.md against the complete JOSS reviewer checklist, producing a structured gap report."
+description: >-
+  Evaluate R package and paper.md against the full JOSS reviewer
+  checklist. Covers software requirements, paper format, and community
+  standards. Gap report with Critical, Warnings, and Passed sections, plus
+  fix recommendations.
 ---
 
 # JOSS Submission Audit

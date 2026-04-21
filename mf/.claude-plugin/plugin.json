@@ -1,8 +1,10 @@
 {
   "name": "mf",
-  "description": "Metafunctor site management — blog architecture, content workflows, and mf CLI",
+  "description": "Metafunctor site management: blog architecture, content workflows, and mf CLI",
   "version": "1.1.0",
+  "repository": "https://github.com/queelius/claude-anvil",
+  "license": "MIT",
   "author": {
-    "name": "Alex Towell"
+    "name": "Alexander Towell"
   }
 }

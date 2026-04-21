@@ -2,7 +2,7 @@
 name: jot
 description: >-
   Use when the user needs to interact with their plaintext journal. Provides
-  CLI reference for jot — a plaintext journal tool for capturing ideas, tasks,
+  CLI reference for jot, a plaintext journal tool for capturing ideas, tasks,
   notes, plans, and logs. Trigger on: "jot add", "jot list", "jot search",
   "jot tags", "capture idea", "track task", "journal", "what are my tasks",
   "what am I working on", "project status", "search my notes", "open tasks",

@@ -1,6 +1,6 @@
 ---
 name: crier
-description: Cross-post blog content to social platforms. Crier is MCP-native with 17 tools. This skill provides judgment context that tools can't: rewrite guidelines, platform culture, workflow tips.
+description: "Cross-post blog content to social platforms. Crier is MCP-native with 17 tools. This skill provides judgment context that tools can't: rewrite guidelines, platform culture, workflow tips."
 ---
 
 # Crier Cross-Posting

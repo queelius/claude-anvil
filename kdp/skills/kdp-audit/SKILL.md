@@ -1,6 +1,11 @@
 ---
 name: kdp-audit
-description: "This skill should be used when the user asks to \"KDP audit\", \"check manuscript formatting\", \"is my book ready for KDP\", \"Amazon publishing requirements\", \"Kindle formatting check\", \"manuscript readiness\", \"book formatting audit\", \"prepare for Amazon KDP\", or mentions KDP/Amazon publishing compliance. It audits a book manuscript against Amazon KDP (Kindle Direct Publishing) requirements for both eBook and paperback formats, handling technical books (LaTeX, math-heavy) and fiction/general nonfiction."
+description: >-
+  Audit a book manuscript against Amazon KDP requirements: interior
+  formatting, cover specs, metadata, and genre-specific checks. Handles
+  technical books (LaTeX, math), fiction, and nonfiction. Produces a
+  structured gap report with Critical and Warnings sections plus
+  automation suggestions.
 ---
 
 # KDP Manuscript Audit

@@ -38,7 +38,7 @@ ai_usage:
   scope: ""                            # e.g., "code generation, documentation drafting"
   human_oversight: ""                  # e.g., "All design decisions by authors"
 
-# Related work — companion papers, sibling packages, preprints, prior pub-pipeline outputs
+# Related work (companion papers, sibling packages, preprints, prior pub-pipeline outputs)
 related_work: []
   # - type: "companion-paper"          # companion-paper, preprint, sibling-package, dependency
   #   path: "../reliability-paper/"    # local path (relative to project root) or URL

@@ -2,7 +2,7 @@
 name: journal-analyst
 description: >-
   Autonomous journal analysis agent. Use when the user needs deep analysis
-  across their jot journal — finding patterns, cross-referencing entries,
+  across their jot journal, finding patterns, cross-referencing entries,
   generating reports, analyzing project status across tags, or answering
   complex questions that require multiple queries.
   Triggers on: "analyze my journal", "journal report", "project status across all tags",
@@ -13,14 +13,14 @@ description: >-
   Context: User wants to understand their work patterns across projects.
   user: "What have I been working on this month across all projects?"
   assistant: "I'll use the journal-analyst agent to analyze your recent activity across all tags and entry types."
-  <commentary>Requires querying multiple tags and date ranges, then synthesizing patterns — multi-query analysis task.</commentary>
+  <commentary>Requires querying multiple tags and date ranges, then synthesizing patterns: multi-query analysis task.</commentary>
   </example>
 
   <example>
   Context: User wants to find related ideas across different projects.
   user: "Are there any common themes in my ideas from the past few months?"
   assistant: "I'll use the journal-analyst agent to cross-reference your ideas and identify recurring themes."
-  <commentary>Requires reading multiple entries, analyzing content, and finding patterns — deep analysis task.</commentary>
+  <commentary>Requires reading multiple entries, analyzing content, and finding patterns: deep analysis task.</commentary>
   </example>
 
   <example>

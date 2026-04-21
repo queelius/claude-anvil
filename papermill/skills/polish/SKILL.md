@@ -1,13 +1,9 @@
 ---
 name: polish
 description: >-
-  This skill should be used when the user asks to "polish my paper for
-  submission", "pre-flight check", "is my paper ready to submit",
-  "final check before submission", "prepare for submission", or needs
-  final preparation before submitting a paper. Performs a systematic
-  pre-flight check covering formatting, citations, figures, metadata,
-  and build verification. Produces a checklist report with suggested
-  fixes.
+  Perform final pre-submission checks: formatting, citations, figures,
+  metadata, and build verification. Systematic checklist identifies
+  remaining issues and suggests fixes.
 ---
 
 # Submission Polish

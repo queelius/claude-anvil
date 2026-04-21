@@ -1,7 +1,7 @@
 ---
-description: Run diagnostics — consistency, editorial, cross-references, or project status
+description: "Run diagnostics: consistency, editorial, cross-references, or project status"
 allowed-tools: Read, Grep, Glob, Bash, AskUserQuestion
-argument-hint: [work-name] [scope: all|consistency|editorial|xref|status|cross-work]
+argument-hint: "[work-name] [scope: all|consistency|editorial|xref|status|cross-work]"
 ---
 
 # /worldsmith:check

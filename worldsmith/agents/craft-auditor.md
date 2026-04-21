@@ -6,11 +6,11 @@ description: >-
   violations, dialogue craft failures, sentence-level weaknesses, and scene
   mechanic problems. Runs mechanical pattern counts via count_patterns.py and
   layers analytical judgment on top. Does not evaluate consistency, voice, or
-  structure — only prose quality.
+  structure, only prose quality.
 
   <example>
   Context: Orchestrator needs prose craft analysis during multi-agent review.
-  user: "Audit the manuscript for prose craft issues — cliches, telling, weak dialogue"
+  user: "Audit the manuscript for prose craft issues: cliches, telling, weak dialogue"
   assistant: "I'll launch the craft-auditor to analyze prose quality: show-don't-tell, dialogue craft, sentence mechanics, and scene structure."
   </example>
   <example>

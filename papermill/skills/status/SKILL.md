@@ -1,11 +1,9 @@
 ---
 name: status
 description: >-
-  This skill should be used when the user asks to "show paper status",
-  "where am I on this paper", "what's the state of my paper", "papermill
-  dashboard", or needs orientation on a paper project. Reads .papermill/state.md
-  and presents a read-only dashboard showing stage, thesis, experiments,
-  review history, venue, and suggested next actions.
+  Display a read-only dashboard for paper project status: stage, thesis,
+  experiments, review history, venue, and suggested next action. Reads
+  .papermill/state.md.
 ---
 
 # Status Dashboard

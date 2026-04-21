@@ -1,13 +1,9 @@
 ---
 name: draft
 description: >-
-  This skill should be used when the user asks to "draft my paper",
-  "write the paper", "bootstrap a draft", "generate a manuscript",
-  "write the first draft", "create a paper draft", or needs to produce
-  a full or partial manuscript draft. Launches a multi-agent writing
-  system with specialist writers for literature, formal content,
-  methodology, and results, orchestrated by a lead author agent.
-  Produces a manuscript draft and section-level artifacts in
+  Launch a multi-agent writing system with specialist writers for
+  literature, formal content, methodology, and results, orchestrated by a
+  lead author. Produces a manuscript draft and section-level artifacts in
   .papermill/drafts/. Updates .papermill/state.md.
 ---
 

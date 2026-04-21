@@ -1,13 +1,10 @@
 ---
 name: review
 description: >-
-  This skill should be used when the user asks to "review my paper",
-  "give me feedback on my draft", "editorial review", "is my paper
-  ready to submit", "check my paper for issues", or needs structured
-  editorial feedback on a paper draft. Launches a multi-agent review
-  system with 8 specialists (2 literature scouts + 6 domain reviewers)
-  orchestrated by an area chair agent. Produces a unified report in
-  .papermill/reviews/. Updates .papermill/state.md.
+  Launch a multi-agent editorial review with 8 specialists (2 literature
+  scouts plus 6 domain reviewers) orchestrated by an area-chair agent.
+  Produces a unified report plus specialist reports in .papermill/reviews/.
+  Updates .papermill/state.md.
 ---
 
 # Multi-Agent Editorial Review

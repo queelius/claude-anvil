@@ -1,6 +1,6 @@
 ---
 name: triage
-description: Intelligent journal cleanup — cross-references open tasks and ideas with git history, codebase state, and project activity to suggest what's done, stale, or abandoned
+description: "Intelligent journal cleanup: cross-references open tasks and ideas with git history, codebase state, and project activity to suggest what's done, stale, or abandoned"
 argument-hint: "[tag or project name]"
 allowed-tools:
   - Bash

@@ -1,12 +1,10 @@
 ---
 name: prior-art
 description: >-
-  This skill should be used when the user asks to "survey related work",
-  "find prior art", "literature review", "what papers are related to mine",
-  "search for references", or needs to conduct a systematic literature
-  survey. Reads thesis from .papermill/state.md, searches academic sources,
-  classifies references, identifies gaps, generates BibTeX, and updates
-  the state file. Can launch the surveyor agent for deep autonomous search.
+  Conduct a systematic literature survey. Reads the thesis from
+  .papermill/state.md, searches academic sources, classifies references,
+  identifies gaps, generates BibTeX, and updates the state file. Can
+  launch the surveyor agent for deeper autonomous search.
 ---
 
 # Prior Art: Systematic Literature Survey

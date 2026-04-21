@@ -1,11 +1,8 @@
 ---
 name: experiment
 description: >-
-  This skill should be used when the user asks to "design an experiment",
-  "plan my experiments", "set up a benchmark", "how should I test my
-  thesis", "design a computational study", or needs to plan experiments
-  for a research paper. Covers hypothesis formulation, variable
-  identification, methodology selection, and success criteria definition.
+  Design rigorous experiments for a research paper: hypothesis formulation,
+  variable identification, methodology selection, and success criteria.
   Produces a structured experiment plan with reproducibility in mind.
 ---
 

@@ -9,12 +9,12 @@ description: >-
   <example>
   Context: Orchestrator needs a confrontation scene drafted for chapter 7.
   user: "Draft the scene where Maren confronts her mother about the treaty"
-  assistant: "I'll launch the scene-writer to draft the confrontation — entering late, writing to Maren's documented voice patterns, and grounding the tension in physical detail."
+  assistant: "I'll launch the scene-writer to draft the confrontation: entering late, writing to Maren's documented voice patterns, and grounding the tension in physical detail."
   </example>
   <example>
   Context: Orchestrator needs a quiet character scene between two chapters.
   user: "Write the interlude scene where Kael discovers the broken resonance stone"
-  assistant: "I'll launch the scene-writer to draft the discovery scene — sensory detail, Kael's documented speech tics, and a turn that shifts the stakes."
+  assistant: "I'll launch the scene-writer to draft the discovery scene: sensory detail, Kael's documented speech tics, and a turn that shifts the stakes."
   </example>
 tools:
   - Read

@@ -1,6 +1,10 @@
 ---
 name: cran-audit
-description: "This skill should be used when the user asks to \"audit for CRAN\", \"check CRAN readiness\", \"prepare for CRAN submission\", \"CRAN check\", \"is my package CRAN ready\", \"submit to CRAN\", or mentions CRAN submission compliance. It audits an R package against CRAN Repository Policy and submission requirements, producing a structured gap report with actionable fixes."
+description: >-
+  Audit an R package against CRAN Repository Policy and submission
+  requirements. Produces a gap report with Critical (must fix), Warnings
+  (should fix), and pass/fail assessment per requirement type. Offers
+  automated fixes where possible.
 ---
 
 # CRAN Submission Audit

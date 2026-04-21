@@ -1,6 +1,9 @@
 ---
 name: r-pub-pipeline
-description: "This skill should be used when the user asks to \"publish my R package\", \"R publication pipeline\", \"get this R package published\", \"CRAN and JOSS pipeline\", \"publish to CRAN and JOSS\", or mentions an end-to-end R package publication workflow. It orchestrates the full CRAN → JOSS → (optionally JSS) publication pipeline for R packages, coordinating audits, paper drafting, and review cycles."
+description: >-
+  Orchestrate the full R publication pipeline: CRAN submission for
+  distribution, JOSS paper for DOI and peer review, optionally a JSS
+  methods paper. Coordinates audits, drafting, and review cycles.
 ---
 
 # R Package Publication Pipeline

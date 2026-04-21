@@ -7,6 +7,16 @@ tools:
   - Bash
   - Read
   - AskUserQuestion
+  - mcp__crier__crier_summary
+  - mcp__crier__crier_query
+  - mcp__crier__crier_missing
+  - mcp__crier__crier_search
+  - mcp__crier__crier_list_remote
+  - mcp__crier__crier_failures
+  - mcp__crier__crier_stats
+  - mcp__crier__crier_stats_refresh
+  - mcp__crier__crier_sql
+  - mcp__crier__crier_doctor
 ---
 
 # Cross-Posting Auditor

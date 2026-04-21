@@ -1,6 +1,11 @@
 ---
 name: kdp-listing
-description: "This skill should be used when the user asks to \"craft Amazon listing\", \"write book blurb\", \"KDP blurb\", \"book description\", \"Amazon keywords\", \"book categories\", \"KDP listing\", \"improve my blurb\", \"help with book marketing metadata\", or mentions creating or refining the marketing copy for a book on Amazon KDP. It generates blurb, keywords, categories, and author bio — the four artifacts that determine discoverability and conversion on Amazon."
+description: >-
+  Craft the four marketing artifacts for an Amazon KDP listing: blurb
+  (with HTML formatting), keywords, BISAC categories, and author bio.
+  Reads manuscript context to generate variants, then saves outputs to
+  the user config. These four artifacts determine discoverability and
+  conversion on Amazon.
 ---
 
 # KDP Listing Craft

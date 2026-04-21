@@ -1,12 +1,9 @@
 ---
 name: outline
 description: >-
-  This skill should be used when the user asks to "outline my paper",
-  "structure the paper", "design the paper sections", "create a paper
-  outline", "organize my argument", or needs to design or refine paper
-  structure. Generates a section-by-section outline with purpose, key
-  arguments, estimated length, and narrative arc. Adapts to the paper
-  type and venue conventions. Updates .papermill/state.md.
+  Design paper structure: generate a section-by-section outline with
+  purpose, key content, estimated length, and narrative arc. Adapts to
+  paper type and venue conventions. Updates .papermill/state.md.
 ---
 
 # Paper Outline

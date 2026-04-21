@@ -1,6 +1,10 @@
 ---
 name: pypi-publish
-description: "This skill should be used when the user asks to \"publish to PyPI\", \"upload to PyPI\", \"PyPI release\", \"publish my Python package\", \"package for PyPI\", \"submit to PyPI\", \"PyPI submission\", or mentions PyPI publishing. It guides the complete workflow: auditing package metadata, running tests, building distributions, testing on TestPyPI, and publishing to PyPI."
+description: >-
+  Audit a Python package's metadata, verify tests pass, build
+  distributions, test on TestPyPI, then publish to PyPI. Validates name,
+  version, readme rendering, and dependency requirements. Handles
+  credential setup and trusted publishers.
 ---
 
 # PyPI Package Publication

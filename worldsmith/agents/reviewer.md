@@ -18,7 +18,7 @@ description: >-
   <example>
   Context: User wants a full consistency and craft pass before publishing.
   user: "Review my novel for consistency and craft issues"
-  assistant: "I'll launch the reviewer agent for a full editorial review — consistency, craft, voice, and structure."
+  assistant: "I'll launch the reviewer agent for a full editorial review (consistency, craft, voice, and structure)."
   </example>
   <example>
   Context: User wants a comprehensive editorial report.

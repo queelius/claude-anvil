@@ -1,14 +1,10 @@
 ---
 name: init
 description: >-
-  This skill should be used when the user asks to "initialize a paper",
-  "start a new paper project", "set up papermill", "onboard this repo",
-  "refresh papermill", "update papermill state", or needs to create or
-  update the .papermill/state.md state file. On new repos: discovers
-  structure, infers format, gathers author info, creates state file. On
-  existing repos: offers refresh mode that adds missing schema fields and
-  new context without overwriting existing data. Migrates old .papermill.md
-  files to .papermill/state.md automatically.
+  Initialize a paper repository: discover structure, infer format, gather
+  author info, and create .papermill/state.md. On existing repos, refresh
+  mode adds missing schema fields without overwriting data. Migrates legacy
+  .papermill.md to .papermill/state.md automatically.
 ---
 
 # Papermill Init

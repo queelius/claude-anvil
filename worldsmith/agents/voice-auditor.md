@@ -4,8 +4,8 @@ description: >-
   Specialist agent for character voice, dialogue distinctiveness, and POV
   consistency in fiction manuscripts. Launched by the reviewer orchestrator
   during multi-agent review. Verifies characters sound like themselves and like
-  distinct people — the hardest thing for AI-assisted fiction to get right. Does
-  not evaluate consistency, prose craft, or structure — only voice.
+  distinct people: the hardest thing for AI-assisted fiction to get right. Does
+  not evaluate consistency, prose craft, or structure, only voice.
 
   <example>
   Context: Orchestrator needs character voice verification during multi-agent review.

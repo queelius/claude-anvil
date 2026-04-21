@@ -1,12 +1,9 @@
 ---
 name: thesis
 description: >-
-  This skill should be used when the user asks to "define my thesis",
-  "sharpen my research question", "what is my paper's main claim",
-  "extract the thesis from my draft", "crystallize my contribution",
-  or needs to refine the central claim and novelty of a research paper.
-  Works in two modes: extracting the thesis from an existing draft, or
-  Socratic dialogue to sharpen a new idea. Updates .papermill/state.md.
+  Extract or refine a paper's central claim and novelty via Socratic
+  dialogue or existing-draft analysis. Two modes: extract from a draft,
+  or explore and sharpen a new idea. Updates .papermill/state.md.
 ---
 
 # Thesis Extraction and Refinement

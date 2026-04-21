@@ -1,6 +1,10 @@
 ---
 name: kdp-publish
-description: "This skill should be used when the user asks to \"publish on KDP\", \"publish my book\", \"Amazon book publishing\", \"Kindle Direct Publishing\", \"self-publish\", \"publish on Amazon\", \"KDP workflow\", \"submit to Amazon KDP\", \"publish to Kindle\", or mentions Amazon/KDP book publishing. It guides the complete workflow for publishing a book through Amazon KDP, handling both technical books and fiction/nonfiction."
+description: >-
+  Orchestrate the full Amazon KDP publishing workflow: audit, listing
+  craft, manuscript prep, cover generation, dashboard submission, pricing,
+  publish. Phases gate each other. Handles both eBook and paperback.
+  Manages MCP-driven cover generation or falls back to manual prep.
 ---
 
 # KDP Book Publishing Workflow

@@ -1,6 +1,11 @@
 ---
 name: worldsmith-methodology
-description: This skill should be used when the user asks about "documentation structure", "doc relationships", "cross-references", "propagation", "canonical workflow", "exploratory workflow", "docs-first", "lore management", "worldbuilding docs", "consistency rules", "canonical hierarchy", "update docs", "change propagation", "editorial workflow", "Silmarillion approach", or is working in a project with a worldbuilding documentation ecosystem (docs/ or lore/ directory).
+description: >-
+  Use when working in a project with a worldbuilding documentation
+  ecosystem (docs/ or lore/ directory). Provides the documentation-first
+  methodology: canonical hierarchy, doc roles (timeline, lore, characters,
+  systems), propagation discipline, and the dual canonical and exploratory
+  workflow.
 version: 0.2.0
 ---
 

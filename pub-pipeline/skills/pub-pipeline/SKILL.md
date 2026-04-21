@@ -1,6 +1,9 @@
 ---
 name: pub-pipeline
-description: "This skill should be used when the user asks to \"publish my package\", \"publication pipeline\", \"get this published\", \"how do I publish this\", or mentions publication without specifying an ecosystem. It detects the project type (R package or Python package) and routes to the appropriate ecosystem-specific publication skill."
+description: >-
+  Detect project type and route to the appropriate publication workflow.
+  Routes R packages to the CRAN/JOSS pipeline, Python packages to PyPI
+  publishing, or asks for clarification if ambiguous.
 ---
 
 # Publication Pipeline Router

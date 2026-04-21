@@ -1,13 +1,10 @@
 ---
 name: research
 description: >-
-  This skill should be used when the user asks to "research this",
-  "investigate", "prove or disprove", "run experiments on", "find a
-  counterexample", "iterate on this problem", "work on this until solved",
-  or needs an autonomous agent to grind on a research goal through proofs,
-  code, simulations, tests, and counterexample search. Fire-and-forget:
-  the agent runs autonomously and writes all results to .research/ in
-  the target project.
+  Launch an autonomous research agent that iterates toward a goal through
+  proofs, code, simulations, tests, and counterexample search.
+  Fire-and-forget mode: the agent runs autonomously and writes all results
+  to .research/ in the target project.
 ---
 
 # Autonomous Research Agent

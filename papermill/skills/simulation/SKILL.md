@@ -1,12 +1,9 @@
 ---
 name: simulation
 description: >-
-  This skill should be used when the user asks to "design a Monte Carlo
-  simulation", "validate my theoretical result", "set up a simulation
-  study", "how many replications do I need", "plan a coverage study",
-  or needs to design simulations for verifying theoretical results.
-  Covers sample size determination, convergence diagnostics, and result
-  presentation. Specialized for statistical methodology papers.
+  Design Monte Carlo simulations for theoretical validation: sample size
+  determination, convergence diagnostics, and result presentation.
+  Specialized for statistical methodology papers.
 ---
 
 # Monte Carlo Simulation Design

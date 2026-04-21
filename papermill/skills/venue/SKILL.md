@@ -1,12 +1,9 @@
 ---
 name: venue
 description: >-
-  This skill should be used when the user asks to "where should I submit
-  this paper", "find a venue for my paper", "which journal fits my paper",
-  "evaluate publication venues", "conference or journal for this work",
-  or needs to identify and evaluate publication venues. Considers scope,
-  impact factor, review timeline, acceptance rate, and fit. Produces a
-  ranked shortlist with submission strategy guidance.
+  Identify and evaluate publication venues. Considers scope, impact factor,
+  review timeline, acceptance rate, and fit. Produces a ranked shortlist
+  with submission strategy guidance. Updates .papermill/state.md.
 ---
 
 # Venue Selection

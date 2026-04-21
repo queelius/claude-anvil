@@ -1,7 +1,7 @@
 {
   "name": "crier",
   "version": "1.1.0",
-  "description": "Cross-post blog content to multiple platforms — audit, publish, rewrite, and track content distribution via the crier CLI",
+  "description": "Cross-post blog content to multiple platforms: audit, publish, rewrite, and track content distribution via the crier CLI",
   "author": {
     "name": "Alexander Towell",
     "email": "lex@metafunctor.com",

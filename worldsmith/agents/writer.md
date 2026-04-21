@@ -19,12 +19,12 @@ description: >-
   <example>
   Context: User wants worldbuilding content developed.
   user: "Develop the Ashwalker culture"
-  assistant: "I'll launch the writer agent to build out the Ashwalker culture — history, customs, internal diversity, and consequences."
+  assistant: "I'll launch the writer agent to build out the Ashwalker culture: history, customs, internal diversity, and consequences."
   </example>
   <example>
   Context: User wants character work done.
   user: "Flesh out Sera's backstory"
-  assistant: "I'll launch the writer agent to develop Sera's backstory — voice patterns, arc trajectory, and relationship dynamics."
+  assistant: "I'll launch the writer agent to develop Sera's backstory: voice patterns, arc trajectory, and relationship dynamics."
   </example>
 tools:
   - Read

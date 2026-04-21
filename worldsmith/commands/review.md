@@ -1,5 +1,5 @@
 ---
-description: Launch multi-agent editorial review — consistency, craft, voice, and structure auditors in parallel
+description: Launch multi-agent editorial review (consistency, craft, voice, structure auditors in parallel)
 allowed-tools: Read, Write, Glob, Grep, Bash, Task
 argument-hint: "[work-name] [scope: full manuscript, or specific chapters e.g. 'chapters 3-5']"
 ---

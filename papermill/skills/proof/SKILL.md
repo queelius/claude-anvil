@@ -1,12 +1,9 @@
 ---
 name: proof
 description: >-
-  This skill should be used when the user asks to "help me prove this
-  theorem", "check my proof", "verify this proof is correct", "develop
-  a proof for", "is this proof rigorous", or needs to develop, verify,
-  or refine mathematical proofs. Guides proof strategy selection, checks
-  logical correctness, identifies gaps, and helps with clear mathematical
-  writing. Works with existing proof drafts or constructs from scratch.
+  Develop, verify, or refine mathematical proofs: strategy selection,
+  logical-correctness checks, gap identification, and clear presentation.
+  Works with existing drafts or constructs from scratch.
 ---
 
 # Proof Development
