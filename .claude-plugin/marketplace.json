@@ -66,7 +66,7 @@
       "name": "kdp",
       "source": "./kdp",
       "description": "Amazon KDP book publishing: manuscript audit, listing craft, and submission workflow",
-      "version": "0.3.0",
+      "version": "0.4.0",
       "author": {
         "name": "Alexander Towell"
       }
@@ -84,7 +84,7 @@
       "name": "crier",
       "source": "./crier",
       "description": "Cross-post blog content to multiple platforms: audit, publish, rewrite, and track content distribution via the crier CLI",
-      "version": "1.1.0",
+      "version": "1.2.0",
       "author": {
         "name": "Alexander Towell"
       }
