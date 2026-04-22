@@ -1,6 +1,7 @@
 #!/bin/bash
 # Detect crier CLI availability on SessionStart.
 # Warns if the CLI is missing so MCP tools and the /crier skill fail loudly, not silently.
+# Hook contract: never block, never crash.
 set -euo pipefail
 
 if ! command -v crier &>/dev/null; then

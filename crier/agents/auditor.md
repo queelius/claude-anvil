@@ -17,6 +17,7 @@ tools:
   - mcp__crier__crier_stats_refresh
   - mcp__crier__crier_sql
   - mcp__crier__crier_doctor
+  - mcp__crier__crier_check
 ---
 
 # Cross-Posting Auditor
