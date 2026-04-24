@@ -1,7 +1,7 @@
 {
   "name": "repoindex",
-  "version": "0.15.0",
-  "description": "Agent-driven repository intelligence for Claude Code. MCP-first architecture with three specialized agents: repo-doctor (triage), repo-polish (release prep), repo-explorer (analysis).",
+  "version": "0.16.0",
+  "description": "Repository intelligence for Claude Code. MCP-first access to a local git catalog, three specialized agents (repo-doctor, repo-polish, repo-explorer), and five slash commands (/repo-week, /repo-status, /repo-audit, /repo-sprint, /repo-mirror) for recurring workflows.",
   "author": {
     "name": "Alexander Towell",
     "email": "lex@metafunctor.com",
