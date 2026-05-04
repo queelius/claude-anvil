@@ -13,16 +13,17 @@ A Claude Code **plugin marketplace** (`queelius`). All plugins are distributed a
 |--------|-----|---------|---------|
 | **papermill** | `papermill/` | Academic paper lifecycle: thesis, lit survey, experiment, review, venue, submission | 0.6.0 |
 | **worldsmith** | `worldsmith/` | Documentation-first fiction worldbuilding (the "Silmarillion approach") | 0.8.0 |
-| **pub-pipeline** | `pub-pipeline/` | Publication workflows: R/CRAN/JOSS, Python/PyPI | 0.6.0 |
+| **pub-pipeline** | `pub-pipeline/` | Publication workflows: R/CRAN/JOSS, Python/PyPI | 0.7.0 |
 | **mf** | `mf/` | Metafunctor site management: blog architecture, content workflows, crier | 1.1.0 |
-| **repoindex** | `repoindex/` | Agent-driven repository intelligence. MCP-first with repo-doctor, repo-polish, repo-explorer agents | 0.15.0 |
+| **repoindex** | `repoindex/` | Agent-driven repository intelligence. MCP-first with repo-doctor, repo-polish, repo-explorer agents | 0.16.0 |
 | **alex-confidential** | `locksmith/` | Confidentiality toolkit: cryptoid, pagevault, gpg encryption | 0.2.0 |
-| **kdp** | `kdp/` | Amazon KDP book publishing: manuscript audit, listing craft, submission workflow | 0.3.0 |
+| **kdp** | `kdp/` | Amazon KDP book publishing: manuscript audit, listing craft, submission workflow | 0.4.0 |
 | **jot** | `jot/` | Journal-aware sessions that surface tasks, ideas, and plans from your jot journal | 0.3.0 |
-| **crier** | `crier/` | Cross-post blog content to multiple platforms via the crier CLI | 1.1.0 |
-| **research-agent** | `research-agent/` | Autonomous research agent: iterates toward a goal through proofs, code, simulations, tests | 0.1.0 |
+| **crier** | `crier/` | Cross-post blog content to multiple platforms via the crier CLI | 1.2.0 |
+| **research-agent** | `research-agent/` | Autonomous research agent: iterates toward a goal through proofs, code, simulations, tests, with parallel sub-agent dispatch | 0.2.0 |
+| **vista** | `vista/` | Surface salient research directions from highly-cited papers. Live OpenAlex search, PDF section extraction, structured catalog | 0.1.0 |
 
-> **Note**: `marketplace.json` also declares `profiler` (0.1.0), but its directory is not yet present in the repo. Treat it as reserved or in-flight until scaffolded.
+> **Note**: A `profiler/` directory exists locally as a symlink to `~/github/personal/profiles/` but is intentionally not in `marketplace.json` (the symlink targets an absolute path outside the repo, so a marketplace install would break for other users). Re-add when the plugin is properly in-tree or a git submodule.
 
 ## Plugin Anatomy
 

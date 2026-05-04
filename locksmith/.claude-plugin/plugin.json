@@ -6,5 +6,6 @@
   "license": "MIT",
   "author": {
     "name": "Alexander Towell"
-  }
+  },
+  "keywords": ["encryption", "cryptography", "gpg", "cryptoid", "pagevault", "confidentiality"]
 }

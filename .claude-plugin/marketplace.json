@@ -48,7 +48,7 @@
       "name": "repoindex",
       "source": "./repoindex",
       "description": "Agent-driven repository intelligence. MCP-first with repo-doctor, repo-polish, repo-explorer agents.",
-      "version": "0.15.0",
+      "version": "0.16.0",
       "author": {
         "name": "Alexander Towell"
       }
@@ -93,6 +93,15 @@
       "name": "research-agent",
       "source": "./research-agent",
       "description": "Autonomous research agent: iterates toward a goal through proofs, code, simulations, tests, and counterexample search",
+      "version": "0.2.0",
+      "author": {
+        "name": "Alexander Towell"
+      }
+    },
+    {
+      "name": "vista",
+      "source": "./vista",
+      "description": "Surface salient research directions from highly-cited papers. Live OpenAlex search, PDF section extraction, structured catalog, MCP tools for in-conversation lookups.",
       "version": "0.1.0",
       "author": {
         "name": "Alexander Towell"

@@ -6,5 +6,6 @@
   "license": "MIT",
   "author": {
     "name": "Alexander Towell"
-  }
+  },
+  "keywords": ["hugo", "metafunctor", "site-management", "blog", "static-site"]
 }

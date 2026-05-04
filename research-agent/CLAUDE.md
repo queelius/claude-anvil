@@ -27,4 +27,14 @@ research-agent/
 - The agent prompt (`agents/researcher.md`) contains the full research methodology. It is intentionally large. Keep sections well-organized with clear headers.
 - The skill (`skills/research/SKILL.md`) is thin. Its only job is to parse user intent and launch the agent. Do not put research methodology here.
 - The command (`commands/research.md`) is a one-liner. Keep it that way.
-- The agent uses `model: opus` for maximum context window (1M tokens).
+- The agent uses `model: opus`, which resolves to the latest Opus (currently 4.7 with the 1M context window when the harness enables it). Long research runs still need file-system persistence (`log.md`, `state.md`, `attempts/`) because individual cycles may compress earlier history; the disk is always the source of truth.
+
+## Capabilities
+
+The researcher has three categories of tools:
+
+1. **File and shell**: `Bash`, `BashOutput`, `KillShell`, `Read`, `Write`, `Edit`, `Glob`, `Grep`. The Bash + BashOutput + KillShell combination lets the researcher launch long-running experiments with `run_in_background: true`, monitor accumulated output, and terminate runs that have stalled.
+2. **Research**: `WebSearch`, `WebFetch` for prior-art lookups, paper retrieval, and reference verification.
+3. **Delegation**: `Task` for spawning sub-agents that pursue parallel approaches (different proof strategies, different parameter regimes, different literature angles). Sub-agent results return as structured summaries that the researcher integrates into `log.md`.
+
+When extending the agent, prefer giving it more capability in these existing categories over adding new ones. Adding more tool categories without a clear use case dilutes the prompt.

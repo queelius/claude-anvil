@@ -1,11 +1,12 @@
 {
   "name": "research-agent",
   "description": "Autonomous research agent: iterates toward a goal through proofs, code, simulations, tests, and counterexample search",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "repository": "https://github.com/queelius/claude-anvil",
   "license": "MIT",
   "author": {
     "name": "Alexander Towell",
     "url": "https://github.com/queelius"
-  }
+  },
+  "keywords": ["research", "autonomous-agent", "proofs", "simulations", "counterexamples", "experiments"]
 }
