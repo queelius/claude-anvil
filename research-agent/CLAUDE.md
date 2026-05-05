@@ -8,26 +8,40 @@ An autonomous research agent plugin for Claude Code. Given a goal and an optiona
 
 ```
 research-agent/
-  .claude-plugin/plugin.json   # Plugin manifest
-  skills/research/SKILL.md     # Launch skill: parse goal + eval, spawn agent
-  commands/research.md          # Thin /research slash command
-  agents/researcher.md          # Monolithic autonomous research agent
+  .claude-plugin/plugin.json    # Plugin manifest
+  skills/research/SKILL.md      # Launch skill: parse goal + eval, spawn agent
+  skills/status/SKILL.md        # Read-only status of an in-flight run
+  skills/resume/SKILL.md        # Continue an interrupted run
+  skills/synthesize/SKILL.md    # Force the run to conclude with synthesis.md
+  commands/research.md          # /research-agent:research (launch)
+  commands/status.md            # /research-agent:status
+  commands/resume.md            # /research-agent:resume
+  commands/synthesize.md        # /research-agent:synthesize
+  agents/researcher.md          # The autonomous research agent (mode-aware)
   CLAUDE.md                     # This file
 ```
 
 ## How It Works
 
-1. User invokes `/research` with a goal (and optionally an eval script path)
-2. The command delegates to the skill
-3. The skill parses the goal and eval path, then launches the researcher agent
-4. The agent creates `.research/` in the target project, then runs autonomously
+The agent has three modes of operation, selected by the XML tags the
+launching skill passes:
+
+- **fresh**: `<goal>...</goal>` plus `<eval>...</eval>`. Used by `/research-agent:research`. Creates `.research/`, writes goal.md, optionally runs the eval baseline, then begins the DECOMPOSE phase.
+- **resume**: `<mode>resume</mode>`. Used by `/research-agent:resume`. Reads state.md and log.md, reorients, then continues from the documented current focus.
+- **synthesize**: `<mode>synthesize</mode>`. Used by `/research-agent:synthesize`. Reads state.md and log.md, finalizes statuses, writes synthesis.md, exits without starting new cycles.
+
+The status skill is **not** an agent dispatch: it reads `.research/` files
+directly and produces a structured summary. This is faster, cheaper, and
+deterministic, and it never accidentally restarts the agent.
 
 ## Editing Guidelines
 
-- The agent prompt (`agents/researcher.md`) contains the full research methodology. It is intentionally large. Keep sections well-organized with clear headers.
-- The skill (`skills/research/SKILL.md`) is thin. Its only job is to parse user intent and launch the agent. Do not put research methodology here.
-- The command (`commands/research.md`) is a one-liner. Keep it that way.
-- The agent uses `model: opus`, which resolves to the latest Opus (currently 4.7 with the 1M context window when the harness enables it). Long research runs still need file-system persistence (`log.md`, `state.md`, `attempts/`) because individual cycles may compress earlier history; the disk is always the source of truth.
+- The agent prompt (`agents/researcher.md`) contains the full research methodology and mode dispatch. It is intentionally large. Keep sections well-organized with clear headers.
+- Each skill (`skills/<name>/SKILL.md`) is thin. The skill's job is to parse user intent and prepare the right XML tags for the agent (or, for status, read files directly). Do not put research methodology in skills.
+- Commands are one-liners. Keep them that way.
+- The agent uses `model: opus`, which resolves to the latest Opus (currently 4.7 with the 1M context window when the harness enables it). Long research runs still need file-system persistence (`log.md`, `state.md`, `attempts/`) because very long runs may compress earlier history; the disk is always the source of truth.
+
+When adding a new mode (e.g., a "branch" mode that forks a research run from a checkpoint), edit four files in lockstep: a new skill, a new command, a new section in the agent's Initialization documenting the mode, and the mode list in this file.
 
 ## Capabilities
 

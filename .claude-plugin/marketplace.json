@@ -92,8 +92,8 @@
     {
       "name": "research-agent",
       "source": "./research-agent",
-      "description": "Autonomous research agent: iterates toward a goal through proofs, code, simulations, tests, and counterexample search",
-      "version": "0.2.0",
+      "description": "Autonomous research agent: iterates toward a goal through proofs, code, simulations, tests, and counterexample search. Status, resume, and synthesize commands manage long-running research as a session.",
+      "version": "0.3.0",
       "author": {
         "name": "Alexander Towell"
       }

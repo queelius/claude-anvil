@@ -45,3 +45,8 @@ Spawn the researcher agent (Agent tool) with this prompt structure:
 The agent runs autonomously from here. Inform the user:
 
 > Research agent launched. It will work autonomously in this directory, writing progress to `.research/log.md`. When it finishes, the synthesis will be at `.research/synthesis.md`.
+>
+> While it runs, you can:
+> - `/research-agent:status` to see cycle progress, current focus, and eval trend (read-only)
+> - `/research-agent:resume` to continue after an interruption or session restart
+> - `/research-agent:synthesize` to force conclusion if results are good enough or the agent is stalling

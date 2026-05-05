@@ -20,7 +20,7 @@ A Claude Code **plugin marketplace** (`queelius`). All plugins are distributed a
 | **kdp** | `kdp/` | Amazon KDP book publishing: manuscript audit, listing craft, submission workflow | 0.4.0 |
 | **jot** | `jot/` | Journal-aware sessions that surface tasks, ideas, and plans from your jot journal | 0.3.0 |
 | **crier** | `crier/` | Cross-post blog content to multiple platforms via the crier CLI | 1.2.0 |
-| **research-agent** | `research-agent/` | Autonomous research agent: iterates toward a goal through proofs, code, simulations, tests, with parallel sub-agent dispatch | 0.2.0 |
+| **research-agent** | `research-agent/` | Autonomous research agent with parallel sub-agent dispatch and a status/resume/synthesize control surface for managing long runs | 0.3.0 |
 | **vista** | `vista/` | Surface salient research directions from highly-cited papers. Live OpenAlex search, PDF section extraction, structured catalog | 0.1.0 |
 
 > **Note**: A `profiler/` directory exists locally as a symlink to `~/github/personal/profiles/` but is intentionally not in `marketplace.json` (the symlink targets an absolute path outside the repo, so a marketplace install would break for other users). Re-add when the plugin is properly in-tree or a git submodule.
