@@ -47,7 +47,7 @@ Delegate deterministic work to the CLI (`ops generate` for citation files, licen
 
 Four tables in `~/.repoindex/index.db`:
 
-- **repos**: core identity (`name`, `path`), git status (`is_clean`, `ahead`, `behind`), metadata (`language`, `description`, `keywords`), boolean flags (`has_readme`, `has_license`, `has_ci`, `has_citation`, `has_codemeta`, `has_funding`, `has_contributors`, `has_changelog`), GitHub stats (`github_stars`, `github_topics`, `github_is_archived`), Gitea stats (`gitea_stars`, `gitea_topics`)
+- **repos**: core identity (`name`, `path`), git status (`is_clean`, `ahead`, `behind`), metadata (`language`, `description`, `keywords`), boolean flags (`has_readme`, `has_license`, `has_ci`, `has_citation`, `has_codemeta`, `has_funding`, `has_contributors`, `has_changelog`), GitHub stats (`stars`, `topics`, `is_archived`), Gitea stats (`stars`, `topics`)
 - **publications**: registry packages (`pypi`/`cran`/`zenodo`/`npm`/`cargo`/`docker`/`rubygems`/`go`), `published` flag, `downloads_total`/`downloads_30d`, `doi`
 - **events**: git activity (`commit`/`git_tag`/`branch`/`merge`) with timestamps
 - **tags**: classification tags, auto-derived from metadata. Source attribution: `user`, `implicit`, `github`, `gitea`, `pyproject`, `pypi`, `cran`

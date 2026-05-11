@@ -66,7 +66,7 @@ Since MCP tools are natively available to the LLM, the CLI reference skills (`re
    ```sql
    SELECT r.name, MAX(e.timestamp) as last_activity
    FROM repos r LEFT JOIN events e ON r.id = e.repo_id
-   WHERE r.github_is_archived = 0
+   WHERE r.is_archived = 0
    GROUP BY r.id
    HAVING last_activity < datetime('now', '-90 days')
    ORDER BY last_activity
@@ -121,7 +121,7 @@ Since MCP tools are natively available to the LLM, the CLI reference skills (`re
    ```bash
    repoindex ops generate citation --dry-run "name == 'REPO'"
    repoindex ops generate codemeta --dry-run "name == 'REPO'"
-   repoindex ops github set-topics --from-pyproject --dry-run "name == 'REPO'"
+   repoindex ops set-topics REPO topic1 topic2 --dry-run
    ```
 
 4. **AI-assisted fixes** (prose that needs judgment):

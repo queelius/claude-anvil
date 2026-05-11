@@ -2,7 +2,7 @@
 
 Repository intelligence for Claude Code. MCP-driven access to a local git catalog, with agents for multi-step workflows and slash commands for recurring queries. Backed by the [repoindex](https://github.com/queelius/repoindex) MCP server.
 
-**Requires**: [repoindex](https://github.com/queelius/repoindex) v0.16 or newer with the MCP extra:
+**Requires**: [repoindex](https://github.com/queelius/repoindex) v2.0 or newer with the MCP extra:
 ```bash
 pip install repoindex[mcp]
 repoindex refresh --external

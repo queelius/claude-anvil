@@ -46,20 +46,26 @@ Special flags:
 Run:
 
 ```bash
-repoindex config show 2>&1 | grep -A 20 "^mirrors:" || echo "NO_MIRRORS"
+repoindex config show 2>&1 | grep -A 30 "^forges:" || echo "NO_FORGES"
 ```
 
-If there is no `mirrors:` section, stop and print a config template:
+If there is no `forges:` section or no entries with `role: mirror`, stop and print a config template:
 
 ```yaml
-mirrors:
-  - name: codeberg
+forges:
+  codeberg:
+    source_id: gitea
+    host: codeberg.org
+    role: mirror
+    token_env: CODEBERG_TOKEN
     url_template: "https://codeberg.org/queelius/{repo}.git"
-  - name: gitea-gdrive
+  gitea-gdrive:
+    source_id: gitea
+    role: mirror
     url_template: "file:///mnt/gdrive/git-mirrors/{repo}.git"
 ```
 
-Explain that `{repo}` is substituted with the repo name, and that SSH URLs (`git@codeberg.org:queelius/{repo}.git`) work too. Do not proceed to step 2.
+Explain that `{repo}` is substituted with the repo name, that SSH URLs (`git@codeberg.org:queelius/{repo}.git`) work too, and that `role: mirror` is what makes `ops mirror` recognize the entry. Do not proceed to step 2.
 
 ### Step 2: Build the command
 

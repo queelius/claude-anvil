@@ -81,7 +81,7 @@ SELECT r.name, r.language,
        (CASE WHEN r.has_ci      = 0 THEN 1 ELSE 0 END) AS gaps
 FROM repos r
 JOIN recent rc ON rc.repo_id = r.id
-WHERE COALESCE(r.github_is_archived, 0) = 0
+WHERE COALESCE(r.is_archived, 0) = 0
   AND (r.has_license = 0 OR r.has_readme = 0 OR r.has_ci = 0)
 ORDER BY gaps DESC
 LIMIT 10

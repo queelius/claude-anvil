@@ -70,7 +70,7 @@ SELECT name,
   CASE WHEN has_ci = 0 THEN 1 ELSE 0 END AS no_ci
 FROM repos
 WHERE (has_license = 0 OR has_readme = 0 OR has_ci = 0)
-  AND github_is_archived = 0
+  AND is_archived = 0
 ORDER BY (no_license + no_readme + no_ci) DESC
 LIMIT 30
 ```
@@ -83,7 +83,7 @@ Repos with no activity in 90+ days that aren't archived:
 SELECT r.name, MAX(e.timestamp) AS last_activity
 FROM repos r
 LEFT JOIN events e ON r.id = e.repo_id
-WHERE COALESCE(r.github_is_archived, 0) = 0
+WHERE COALESCE(r.is_archived, 0) = 0
 GROUP BY r.id, r.name
 HAVING last_activity IS NULL
    OR last_activity < datetime('now', '-90 days')

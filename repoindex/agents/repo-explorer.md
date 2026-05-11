@@ -55,9 +55,9 @@ Four main tables, all joined through `repo_id`:
 - `language`, `description`, `branch`, `is_clean`
 - `has_readme`, `has_license`, `has_ci`, `has_citation`, `has_codemeta`,
   `has_funding`, `has_contributors`, `has_changelog`
-- `github_stars`, `github_forks`, `github_topics`, `github_description`,
-  `github_is_fork`, `github_is_private`, `github_is_archived`
-- `gitea_stars`, `gitea_forks`, `gitea_topics` (if Gitea source enabled)
+- `stars`, `forks_count`, `topics`, `forge_description`,
+  `is_fork`, `is_private`, `is_archived`
+- `stars`, `gitea_forks`, `topics` (if Gitea source enabled)
 - `keywords` (JSON array from pyproject.toml/Cargo.toml/package.json)
 
 **publications**: registry metadata (one row per repo+registry)

@@ -73,8 +73,8 @@ Query the repo state via MCP:
 SELECT name, path, description, language, is_clean,
        has_readme, has_license, has_ci, has_citation,
        has_codemeta, has_funding, has_changelog,
-       github_owner, github_name, github_description, github_topics,
-       github_stars, github_is_archived
+       forge_owner, forge_name, forge_description, topics,
+       stars, is_archived
 FROM repos
 WHERE name = ?
 ```
@@ -119,11 +119,11 @@ repoindex ops generate codemeta --dry-run "name == 'REPO'"
 
 # Documentation scaffolding
 repoindex ops generate mkdocs --dry-run "name == 'REPO'"
-repoindex ops generate gh-pages --dry-run "name == 'REPO'"
+repoindex ops set-pages REPO --branch gh-pages --path / --dry-run
 
-# GitHub settings (sync from pyproject.toml)
-repoindex ops github set-topics --from-pyproject --dry-run "name == 'REPO'"
-repoindex ops github set-description --from-pyproject --dry-run "name == 'REPO'"
+# Forge metadata (cross-platform; dispatches through forge_id)
+repoindex ops set-topics REPO topic1 topic2 --dry-run
+repoindex ops set-description REPO "..." --dry-run
 
 # Missing boilerplate
 repoindex ops generate license --license mit --dry-run "name == 'REPO'"
@@ -141,10 +141,10 @@ one-line description, installation, usage examples, API overview. Add badges
 (DOI, PyPI, CI) only where appropriate.
 
 **Description**: Read existing description plus README. Propose improvement
-(max 350 chars for GitHub). Apply via `repoindex ops github set-description --text "..."`.
+(max 350 chars for GitHub). Apply via `repoindex ops set-description REPO "..."`.
 
 **Topics**: Read pyproject.toml keywords plus code structure. Suggest topics
-beyond what's already there. Apply via `repoindex ops github set-topics --topics t1,t2`.
+beyond what's already there. Apply via `repoindex ops set-topics REPO t1 t2`.
 
 **Documentation**: After mkdocs.yml scaffold, write actual page content.
 Create `docs/index.md` from README. Add pages based on CLAUDE.md sections.
@@ -155,7 +155,7 @@ Re-query the repo state to confirm improvements:
 
 ```sql
 SELECT name, has_readme, has_license, has_citation, has_codemeta,
-       github_description, github_topics
+       forge_description, topics
 FROM repos WHERE name = ?
 ```
 

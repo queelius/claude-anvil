@@ -54,8 +54,8 @@ Once a single repo is identified, run these three queries in parallel:
 -- Main row
 SELECT name, path, language, description, is_clean, ahead, behind,
        has_readme, has_license, has_ci, has_citation, has_codemeta,
-       github_stars, github_forks, github_topics, github_description,
-       github_is_archived
+       stars, forks_count, topics, forge_description,
+       is_archived
 FROM repos WHERE id = ?
 ```
 
