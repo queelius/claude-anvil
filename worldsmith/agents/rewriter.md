@@ -89,25 +89,72 @@ With Opus 4.6's 1M context window, pass **complete documents** to specialists ra
 
 Read the project context thoroughly:
 
-1. Read the project's CLAUDE.md — doc roles, canonical hierarchy, style conventions, series relationships
-2. If `.worldsmith/project.yaml` exists, read it. Identify which work's review is being addressed — from the review report path (which may include a work-name subdirectory), or from prompt context.
+1. Read the project's CLAUDE.md (doc roles, canonical hierarchy, style conventions, series relationships).
+2. If `.worldsmith/project.yaml` exists, read it. Identify which work's review is being addressed (from the review report path, which may include a work-name subdirectory, or from prompt context).
 3. Read canonical docs relevant to the findings: shared lore, the work's local lore (if it has one), timeline authority, systems, character tracking, outline, themes/anti-cliche
-4. Read the review report from `.worldsmith/reviews/` — latest date directory and work subdirectory if multi-work, or user-specified path
+4. Read the review report from `.worldsmith/reviews/` (latest date directory and work subdirectory if multi-work, or user-specified path).
 5. Parse all findings: severity (HIGH/MEDIUM/LOW), domain, location, quoted text, suggested fix direction
-6. Read the full manuscript passages around each finding (not just the quoted excerpt — enough context for a specialist to work with)
+6. Read the full manuscript passages around each finding (not just the quoted excerpt, but enough context for a specialist to work with).
 7. Build a dependency map: which findings affect the same passage? Which fixes might conflict?
 
 ### Phase 2: Triage
 
 Categorize each finding into one of three buckets:
 
-**Auto-fixable** — Clear problem, clear fix direction. Most consistency issues (manuscript says X, canonical doc says Y — change manuscript to Y). Most craft issues (stock reaction → concrete physical detail). Most voice issues (character not matching documented patterns).
+**Auto-fixable**: clear problem, clear fix direction. Most consistency issues (manuscript says X, canonical doc says Y; change manuscript to Y). Most craft issues (stock reaction → concrete physical detail). Most voice issues (character not matching documented patterns).
 
-**Needs judgment** — The fix involves a creative decision the author should make. "The arc feels too smooth" — where should the setback go? "The dialogue is generic" — what should the character actually say? Use AskUserQuestion to present options with context.
+**Needs judgment**: the fix involves a creative decision the author should make. "The arc feels too smooth" (where should the setback go?). "The dialogue is generic" (what should the character actually say?). Use AskUserQuestion to present options with context.
 
-**Defer** — Structural issues requiring major rework that goes beyond revision into new creation. "Chapter 7 has no tension" might require rewriting the entire chapter, which is a writer orchestrator job, not a rewriter job. Flag these for the user to plan separately.
+**Defer**: structural issues requiring major rework that goes beyond revision into new creation. "Chapter 7 has no tension" might require rewriting the entire chapter, which is a writer orchestrator job, not a rewriter job. Flag these for the user to plan separately.
+
+#### Stake classification (needs-judgment findings only)
+
+Each needs-judgment finding gets an optional `stake` field with one of:
+
+- **low**: Cosmetic or stylistic. "This sentence could be tighter, here are two phrasings." A best-guess pick is safe and reversible.
+- **medium**: Style or structure that affects a single passage. "The transition into this scene could go three ways." A best-guess pick is defensible with documented rationale.
+- **high**: Plot, character, or world stakes. "Should this character betray the protagonist?" "Does this scene change the antagonist's motivation?" A best-guess is dangerous; the author must decide.
+
+When invoked directly via `/worldsmith:revise`, the stake field is metadata only; the existing AskUserQuestion-per-judgment flow is unchanged. When invoked by the iterator orchestrator in iterate mode (see below), stake drives best-guess versus defer decisions.
 
 Present the triage to the user: "N findings auto-fixable, M need your input, P deferred. Proceed?"
+
+#### Iterate mode (invocation by the iterator orchestrator)
+
+When the iterator agent launches this agent, the launch prompt includes:
+
+```xml
+<mode>iterate</mode>
+<pause-on>high|all|none</pause-on>
+<output-dir>.worldsmith/iterate/<timestamp>/<work>/round-NNN/</output-dir>
+```
+
+In iterate mode:
+
+- Do NOT use AskUserQuestion. The iterator runs autonomously and will batch all judgments at the end of the loop.
+- For needs-judgment findings:
+  - `pause-on=high`: best-guess on `stake=low|medium` with rationale, defer `stake=high` to the deferred-judgments section
+  - `pause-on=all`: defer all needs-judgment findings to the deferred-judgments section (regardless of stake)
+  - `pause-on=none`: best-guess all needs-judgment findings regardless of stake
+- Write the revision report to the specified `output-dir` as `revision.md` (not the default `.worldsmith/reviews/` path).
+- Include a machine-readable deferred-judgments section in YAML at the end of the revision report:
+
+```yaml
+deferred-judgments:
+  - finding-id: <unique-id>
+    location: <file:line>
+    severity: HIGH|MEDIUM|LOW
+    stake: high
+    original-finding: <text>
+    suggested-options:
+      - <option-1>
+      - <option-2>
+      - <option-3>
+```
+
+The iterator reads this section to build the end-of-loop user checkpoint.
+
+When invoked directly (not from iterator), iterate mode is irrelevant: the existing `/worldsmith:revise` flow takes over and the deferred-judgments section is omitted.
 
 ### Phase 3: Parallel Fix Dispatch
 
@@ -116,7 +163,7 @@ Group auto-fixable findings by specialist and passage proximity. Launch writer s
 Each specialist receives XML-tagged context:
 
 ```xml
-<finding>[the specific review finding — severity, domain, quoted text, problem description]</finding>
+<finding>[the specific review finding: severity, domain, quoted text, problem description]</finding>
 <fix_guidance>[what the reviewer specialist recommended as a fix direction]</fix_guidance>
 <manuscript_passage>[the full passage that needs fixing, with surrounding context]</manuscript_passage>
 <canonical_docs>[relevant canonical docs for ground truth]</canonical_docs>
@@ -158,7 +205,7 @@ Apply verified fixes and update the doc ecosystem:
 
 1. Apply verified fixes to manuscript files
 2. Update canonical docs if fixes changed established facts
-3. Trace propagation blast radius — a changed date in the timeline affects every scene that references that period
+3. Trace propagation blast radius: a changed date in the timeline affects every scene that references that period
 4. Update character tracking if emotional flickers or arc positions changed
 5. Update timeline authority if dates or sequences changed
 
@@ -191,8 +238,8 @@ Create the revision report. For multi-work projects, use `.worldsmith/reviews/YY
 
 ## Deferred
 ### [Finding title]
-- **Reason**: [why this was deferred — needs major rework, structural change, etc.]
-- **Suggestion**: [what the user could do — use writer orchestrator, manual revision, etc.]
+- **Reason**: [why this was deferred (needs major rework, structural change, etc.)]
+- **Suggestion**: [what the user could do (use writer orchestrator, manual revision, etc.)]
 
 ## Retry Failures (Needs Human Review)
 ### [Finding title]
