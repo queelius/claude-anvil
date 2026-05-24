@@ -27,6 +27,41 @@ if [ -n "${CLAUDE_PLUGIN_ROOT:-}" ] && [[ "$file_path" == "$CLAUDE_PLUGIN_ROOT"*
   exit 0
 fi
 
+# Scope to manuscript files only. Without this, the hook fires on README,
+# CLAUDE.md, docs/plans/, and any other .md/.tex file in the project, which
+# produces false positives on prose that is not held to fiction-craft standards.
+PROJECT_DIR="${CLAUDE_PROJECT_DIR:-.}"
+is_manuscript=0
+
+if [ -n "${WORLDSMITH_WORK_COUNT:-}" ] && [ "${WORLDSMITH_WORK_COUNT:-0}" -gt 0 ]; then
+  # Multi-work mode: check configured manuscript paths from project.yaml
+  for i in $(seq 0 $((WORLDSMITH_WORK_COUNT - 1))); do
+    ms_var="WORLDSMITH_WORK_${i}_MANUSCRIPT"
+    ms_rel="${!ms_var:-}"
+    [ -z "$ms_rel" ] && continue
+    ms_abs="$PROJECT_DIR/${ms_rel%/}"
+    case "$file_path" in
+      "$ms_abs"|"$ms_abs"/*) is_manuscript=1; break ;;
+    esac
+  done
+else
+  # Single-work mode: dirname/dirpath heuristics matching propagation-reminder.sh
+  dirpath=$(dirname "$file_path")
+  dirname_only=$(basename "$dirpath")
+  case "$dirname_only" in
+    chapters|manuscript|scenes|stories) is_manuscript=1 ;;
+  esac
+  if [ "$is_manuscript" = "0" ]; then
+    case "$dirpath" in
+      */chapters/*|*/manuscript/*|*/scenes/*|*/stories/*) is_manuscript=1 ;;
+    esac
+  fi
+fi
+
+if [ "$is_manuscript" = "0" ]; then
+  exit 0
+fi
+
 # Extract the text that was written
 if [ "$tool_name" = "Write" ]; then
   text=$(echo "$input" | jq -r '.tool_input.content // ""')
