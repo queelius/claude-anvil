@@ -15,6 +15,8 @@ Display a quick-reference guide to the worldsmith plugin.
 | `/worldsmith:change [description]` | Apply a change — canonical edits, exploratory ideas, or promotions |
 | `/worldsmith:check [work] [scope]` | Run diagnostics: `consistency`, `editorial`, `xref`, `status`, `cross-work`, `all` |
 | `/worldsmith:review [work] [scope]` | Deep multi-agent editorial review (4 specialists in parallel) |
+| `/worldsmith:draft [work] [assignment]` | Launch the writer orchestrator (scenes, chapters, lore, character work) |
+| `/worldsmith:revise [work] [filter]` | Launch the rewriter orchestrator (apply fixes from a review report) |
 | `/worldsmith:help` | This guide |
 
 ## Skills (auto-triggered)
@@ -28,9 +30,9 @@ Display a quick-reference guide to the worldsmith plugin.
 
 | Agent | Role | Launched by |
 |-------|------|-------------|
-| **reviewer** | Multi-agent editorial review (consistency, craft, voice, structure) | `/worldsmith:check all` or direct |
-| **writer** | Multi-agent content generation (lore, scenes, characters) | Direct request |
-| **rewriter** | Fix-then-verify revision (reads review, fixes issues, verifies fixes) | `/worldsmith:review` output or direct |
+| **reviewer** | Multi-agent editorial review (consistency, craft, voice, structure) | `/worldsmith:review` |
+| **writer** | Multi-agent content generation (lore, scenes, characters) | `/worldsmith:draft` |
+| **rewriter** | Fix-then-verify revision (reads review, fixes issues, verifies fixes) | `/worldsmith:revise` |
 | **consistency-auditor** | Timeline, facts, character state, spatial | reviewer |
 | **craft-auditor** | Prose quality, cliches, scene mechanics | reviewer |
 | **voice-auditor** | Character voice, dialogue, POV | reviewer |
@@ -53,6 +55,16 @@ Display a quick-reference guide to the worldsmith plugin.
 **Adding or changing lore:**
 1. `/worldsmith:change add a new faction called the Ashwalkers`
 2. Worldsmith updates canonical docs first, then propagates to manuscript
+
+**Drafting new content:**
+1. `/worldsmith:draft chapter 5` (or specify a scene, lore entry, or character work)
+2. The writer orchestrator routes to lore, scene, and character specialists in parallel
+3. Output lands in the manuscript directory and canonical docs are updated
+
+**Revising after a review:**
+1. `/worldsmith:review` produces a review report in `.worldsmith/reviews/`
+2. `/worldsmith:revise` reads the latest report, fixes findings, verifies each fix
+3. Optionally filter: `/worldsmith:revise HIGH` or `/worldsmith:revise consistency`
 
 **Before a writing session:**
 1. `/worldsmith:check status` — project health overview
