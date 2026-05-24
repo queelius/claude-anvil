@@ -84,6 +84,6 @@ Display a quick-reference guide to the worldsmith plugin.
 
 These fire automatically in any project with a `.worldsmith/` directory:
 
-- **Cliche detection** — blocks stock body reactions, dead metaphors, emotional labeling, redundant adverbs, and fancy dialogue tags on Write/Edit to fiction files
+- **Cliche detection** (manuscript-scoped): blocks stock body reactions, dead metaphors, emotional labeling, redundant adverbs, and fancy dialogue tags on Write/Edit inside the manuscript directory. Skips README, CLAUDE.md, plans, and other non-prose files.
 - **Propagation reminders** — reminds you to check downstream docs when you edit a canonical source or manuscript
 - **Completion check** — verifies propagation before session exit

@@ -63,7 +63,7 @@ Three orchestrators and seven specialists. YAML frontmatter with `name`, `descri
 ### Hooks (`hooks/hooks.json`)
 Three event types:
 - **SessionStart** (command): Runs `detect-worldsmith-project.sh` — checks for `.worldsmith/` directory, reads `project.yaml` for multi-work projects, sets `WORLDSMITH_PROJECT` env var and work metadata, outputs doc/work inventory
-- **PostToolUse** (command, matcher: `Write|Edit`): Two hooks — propagation reminders for doc/manuscript edits, and cliche detection for stock body reactions, dead metaphors, emotional labeling, redundant adverbs, and fancy dialogue tags in fiction files (.tex, .md, .mdx, .txt)
+- **PostToolUse** (command, matcher: `Write|Edit`): Two hooks. Propagation reminders fire for any doc or manuscript edit. Cliche detection (stock body reactions, dead metaphors, emotional labeling, redundant adverbs, fancy dialogue tags) fires only for edits inside the manuscript directory (multi-work: paths from `project.yaml`; single-work: `chapters/`, `manuscript/`, `scenes/`, `stories/` heuristics). Skips README, CLAUDE.md, `docs/plans/`, and other non-prose files.
 - **Stop** (prompt): Completion verification before session exit
 
 ### Scripts
