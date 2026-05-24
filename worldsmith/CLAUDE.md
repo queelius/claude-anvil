@@ -13,7 +13,7 @@ Worldsmith is a Claude Code **plugin** for documentation-first fiction worldbuil
 skills/worldsmith-methodology/SKILL.md            # Editorial methodology skill
 skills/worldsmith-methodology/references/          # Deep reference docs (propagation, doc structure)
 skills/prose-craft/SKILL.md                      # Prose craft rules (show-don't-tell, dialogue, scene structure)
-commands/{init-world,change,check,review,help}.md  # 5 slash commands
+commands/{init-world,change,check,review,draft,revise,help}.md  # 7 slash commands
 agents/reviewer.md                                # Review orchestrator (spawns specialist auditors)
 agents/writer.md                                  # Writer orchestrator (spawns specialist writers)
 agents/rewriter.md                                # Rewriter orchestrator (fix-then-verify loop)
@@ -24,7 +24,7 @@ hooks/scripts/detect-worldsmith-project.sh        # Project detection (checks fo
 hooks/scripts/propagation-reminder.sh            # PostToolUse propagation reminders
 hooks/scripts/check-fiction-cliches.sh           # Cliche detection (stock reactions, dead metaphors, emotional labeling, redundant adverbs, fancy dialogue tags)
 hooks/scripts/completion-check.sh                # Stop hook: propagation verification
-hooks/scripts/parse-project-yaml.py              # Parse .worldsmith/project.yaml for multi-work projects
+hooks/scripts/parse-project-yaml.py              # Parse .worldsmith/project.yaml; emits shell env vars consumed by other hooks
 scripts/count_patterns.py                         # Prose pattern counting (reads patterns.md)
 scripts/patterns.md                               # Default pattern definitions (overridable per project)
 ```
@@ -85,7 +85,22 @@ Three event types:
 
 **Series awareness.** Projects can reference related projects (prequels, sequels, shared-world companions) in their CLAUDE.md. Shared world facts propagate across projects; project-local facts don't.
 
-**Multi-work projects.** A universe can contain multiple works sharing canonical lore. Configured via `.worldsmith/project.yaml`. If absent, worldsmith infers a single work (backward compatible). Commands, agents, and hooks all respect work scoping when project.yaml is present. Each work can optionally have its own local lore directory for work-specific docs. Hierarchy: shared lore > local lore > manuscript.
+**Multi-work projects.** A universe can contain multiple works (novel plus short stories, etc.) sharing canonical lore. Configured via `.worldsmith/project.yaml`. If absent, worldsmith infers a single work (backward compatible).
+
+The cross-language mechanism: `detect-worldsmith-project.sh` invokes `parse-project-yaml.py --env`, which emits shell variable assignments (`WORLDSMITH_UNIVERSE`, `WORLDSMITH_LORE_DIR`, `WORLDSMITH_WORK_COUNT`, `WORLDSMITH_WORK_N_{NAME,TYPE,MANUSCRIPT,LORE,FILETYPES}`) into `$CLAUDE_ENV_FILE`. Downstream hooks read these env vars to scope behavior to the active work without re-parsing YAML in bash. This is the parent CLAUDE.md's "no regex parsing of structured data" rule made concrete.
+
+Each work can optionally have its own local lore directory for work-specific docs. Conflict hierarchy: shared lore > local lore > manuscript. Commands, orchestrator agents, and hooks all respect work scoping when `project.yaml` is present.
+
+## Development Workflow
+
+Features land via a design → impl → commit pipeline recorded in `docs/plans/`:
+
+- `docs/plans/YYYY-MM-DD-<feature>-design.md`: rationale, alternatives, chosen approach
+- `docs/plans/YYYY-MM-DD-<feature>-impl.md`: step-by-step plan with `- [ ]` checkboxes per task
+- Each task in the impl plan becomes one atomic commit with a conventional prefix scoped to this plugin: `feat(worldsmith):`, `fix(worldsmith):`, `chore(worldsmith):`, or `docs(worldsmith):`
+- The final task in every impl plan bumps the version (see "Version Bumps" in `../CLAUDE.md`) and refreshes the Plugin Structure tree above if new files were added
+
+When asked to implement a new feature, write the design and impl plans first, then execute the impl task-by-task. The plans are the historical record: the codebase shows *what*, the plans show *why*. Read an existing plan (e.g. `2026-03-10-multi-work-universe-*.md`) before adding a new one so the structure stays consistent.
 
 ## Validation
 
