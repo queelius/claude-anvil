@@ -13,10 +13,11 @@ Worldsmith is a Claude Code **plugin** for documentation-first fiction worldbuil
 skills/worldsmith-methodology/SKILL.md            # Editorial methodology skill
 skills/worldsmith-methodology/references/          # Deep reference docs (propagation, doc structure)
 skills/prose-craft/SKILL.md                      # Prose craft rules (show-don't-tell, dialogue, scene structure)
-commands/{init-world,change,check,review,draft,revise,help}.md  # 7 slash commands
+commands/{init-world,change,check,review,draft,revise,iterate,help}.md  # 8 slash commands
 agents/reviewer.md                                # Review orchestrator (spawns specialist auditors)
 agents/writer.md                                  # Writer orchestrator (spawns specialist writers)
 agents/rewriter.md                                # Rewriter orchestrator (fix-then-verify loop)
+agents/iterator.md                                # Iterator orchestrator (autonomous review-fix loop)
 agents/{consistency,craft,voice,structure}-auditor.md  # 4 review specialists (read-only)
 agents/{lore-writer,scene-writer,character-developer}.md  # 3 writing specialists
 hooks/hooks.json                                  # SessionStart + PostToolUse + Stop hooks
@@ -42,12 +43,13 @@ Two skills, independently triggered:
 YAML frontmatter with `name`, `description` (trigger phrases for auto-detection), and `version`. Body is lean methodology with references to detailed docs via `${CLAUDE_PLUGIN_ROOT}`. When adding references, verify the target file exists.
 
 ### Agents (`agents/*.md`)
-Three orchestrators and seven specialists. YAML frontmatter with `name`, `description` (with `<example>` blocks), `tools` (list), `model: opus`, and `color`.
+Four orchestrators and seven specialists. YAML frontmatter with `name`, `description` (with `<example>` blocks), `tools` (list), `model: opus`, and `color`.
 
 **Orchestrators** (spawn specialists via Task tool):
-- **reviewer** — Multi-agent editorial review. Reads project context, launches 4 auditors in parallel, cross-verifies critical findings, synthesizes unified report to `.worldsmith/reviews/`.
-- **writer** — Multi-agent content generation. Plans assignments, launches specialists, integrates output, handles doc propagation.
-- **rewriter** — Multi-agent revision. Reads review findings, dispatches writer specialists to fix, then reviewer specialists to verify. Fix-then-verify feedback loop.
+- **reviewer**: Multi-agent editorial review. Reads project context, launches 4 auditors in parallel, cross-verifies critical findings, synthesizes unified report to `.worldsmith/reviews/`.
+- **writer**: Multi-agent content generation. Plans assignments, launches specialists, integrates output, handles doc propagation.
+- **rewriter**: Multi-agent revision. Reads review findings, dispatches writer specialists to fix, then reviewer specialists to verify. Fix-then-verify feedback loop.
+- **iterator**: Autonomous review-fix-review loop. Composes reviewer and rewriter, drives toward convergence with regression and plateau detection, defers high-stake creative judgments to a single end-of-loop user checkpoint. Writes per-round artifacts to `.worldsmith/iterate/<timestamp>/`.
 
 **Review specialists** (read-only, launched by reviewer):
 - **consistency-auditor** — Timeline, facts, character state, spatial contradictions

@@ -17,6 +17,7 @@ Display a quick-reference guide to the worldsmith plugin.
 | `/worldsmith:review [work] [scope]` | Deep multi-agent editorial review (4 specialists in parallel) |
 | `/worldsmith:draft [work] [assignment]` | Launch the writer orchestrator (scenes, chapters, lore, character work) |
 | `/worldsmith:revise [work] [filter]` | Launch the rewriter orchestrator (apply fixes from a review report) |
+| `/worldsmith:iterate [work] [flags]` | Autonomous review-fix loop until convergence (composes review and revise) |
 | `/worldsmith:help` | This guide |
 
 ## Skills (auto-triggered)
@@ -33,6 +34,7 @@ Display a quick-reference guide to the worldsmith plugin.
 | **reviewer** | Multi-agent editorial review (consistency, craft, voice, structure) | `/worldsmith:review` |
 | **writer** | Multi-agent content generation (lore, scenes, characters) | `/worldsmith:draft` |
 | **rewriter** | Fix-then-verify revision (reads review, fixes issues, verifies fixes) | `/worldsmith:revise` |
+| **iterator** | Autonomous review-fix-review loop with end-of-loop user checkpoint | `/worldsmith:iterate` |
 | **consistency-auditor** | Timeline, facts, character state, spatial | reviewer |
 | **craft-auditor** | Prose quality, cliches, scene mechanics | reviewer |
 | **voice-auditor** | Character voice, dialogue, POV | reviewer |
@@ -65,6 +67,13 @@ Display a quick-reference guide to the worldsmith plugin.
 1. `/worldsmith:review` produces a review report in `.worldsmith/reviews/`
 2. `/worldsmith:revise` reads the latest report, fixes findings, verifies each fix
 3. Optionally filter: `/worldsmith:revise HIGH` or `/worldsmith:revise consistency`
+
+**Running the autonomous loop (finishing pass):**
+1. `/worldsmith:iterate` (defaults: 8 rounds, stop when zero HIGH findings, defer high-stake judgments)
+2. The iterator runs reviewer + rewriter in a loop, writing per-round artifacts to `.worldsmith/iterate/<timestamp>/`
+3. At the end, batches any deferred high-stake judgments into a single AskUserQuestion checkpoint
+4. After you resolve, runs one final revise round with your answers
+5. Reports total fixes, regressions, convergence reason, and cost estimate
 
 **Before a writing session:**
 1. `/worldsmith:check status` — project health overview
