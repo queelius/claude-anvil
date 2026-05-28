@@ -106,6 +106,15 @@
       "author": {
         "name": "Alexander Towell"
       }
+    },
+    {
+      "name": "bookwright",
+      "source": "./bookwright",
+      "description": "Documentation-first methodology and multi-agent toolchain for technical non-fiction long-form manuscripts. The Bernoulli-textbook approach: design spec and chapter plans drive the manuscript.",
+      "version": "0.1.0",
+      "author": {
+        "name": "Alexander Towell"
+      }
     }
   ]
 }

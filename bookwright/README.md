@@ -14,14 +14,21 @@ Sibling to `worldsmith` (fiction) and `papermill` (academic papers); bookwright 
 
 ## Installation
 
-```bash
-# Via the marketplace
+From a Claude Code session:
+
+```
 /plugin marketplace add queelius/claude-anvil
 /plugin install bookwright@queelius
-
-# Or local install
-claude plugin add ~/github/alex-claude-plugins/bookwright
 ```
+
+Or, if you have the monorepo cloned locally and want to install from the working tree:
+
+```
+/plugin marketplace add ~/github/alex-claude-plugins
+/plugin install bookwright@queelius
+```
+
+(The marketplace name is `queelius` regardless of how you added it.)
 
 **Required co-installation:** the `soul` plugin from the same marketplace, for the soul-voice hook (banned-phrase enforcement). The marketplace does not auto-install dependencies, so install `soul` explicitly. The macro-leak hook ships with bookwright itself.
 
