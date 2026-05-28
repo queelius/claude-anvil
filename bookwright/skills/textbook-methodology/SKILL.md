@@ -1,6 +1,6 @@
 ---
 name: textbook-methodology
-description: Use when drafting prose sections for a bookwright (technical non-fiction) project. Encodes the Bernoulli-textbook workflow: atom-outward design, deferral discipline, running threads, page budgets, Path A subagent pattern, header comment block convention.
+description: "Use when drafting prose sections for a bookwright (technical non-fiction) project. Encodes the Bernoulli-textbook workflow: atom-outward design, deferral discipline, running threads, page budgets, Path A subagent pattern, header comment block convention."
 metadata:
   type: methodology
 ---
