@@ -6,8 +6,9 @@ description: >-
   dispatches the appropriate drafting specialist for each section (section-writer,
   notebook-author, or source-reformulator), then dispatches spec-auditor and
   quality-auditor in parallel for review. If either auditor surfaces substantive
-  findings, dispatches a fix subagent and re-runs the relevant auditor to verify.
-  Reports task commit SHAs and word counts when done.
+  findings, re-dispatches section-writer with the auditor finding as input and
+  re-runs the relevant auditor to verify the fix. Reports task commit SHAs and
+  word counts when done.
 
   <example>
   Context: User wants a full chapter drafted.
@@ -24,7 +25,7 @@ description: >-
   <example>
   Context: Review findings need to be addressed.
   user: "Fix the chapter 7 review findings"
-  assistant: "I'll launch the writer orchestrator with the chapter 7 review report as input, dispatch fix subagents per finding, then re-run the relevant auditors to verify each fix."
+  assistant: "I'll launch the writer orchestrator with the chapter 7 review report as input, re-dispatch section-writer per finding to apply the fix, then re-run the relevant auditors to verify each fix."
   <commentary>writer handles the fix loop when given a review report rather than a plan section.</commentary>
   </example>
 tools: Read, Write, Edit, Glob, Grep, Bash, Task, AskUserQuestion

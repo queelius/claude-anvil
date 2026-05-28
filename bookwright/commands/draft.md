@@ -18,7 +18,7 @@ For each section task in the relevant plan:
    - `notebook-author` if the task includes a paired notebook.
    - `source-reformulator` if the task requires reformulating an external paper.
 3. After the draft commits, dispatches `spec-auditor` and `quality-auditor` in parallel for review.
-4. If either auditor surfaces substantive findings, dispatches a fix subagent and re-runs the relevant auditor to verify.
+4. If either auditor surfaces substantive findings, re-dispatches section-writer with the finding as input and re-runs the relevant auditor to verify the fix.
 5. Reports the task's commit SHAs and word counts back to the user.
 
 ## When to use what

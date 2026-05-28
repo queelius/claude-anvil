@@ -23,7 +23,7 @@ Sibling to `worldsmith` (fiction) and `papermill` (academic papers); bookwright 
 claude plugin add ~/github/alex-claude-plugins/bookwright
 ```
 
-**Required co-installation:** the `soul` plugin from the same marketplace, for the soul-voice hook (banned-phrase enforcement). bookwright declares this as a dependency; the macro-leak hook ships with bookwright itself.
+**Required co-installation:** the `soul` plugin from the same marketplace, for the soul-voice hook (banned-phrase enforcement). The marketplace does not auto-install dependencies, so install `soul` explicitly. The macro-leak hook ships with bookwright itself.
 
 ## What's Included
 
