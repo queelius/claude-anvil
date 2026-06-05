@@ -47,8 +47,8 @@
     {
       "name": "repoindex",
       "source": "./repoindex",
-      "description": "Agent-driven repository intelligence. MCP-first with repo-doctor, repo-polish, repo-explorer agents.",
-      "version": "0.16.0",
+      "description": "Repository intelligence for Claude Code. MCP-first access to a local git catalog, three specialized agents (repo-doctor, repo-polish, repo-explorer), and five slash commands (/repo-week, /repo-status, /repo-audit, /repo-sprint, /repo-mirror) for recurring workflows.",
+      "version": "2.0.0",
       "author": {
         "name": "Alexander Towell"
       }

@@ -119,8 +119,8 @@ Since MCP tools are natively available to the LLM, the CLI reference skills (`re
 
 3. **Deterministic fixes** (via shell, with --dry-run first):
    ```bash
-   repoindex ops generate citation --dry-run "name == 'REPO'"
-   repoindex ops generate codemeta --dry-run "name == 'REPO'"
+   repoindex ops generate citation --dry-run -d /path/to/REPO
+   repoindex ops generate codemeta --dry-run -d /path/to/REPO
    repoindex ops set-topics REPO topic1 topic2 --dry-run
    ```
 
