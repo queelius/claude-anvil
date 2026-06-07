@@ -6,6 +6,11 @@ __pycache__/
 build/
 dist/
 
+# test / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
 # data outputs (not source)
 data/papers.db
 data/papers.db-shm
