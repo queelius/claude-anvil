@@ -5,6 +5,9 @@ Thumbs.db
 *~
 .vscode/
 .idea/
+
+# Per-project Claude Code settings (e.g. settings.local.json), at any depth
+# including nested plugin dirs. Committed plugin config lives in .claude-plugin/.
 .claude/
 .worktrees/
 
