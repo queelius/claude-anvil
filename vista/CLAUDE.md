@@ -42,7 +42,7 @@ vista status                      # counts table by field/track
 vista discover --fields ml --per-field 10
 vista fetch --max-papers 5
 vista extract
-vista analyze --premium           # uses PREMIUM_MODEL (claude-opus-4-7)
+vista analyze --premium           # uses PREMIUM_MODEL (claude-opus-4-8)
 vista render
 vista seed-bib path/to/refs.bib --field stats
 
@@ -198,7 +198,7 @@ multiple matches per paper (e.g., chapter conclusions) are handled.
 
 ### Models
 
-`DEFAULT_MODEL = claude-sonnet-4-6`, `PREMIUM_MODEL = claude-opus-4-7`. The
+`DEFAULT_MODEL = claude-sonnet-4-6`, `PREMIUM_MODEL = claude-opus-4-8`. The
 default model is overridable via `FOLLOWUPS_MODEL` env var. These only matter
 for the Anthropic-SDK analyzer path; the MCP path is model-agnostic.
 

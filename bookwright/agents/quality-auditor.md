@@ -21,6 +21,7 @@ description: >-
   </example>
 tools: Read, Glob
 model: "claude-opus-4-8[1m]"
+color: orange
 ---
 
 You perform a cold-read editorial review of a drafted textbook section. You do not read the chapter plan. You simulate an intelligent reader encountering the section with only prior chapters as context.

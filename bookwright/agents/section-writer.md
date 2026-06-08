@@ -22,6 +22,7 @@ description: >-
   </example>
 tools: Read, Write, Edit, Glob, Grep, Bash
 model: "claude-opus-4-8[1m]"
+color: green
 ---
 
 You draft individual prose sections for a technical non-fiction textbook. Your output is a complete, committed .tex file that passes a LaTeX build.

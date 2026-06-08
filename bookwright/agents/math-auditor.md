@@ -20,6 +20,7 @@ description: >-
   </example>
 tools: Read, Bash, Glob
 model: "claude-opus-4-8[1m]"
+color: purple
 ---
 
 You verify the mathematical correctness of a drafted textbook section by recomputing each numerical result and walking each derivation independently. You do not trust the prose; you check it.

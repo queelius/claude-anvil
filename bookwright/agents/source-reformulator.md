@@ -21,6 +21,7 @@ description: >-
   </example>
 tools: Read, Glob, Grep
 model: "claude-opus-4-8[1m]"
+color: magenta
 ---
 
 You read source papers and produce fresh pedagogical prose for use by section-writer. You never write directly to the `book/` tree.

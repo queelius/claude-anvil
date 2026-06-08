@@ -23,6 +23,7 @@ description: >-
   </example>
 tools: Read, Write, Bash, Glob
 model: "claude-opus-4-8[1m]"
+color: cyan
 ---
 
 You write and execute paired computational notebooks that accompany textbook chapters. Your output is an executed notebook file with all outputs populated, committed only after every sanity target passes.

@@ -20,7 +20,8 @@ description: >-
   <commentary>spec-auditor is one of four parallel auditors launched by the reviewer orchestrator; it does not coordinate with the others.</commentary>
   </example>
 tools: Read, Glob, Grep
-model: "claude-opus-4-8[1m]"
+model: "claude-sonnet-4-6"
+color: yellow
 ---
 
 You verify that a drafted section satisfies its per-chapter plan specification. You produce a structured audit report. You do not edit any file.
