@@ -15,15 +15,26 @@ A Claude Code **plugin marketplace** (`queelius`). All plugins are distributed a
 | **worldsmith** | `worldsmith/` | Documentation-first fiction worldbuilding (the "Silmarillion approach") | 0.11.0 |
 | **pub-pipeline** | `pub-pipeline/` | Publication workflows: R/CRAN/JOSS, Python/PyPI | 0.7.0 |
 | **mf** | `mf/` | Metafunctor site management: blog architecture, content workflows, crier | 1.1.0 |
-| **repoindex** | `repoindex/` | Agent-driven repository intelligence. MCP-first with repo-doctor, repo-polish, repo-explorer agents | 0.16.0 |
+| **repoindex** | `repoindex/` | Agent-driven repository intelligence (repo-doctor, repo-polish, repo-explorer) plus five workflow slash commands. MCP-first over a local git catalog | 2.2.0 |
 | **alex-confidential** | `locksmith/` | Confidentiality toolkit: cryptoid, pagevault, gpg encryption | 0.2.0 |
-| **kdp** | `kdp/` | Amazon KDP book publishing: manuscript audit, listing craft, submission workflow | 0.4.0 |
+| **kdp** | `kdp/` | Amazon KDP book publishing: manuscript audit, listing craft, submission workflow | 0.4.1 |
 | **jot** | `jot/` | Journal-aware sessions that surface tasks, ideas, and plans from your jot journal | 0.3.0 |
 | **crier** | `crier/` | Cross-post blog content to multiple platforms via the crier CLI | 1.2.0 |
 | **research-agent** | `research-agent/` | Autonomous research agent with parallel sub-agent dispatch and a status/resume/synthesize control surface for managing long runs | 0.3.0 |
 | **vista** | `vista/` | Surface salient research directions from highly-cited papers. Live OpenAlex search, PDF section extraction, structured catalog | 0.1.0 |
+| **bookwright** | `bookwright/` | Non-fiction book authoring: LaTeX + paired computational notebooks, multi-agent drafting/review, design→plan→draft→integrate workflow | 0.1.0 |
 
 > **Note**: A `profiler/` directory exists locally as a symlink to `~/github/personal/profiles/` but is intentionally not in `marketplace.json` (the symlink targets an absolute path outside the repo, so a marketplace install would break for other users). Re-add when the plugin is properly in-tree or a git submodule.
+
+### Three plugins say "research" and they do not overlap
+
+`vista`, `research-agent`, and `papermill` all sound like the same thing and are not. They occupy three different stages of the research lifecycle:
+
+- **vista (*finds the questions*).** Read-only reconnaissance over the *published literature*. Mines the Future Work / Limitations / Discussion / Conclusion sections of highly-cited OpenAlex papers and synthesizes candidate directions. The MCP server is deliberately *mechanical* (returns raw section text plus metadata as JSON, no LLM calls); the in-conversation Claude does the synthesis. It tells you what is worth working on; it does not do the work. Bounded and fast.
+- **research-agent (*attacks a question*).** An autonomous, fire-and-forget reasoning loop (decompose, hypothesize, attempt, evaluate, reflect) that proves theorems, writes code, runs simulations, and hunts counterexamples, persisting everything to `.research/` in the *target project*. Unbounded; the deliverable is `.research/synthesis.md`.
+- **papermill (*writes the paper*).** Multi-agent thesis/draft/review/venue lifecycle once you have results to report.
+
+The natural pipeline is **vista, then research-agent, then papermill**: scope a direction, work it, write it up. The shared word "synthesis" is the main trap: vista synthesizes *other people's* stated future work, while research-agent synthesizes *its own* attempt results. (Likewise vista's `research-synthesizer` agent writes a *literature landscape report*, whereas research-agent's `researcher` writes up *experimental findings*; both dispatch subagents, but the content is unrelated.)
 
 ## Plugin Anatomy
 
