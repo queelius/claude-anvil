@@ -18,6 +18,7 @@ research-agent/
   commands/resume.md            # /research-agent:resume
   commands/synthesize.md        # /research-agent:synthesize
   agents/researcher.md          # The autonomous research agent (mode-aware)
+  docs/superpowers/             # Design history (specs, plans). Not loaded at runtime.
   CLAUDE.md                     # This file
 ```
 
@@ -34,14 +35,38 @@ The status skill is **not** an agent dispatch: it reads `.research/` files
 directly and produces a structured summary. This is faster, cheaper, and
 deterministic, and it never accidentally restarts the agent.
 
+## The `.research/` Artifact Contract
+
+The agent operates on the **target project's** working directory (not on
+this plugin), creating and maintaining `.research/`. Every mode coordinates
+through this directory; treat it as the cross-mode interface.
+
+```
+.research/
+  goal.md         # Verbatim user goal + eval script path. Written once in fresh mode; never edited.
+  state.md        # Current beliefs: sub-problems, hypotheses, current focus. Updated every REFLECT.
+  log.md          # Append-only cycle log. The defense against context compression.
+  attempts/       # One subdirectory per attempt: NNN-<slug>/notes.md plus artifacts.
+  findings/       # Confirmed results promoted out of attempts/.
+  synthesis.md    # Final deliverable. Presence => the run has concluded.
+```
+
+Discipline points the agent enforces: `log.md` is append-only; `state.md`
+is the source of truth for "where am I?"; `synthesis.md` is the single
+document a future reader relies on. Any new mode you add must respect
+these invariants. For example, a hypothetical "branch" mode should
+**not** rewrite `goal.md` or rewind `log.md`; it should fork into a new
+sibling subtree.
+
 ## Editing Guidelines
 
 - The agent prompt (`agents/researcher.md`) contains the full research methodology and mode dispatch. It is intentionally large. Keep sections well-organized with clear headers.
 - Each skill (`skills/<name>/SKILL.md`) is thin. The skill's job is to parse user intent and prepare the right XML tags for the agent (or, for status, read files directly). Do not put research methodology in skills.
 - Commands are one-liners. Keep them that way.
+- Skills that dispatch the researcher use `subagent_type: research-agent:researcher` (see `skills/resume/SKILL.md` and `skills/synthesize/SKILL.md`). Any new mode that runs the agent must use the same subagent_type so it inherits the canonical system prompt.
 - The agent uses `model: opus`, which resolves to the latest Opus (currently 4.7 with the 1M context window when the harness enables it). Long research runs still need file-system persistence (`log.md`, `state.md`, `attempts/`) because very long runs may compress earlier history; the disk is always the source of truth.
 
-When adding a new mode (e.g., a "branch" mode that forks a research run from a checkpoint), edit four files in lockstep: a new skill, a new command, a new section in the agent's Initialization documenting the mode, and the mode list in this file.
+When adding a new mode (e.g., a "branch" mode that forks a research run from a checkpoint), edit four files in lockstep: (1) a new `skills/<mode>/SKILL.md`, (2) a new `commands/<mode>.md`, (3) a new section in the agent's `Initialization` block documenting the mode and its XML trigger tag, and (4) the mode list in the "How It Works" section of this file. If the new mode reads or writes `.research/`, also extend the Artifact Contract section above to describe any new files or new shape on existing ones.
 
 ## Capabilities
 
@@ -49,6 +74,8 @@ The researcher has three categories of tools:
 
 1. **File and shell**: `Bash`, `BashOutput`, `KillShell`, `Read`, `Write`, `Edit`, `Glob`, `Grep`. The Bash + BashOutput + KillShell combination lets the researcher launch long-running experiments with `run_in_background: true`, monitor accumulated output, and terminate runs that have stalled.
 2. **Research**: `WebSearch`, `WebFetch` for prior-art lookups, paper retrieval, and reference verification.
-3. **Delegation**: `Task` for spawning sub-agents that pursue parallel approaches (different proof strategies, different parameter regimes, different literature angles). Sub-agent results return as structured summaries that the researcher integrates into `log.md`.
+3. **Delegation**: `Task` for spawning child sub-agents that pursue parallel approaches (different proof strategies, different parameter regimes, different literature angles). Sub-agent results return as structured summaries that the researcher integrates into `log.md`. Working artifacts from a child sub-agent should land in a sibling subdirectory under `attempts/` so they are visible to status, resume, and synthesize.
+
+Note the two-level use of `Task`. The launching skills use `Task` with `subagent_type: research-agent:researcher` to spawn the *top-level* researcher. The researcher itself then uses `Task` for parallel exploration of *child* sub-agents. They are the same tool but different roles. Do not conflate them when editing.
 
 When extending the agent, prefer giving it more capability in these existing categories over adding new ones. Adding more tool categories without a clear use case dilutes the prompt.
