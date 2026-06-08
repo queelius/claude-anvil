@@ -35,7 +35,7 @@ export function calculateSpineWidth(
   pageCount: number,
   paperType: PaperType,
 ): number {
-  return pageCount * PAPER_MULTIPLIER[paperType] + 0.06;
+  return pageCount * PAPER_MULTIPLIER[paperType];
 }
 
 export function calculateCoverDimensions(opts: {
