@@ -7,7 +7,7 @@
 # as" / "the macro" patterns.
 #
 # Reads the new file content from stdin (the hook protocol provides it),
-# inspects it, exits 0 if clean, exits 1 with an explanation if it finds
+# inspects it, exits 0 if clean, exits 2 with an explanation if it finds
 # a leak.
 
 set -euo pipefail
