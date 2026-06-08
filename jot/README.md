@@ -41,8 +41,8 @@ health.
 ## Install
 
 ```bash
-# From claude-anvil marketplace
-claude plugin install jot
+/plugin marketplace add queelius/claude-anvil
+/plugin install jot@queelius
 ```
 
 ## License

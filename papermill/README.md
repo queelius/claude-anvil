@@ -7,13 +7,8 @@ Papermill provides interactive skills and autonomous agents that cover the full 
 ## Installation
 
 ```bash
-claude plugins add ~/github/papermill
-```
-
-Or from any directory containing the plugin:
-
-```bash
-claude plugins add .
+/plugin marketplace add queelius/claude-anvil
+/plugin install papermill@queelius
 ```
 
 ## Commands

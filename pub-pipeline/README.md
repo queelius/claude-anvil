@@ -26,6 +26,15 @@ A Claude Code plugin for automating publication workflows across multiple ecosys
 
 Say "publish my package" or "publication pipeline" and the top-level `pub-pipeline` skill will detect your project type (R or Python) and route to the right workflow.
 
+## Multi-Agent JOSS System
+
+`/joss-draft` and `/joss-audit` are backed by a multi-agent system: two orchestrators each spawn specialist agents in parallel.
+
+- **joss-writer** drafts `paper.md` and `paper.bib`, spawning **field-scout** to map competing packages for the State of the Field.
+- **joss-reviewer** evaluates the package and paper against the JOSS checklist, spawning **software-auditor** (tests, coverage, CI, API docs), **community-auditor** (LICENSE, CONTRIBUTING, CODE_OF_CONDUCT, development history), and **field-scout** (missing comparisons), then synthesizes a unified gap report.
+
+Agents pass context via XML tags and return structured findings the orchestrator merges.
+
 ## Configuration
 
 Copy `docs/user-config-template.md` to `.claude/pub-pipeline.local.md` in your project and fill in your details:
@@ -43,7 +52,8 @@ The config provides author metadata, competing package info, AI usage disclosure
 ## Installation
 
 ```bash
-claude plugin add /path/to/pub-pipeline
+/plugin marketplace add queelius/claude-anvil
+/plugin install pub-pipeline@queelius
 ```
 
 ## Prerequisites

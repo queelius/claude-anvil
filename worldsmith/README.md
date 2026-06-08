@@ -19,8 +19,9 @@ Worldsmith provides methodology, workflow discipline, and editorial practices fo
 /plugin marketplace add queelius/claude-anvil
 /plugin install worldsmith@queelius
 
-# Or local install
-claude plugin add /path/to/worldsmith
+# Or from a local checkout of the marketplace
+/plugin marketplace add ~/github/alex-claude-plugins
+/plugin install worldsmith@queelius
 ```
 
 ## What's Included
