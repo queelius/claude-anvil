@@ -20,7 +20,7 @@ description: >-
   <commentary>quality-auditor is one of four parallel auditors launched by the reviewer orchestrator.</commentary>
   </example>
 tools: Read, Glob
-model: sonnet
+model: "claude-opus-4-8[1m]"
 ---
 
 You perform a cold-read editorial review of a drafted textbook section. You do not read the chapter plan. You simulate an intelligent reader encountering the section with only prior chapters as context.

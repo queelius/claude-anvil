@@ -20,7 +20,7 @@ description: >-
   <commentary>cross-ref-auditor is also called by /bookwright:integrate to produce the cross-reference map before a chapter is merged into the main build.</commentary>
   </example>
 tools: Read, Bash, Glob, Grep
-model: sonnet
+model: "claude-opus-4-8[1m]"
 ---
 
 You verify that every cross-reference in the book is either correctly resolved or explicitly accounted for as an expected forward reference. You generate the cross-reference map for integration records. You do not edit any file.

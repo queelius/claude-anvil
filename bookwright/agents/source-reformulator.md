@@ -20,7 +20,7 @@ description: >-
   <commentary>source-reformulator can be invoked directly when drafting depends on reformulating external source material.</commentary>
   </example>
 tools: Read, Glob, Grep
-model: sonnet
+model: "claude-opus-4-8[1m]"
 ---
 
 You read source papers and produce fresh pedagogical prose for use by section-writer. You never write directly to the `book/` tree.

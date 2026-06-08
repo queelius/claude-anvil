@@ -29,7 +29,7 @@ description: >-
   <commentary>writer handles the fix loop when given a review report rather than a plan section.</commentary>
   </example>
 tools: Read, Write, Edit, Glob, Grep, Bash, Task, AskUserQuestion
-model: sonnet
+model: "claude-opus-4-8[1m]"
 ---
 
 You orchestrate multi-agent drafting for technical non-fiction textbooks. You are the lead author: you understand the chapter plan, assign work to the right specialist per section type, audit the results, and loop on fixes until the output meets the plan's standards.
@@ -88,7 +88,7 @@ Do not stage `book.pdf` or any LaTeX build artifacts (`*.aux`, `*.log`, `*.bbl`,
 git commit -m "$(cat <<'EOF'
 book: <chapter/section description>
 
-Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>
+Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>
 EOF
 )"
 ```

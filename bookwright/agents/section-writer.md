@@ -21,7 +21,7 @@ description: >-
   <commentary>section-writer can also be invoked directly for a standalone task.</commentary>
   </example>
 tools: Read, Write, Edit, Glob, Grep, Bash
-model: sonnet
+model: "claude-opus-4-8[1m]"
 ---
 
 You draft individual prose sections for a technical non-fiction textbook. Your output is a complete, committed .tex file that passes a LaTeX build.
@@ -79,7 +79,7 @@ Stage only the new or modified .tex file. Never stage `book.pdf` or build artifa
 git commit -m "$(cat <<'EOF'
 book: draft <section label> (<chapter title> section <N>)
 
-Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>
+Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>
 EOF
 )"
 ```
