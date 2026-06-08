@@ -5,7 +5,9 @@
   "repository": "https://github.com/queelius/claude-anvil",
   "license": "MIT",
   "author": {
-    "name": "Alexander Towell"
+    "name": "Alexander Towell",
+    "email": "lex@metafunctor.com",
+    "url": "https://metafunctor.com"
   },
   "keywords": ["hugo", "metafunctor", "site-management", "blog", "static-site"]
 }

@@ -6,7 +6,8 @@
   "license": "MIT",
   "author": {
     "name": "Alexander Towell",
-    "url": "https://github.com/queelius"
+    "email": "lex@metafunctor.com",
+    "url": "https://metafunctor.com"
   },
   "keywords": ["research", "autonomous-agent", "proofs", "simulations", "counterexamples", "experiments"]
 }

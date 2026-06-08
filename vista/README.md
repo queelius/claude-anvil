@@ -36,7 +36,7 @@ renders a browseable markdown catalog plus a queryable SQLite database.
 ## Install
 
 ```bash
-cd ~/github/beta/vista
+cd vista          # or wherever you cloned it
 uv venv
 uv pip install -e .
 python -m pytest tests/ -q
@@ -64,7 +64,7 @@ Add a `.mcp.json` at the project root where you want vista available:
   "mcpServers": {
     "vista": {
       "command": "uv",
-      "args": ["run", "--project", "/home/spinoza/github/beta/vista", "vista-mcp"]
+      "args": ["run", "--project", "${CLAUDE_PLUGIN_ROOT}", "vista-mcp"]
     }
   }
 }

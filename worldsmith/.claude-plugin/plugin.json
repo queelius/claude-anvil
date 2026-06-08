@@ -3,7 +3,9 @@
   "version": "0.11.0",
   "description": "Documentation-first worldbuilding methodology and prose craft guardrails for fiction projects. The Silmarillion approach: docs ARE the world, story text derives from them.",
   "author": {
-    "name": "Spinoza"
+    "name": "Alexander Towell",
+    "email": "lex@metafunctor.com",
+    "url": "https://metafunctor.com"
   },
   "repository": "https://github.com/queelius/claude-anvil",
   "license": "MIT",

@@ -116,8 +116,8 @@ ORDER BY r.name
 LIMIT 20
 ```
 
-(You may need to cross-reference with local `pyproject.toml` version via Read
-if the user asks about version drift specifically.)
+(This lists published packages; comparing them against the local manifest
+version is the repo-polish agent's job, since it has file-read access.)
 
 ## Synthesis
 

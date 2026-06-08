@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "description": "Documentation-first methodology and multi-agent toolchain for technical non-fiction long-form manuscripts. The Bernoulli-textbook approach: design spec and chapter plans drive the manuscript.",
   "author": {
-    "name": "Alexander Towell"
+    "name": "Alexander Towell",
+    "email": "lex@metafunctor.com",
+    "url": "https://metafunctor.com"
   },
   "repository": "https://github.com/queelius/claude-anvil",
   "license": "MIT",

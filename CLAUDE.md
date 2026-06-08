@@ -65,6 +65,25 @@ YAML frontmatter with `name`, `description` (with `<example>` blocks showing tri
 ### Hooks (`hooks/hooks.json`)
 JSON with event handlers. Worldsmith uses three: `SessionStart` (command hook for ambient project detection), `PostToolUse` (prompt hook for propagation reminders on Write/Edit), `Stop` (prompt hook for completion verification).
 
+### Slash-command name collisions
+
+Several plugins share bare command names, which is fine because Claude Code
+namespaces every command as `plugin:command`. Always qualify when documenting or
+typing them:
+
+| Bare name | Defined by |
+|-----------|------------|
+| `/draft` | papermill, worldsmith, bookwright |
+| `/review` | papermill, worldsmith, bookwright |
+| `/check` | worldsmith, bookwright |
+| `/init` | papermill, bookwright |
+| `/help` | worldsmith, bookwright |
+| `/status` | papermill, research-agent |
+
+The three authoring plugins (papermill, worldsmith, bookwright) sharing `/draft`
+and `/review` is the highest-friction case. Prefer the qualified form
+(`/bookwright:draft`) in all docs and examples.
+
 ## Cross-Plugin Patterns
 
 **State files**: papermill (`.papermill.md`), pub-pipeline (`.claude/pub-pipeline.local.md`), and kdp (`.claude/kdp.local.md`) use per-project state files with YAML frontmatter + markdown body. These live in the *target* project, not in this repo.

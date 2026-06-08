@@ -23,7 +23,7 @@ Entry fields: `title` (string), `type` (idea/task/note/plan/log), `tags` (array 
 
 ## Output Formats
 
-Default output is table format. Global flags control output: `--json` (JSONL, one JSON object per line), `--table` (columnar), `--markdown` or `--md` (markdown list). The `--fuzzy` global flag enables Levenshtein-based fuzzy matching for tags and search queries across all commands. Always prefer `--json` when parsing results programmatically.
+Default output is table format. Global flags control output: `--json` (JSON output; note that `list`/`stale`/`show` emit a concatenated stream of pretty-printed objects, so parse with `jq -s`, while `search`/`tags` emit strict one-object-per-line JSONL), `--table` (columnar), `--markdown` or `--md` (markdown list). The `--fuzzy` global flag enables Levenshtein-based fuzzy matching for tags and search queries across all commands. Always prefer `--json` when parsing results programmatically.
 
 ## Commands
 

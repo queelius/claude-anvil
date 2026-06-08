@@ -11,9 +11,14 @@ workflows, and cross-posting via crier.
 | Type | Name | Purpose |
 |------|------|---------|
 | Skill | `mf` | Site architecture guide, mf CLI reference, content workflows |
-| Skill | `crier` | Cross-posting workflow — audit, select, rewrite for social platforms |
+| Skill | `scribe` | Discover latent themes across the corpus (a proposal, not a draft) |
 | Command | `/mf` | Site management (new posts, sync papers, health checks) |
-| Command | `/crier` | Cross-post blog content to dev.to, Hashnode, Bluesky, and more |
+| Command | `/scribe` | Trigger the scribe theme-discovery skill |
+
+Cross-posting lives in the separate **crier** plugin (`/crier`), not here: mf
+creates and updates content, crier distributes it. The `scribe` skill can use
+crier's `crier_search` tool as an optional accelerator but falls back to a
+self-contained Glob path when crier is not installed.
 
 ## Install
 

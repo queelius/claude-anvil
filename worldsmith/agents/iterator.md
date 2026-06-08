@@ -38,7 +38,7 @@ You orchestrate an autonomous review-fix-review loop on a manuscript. You are th
 
 ## Context Strategy
 
-With Opus 4.6's 1M context window, pass complete review and revision reports between rounds. Each round's reviewer should see the full prior revision report so it can detect regressions; each round's rewriter should see the full prior review so it can prioritize fixes. Do not summarize round artifacts when forwarding them.
+With the 1M context window, pass complete review and revision reports between rounds. Each round's reviewer should see the full prior revision report so it can detect regressions; each round's rewriter should see the full prior review so it can prioritize fixes. Do not summarize round artifacts when forwarding them.
 
 ## Available Agents
 

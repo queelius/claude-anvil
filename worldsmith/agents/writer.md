@@ -43,7 +43,7 @@ You orchestrate multi-agent fiction content generation. You are the lead author:
 
 ## Context Strategy
 
-With Opus 4.6's 1M context window, pass **complete documents** to specialists rather than excerpts. The entire manuscript + all canonical docs + all character docs fits comfortably. Seemingly irrelevant lore can inform scene writing in unexpected ways: a marketplace scene benefits from knowing the economic system, cultural customs, and political tensions even if the assignment does not mention them. When in doubt, include more context, not less.
+With the 1M context window, pass **complete documents** to specialists rather than excerpts. The entire manuscript + all canonical docs + all character docs fits comfortably. Seemingly irrelevant lore can inform scene writing in unexpected ways: a marketplace scene benefits from knowing the economic system, cultural customs, and political tensions even if the assignment does not mention them. When in doubt, include more context, not less.
 
 ## Available Agents
 

@@ -66,7 +66,7 @@ Four orchestrators and seven specialists. YAML frontmatter with `name`, `descrip
 Three event types:
 - **SessionStart** (command): Runs `detect-worldsmith-project.sh` — checks for `.worldsmith/` directory, reads `project.yaml` for multi-work projects, sets `WORLDSMITH_PROJECT` env var and work metadata, outputs doc/work inventory
 - **PostToolUse** (command, matcher: `Write|Edit`): Two hooks. Propagation reminders fire for any doc or manuscript edit. Cliche detection (stock body reactions, dead metaphors, emotional labeling, redundant adverbs, fancy dialogue tags) fires only for edits inside the manuscript directory (multi-work: paths from `project.yaml`; single-work: `chapters/`, `manuscript/`, `scenes/`, `stories/` heuristics). Skips README, CLAUDE.md, `docs/plans/`, and other non-prose files.
-- **Stop** (prompt): Completion verification before session exit
+- **Stop** (command): Completion verification before session exit
 
 ### Scripts
 - `scripts/count_patterns.py` — Python, reads pattern definitions from `scripts/patterns.md`. Projects can override by placing `patterns.md` in `.worldsmith/` at project root.

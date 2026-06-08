@@ -10,7 +10,7 @@ A Claude Code plugin that provides MCP-driven agents for the [repoindex](https:/
 
 ## Architecture
 
-The plugin is agent-first. Claude Code's built-in MCP support is the single interface for reading repoindex data; agents orchestrate multi-step workflows on top of those tools.
+The plugin is agent-first. Claude Code's built-in MCP support is the primary interface for reading repoindex data; agents orchestrate multi-step workflows on top of those tools, and five slash commands plus a `workflows` router skill provide quick entry points for recurring tasks.
 
 Three agents:
 
@@ -47,7 +47,7 @@ Delegate deterministic work to the CLI (`ops generate` for citation files, licen
 
 Four tables in `~/.repoindex/index.db`:
 
-- **repos**: core identity (`name`, `path`), git status (`is_clean`, `ahead`, `behind`), metadata (`language`, `description`, `keywords`), boolean flags (`has_readme`, `has_license`, `has_ci`, `has_citation`, `has_codemeta`, `has_funding`, `has_contributors`, `has_changelog`), GitHub stats (`stars`, `topics`, `is_archived`), Gitea stats (`stars`, `topics`)
+- **repos**: core identity (`name`, `path`), git status (`is_clean`, `ahead`, `behind`), metadata (`language`, `description`, `keywords`), boolean flags (`has_readme`, `has_license`, `has_ci`, `has_citation`, `has_codemeta`, `has_funding`, `has_contributors`, `has_changelog`), and forge metadata abstracted across GitHub/Gitea (`forge_owner`, `forge_name`, `forge_description`, `forge_id`, `stars`, `topics`, `is_archived`)
 - **publications**: registry packages (`pypi`/`cran`/`zenodo`/`npm`/`cargo`/`docker`/`rubygems`/`go`), `published` flag, `downloads_total`/`downloads_30d`, `doi`
 - **events**: git activity (`commit`/`git_tag`/`branch`/`merge`) with timestamps
 - **tags**: classification tags, auto-derived from metadata. Source attribution: `user`, `implicit`, `github`, `gitea`, `pyproject`, `pypi`, `cran`
@@ -56,8 +56,9 @@ All joins go through `repo_id` foreign key.
 
 ## Migration Note
 
-Earlier versions of this plugin had CLI reference skills (`repoindex`, `repo-polish`), slash commands (`/repo-query`, `/repo-status`), and one agent. With the repoindex v0.15.0 MCP server providing full CLI parity, those skills and commands are obsolete:
+Earlier versions had CLI-reference skills (`repoindex`, `repo-polish`) and a `/repo-query` slash command. With the repoindex MCP server providing full CLI parity, those were removed:
 - CLI reference: covered by MCP tool descriptions plus `get_schema()`
 - `/repo-query`: covered by `run_sql` directly
-- `/repo-status`: covered by `run_sql` or `repo-doctor` agent
 - `repo-polish` skill: converted to an agent
+
+The current surface (v2.x) is three agents (`repo-doctor`, `repo-polish`, `repo-explorer`), a `workflows` router skill, and five slash commands (`/repo-week`, `/repo-status`, `/repo-audit`, `/repo-sprint`, `/repo-mirror`). `/repo-status` is a live command, not a removed one.

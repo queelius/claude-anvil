@@ -26,7 +26,7 @@ Each stage builds on the previous. CRAN gives the package legitimacy. JOSS gives
 
 Start by understanding where the package stands:
 
-**Load user config** (Read tool): Read `.claude/pub-pipeline.local.md` if it exists. Extract author metadata, `r.domain`, `r.audience`, `r.competitors`, `related_work`, and publication `targets` from the YAML frontmatter. If `related_work` contains companion papers or preprints, note them — they affect the JOSS paper (cite companion papers, reference preprint DOIs) and the overall publication strategy.
+**Load user config** (Read tool): Read `.claude/pub-pipeline.local.md` if it exists. Extract author metadata, `r.domain`, `r.audience`, `r.competitors`, `r.targets` (e.g., `["CRAN", "JOSS"]`), and `related_work` from the YAML frontmatter. If `related_work` contains companion papers or preprints, note them, since they affect the JOSS paper (cite companion papers, reference preprint DOIs) and the overall publication strategy.
 
 ```
 1. Read DESCRIPTION for package metadata (Read tool)
@@ -113,7 +113,7 @@ Invoke `/joss-draft` (the `joss-draft` skill) to draft `paper.md` and `paper.bib
 After drafting:
 1. Present the draft to the user for review
 2. Iterate on feedback
-3. Optionally use the `papermill:reviewer` agent for critical review
+3. Optionally run the `pub-pipeline:joss-reviewer` agent (via `/joss-audit`) for critical review against the JOSS checklist
 4. Commit the paper to the repository
 
 ### Phase 5: JOSS Submission

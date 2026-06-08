@@ -152,7 +152,7 @@ The Silmarillion of the project. A narrative-form synthesis of all canonical lor
 - The connections between all of the above: how the magic system shaped the political structure that caused the war that defines the cultural divide
 
 **What makes it useful:**
-A new writing session (or a new work in the universe) can read one document and understand the entire world. With Opus 4.6's 1M context, the universe bible + all canonical docs + an entire manuscript can fit simultaneously, giving agents complete world knowledge.
+A new writing session (or a new work in the universe) can read one document and understand the entire world. With the 1M context, the universe bible + all canonical docs + an entire manuscript can fit simultaneously, giving agents complete world knowledge.
 
 The universe bible is derived from canonical docs, not the other way around. When canonical docs change, the relevant section of the universe bible should be regenerated. The lore-writer specialist is responsible for maintaining it.
 

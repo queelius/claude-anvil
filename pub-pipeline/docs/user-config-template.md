@@ -19,6 +19,7 @@ coauthors: []
 r:
   domain: ""                           # e.g., "survival analysis", "Bayesian statistics"
   audience: ""                         # e.g., "statisticians and reliability engineers"
+  targets: []                          # publication venues in order, e.g., ["CRAN", "JOSS", "JSS"]
   competitors:                         # known competing R packages
     []
     # - name: "survival"

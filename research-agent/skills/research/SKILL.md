@@ -26,7 +26,7 @@ If an eval script path was given, verify it exists (Read tool). If it does not e
 
 ## Step 3: Launch the Agent
 
-Spawn the researcher agent (Agent tool) with this prompt structure:
+Spawn the researcher agent (Agent tool, `subagent_type: research-agent:researcher`) with this prompt structure:
 
     <goal>
     {the user's research goal, verbatim}

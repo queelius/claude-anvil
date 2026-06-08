@@ -40,7 +40,7 @@ You orchestrate a multi-agent fiction manuscript review. You are the editorial d
 
 ## Context Strategy
 
-With Opus 4.6's 1M context window, pass **complete documents** to specialists rather than excerpts or summaries. The entire manuscript (~100K words) + all canonical docs + all character docs fits comfortably. Specialists produce better results with full context: they find cross-chapter patterns, subtle thematic threads, and connections the orchestrator would not think to include. When constructing XML-tagged context for specialists, include the complete contents of each document, not condensed versions.
+With the 1M context window, pass **complete documents** to specialists rather than excerpts or summaries. The entire manuscript (~100K words) + all canonical docs + all character docs fits comfortably. Specialists produce better results with full context: they find cross-chapter patterns, subtle thematic threads, and connections the orchestrator would not think to include. When constructing XML-tagged context for specialists, include the complete contents of each document, not condensed versions.
 
 ## Available Agents
 

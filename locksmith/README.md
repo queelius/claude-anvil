@@ -9,7 +9,9 @@ complementary encryption tools: cryptoid (Hugo site encryption), pagevault
 | Type | Name | Purpose |
 |------|------|---------|
 | Skill | `confidential` | Tool selection logic, usage patterns, and workflow guidance |
-| Command | `/confidential` | Encrypt, decrypt, sign, or verify content |
+
+This is a skill-only plugin: the `confidential` skill triggers on natural
+language (e.g. "encrypt this page", "sign this file"); there is no slash command.
 
 ## Install
 
@@ -17,6 +19,13 @@ complementary encryption tools: cryptoid (Hugo site encryption), pagevault
 # From the marketplace
 /plugin install alex-confidential@queelius
 ```
+
+## Requirements
+
+The skill assumes these tools are installed and on PATH:
+
+- `cryptoid` and `pagevault` (the user's own packages; `pip install cryptoid pagevault`)
+- `gpg` (system package)
 
 ## Tool Selection
 

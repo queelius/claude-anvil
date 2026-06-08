@@ -64,7 +64,7 @@ sibling subtree.
 - Each skill (`skills/<name>/SKILL.md`) is thin. The skill's job is to parse user intent and prepare the right XML tags for the agent (or, for status, read files directly). Do not put research methodology in skills.
 - Commands are one-liners. Keep them that way.
 - Skills that dispatch the researcher use `subagent_type: research-agent:researcher` (see `skills/resume/SKILL.md` and `skills/synthesize/SKILL.md`). Any new mode that runs the agent must use the same subagent_type so it inherits the canonical system prompt.
-- The agent uses `model: opus`, which resolves to the latest Opus (currently 4.7 with the 1M context window when the harness enables it). Long research runs still need file-system persistence (`log.md`, `state.md`, `attempts/`) because very long runs may compress earlier history; the disk is always the source of truth.
+- The agent uses `model: opus`, which resolves to the latest Opus (currently Opus 4.8 with the 1M context window when the harness enables it). Long research runs still need file-system persistence (`log.md`, `state.md`, `attempts/`) because very long runs may compress earlier history; the disk is always the source of truth.
 
 When adding a new mode (e.g., a "branch" mode that forks a research run from a checkpoint), edit four files in lockstep: (1) a new `skills/<mode>/SKILL.md`, (2) a new `commands/<mode>.md`, (3) a new section in the agent's `Initialization` block documenting the mode and its XML trigger tag, and (4) the mode list in the "How It Works" section of this file. If the new mode reads or writes `.research/`, also extend the Artifact Contract section above to describe any new files or new shape on existing ones.
 

@@ -1,10 +1,25 @@
 ---
 name: auditor
-description: Cross-posting analysis agent. Use for gap analysis (what's missing where), performance review (what performed well), staleness checks (old unposted content), and failure triage. Works entirely through MCP tools.
+description: >-
+  Cross-posting analysis agent. Use for gap analysis (what's missing where),
+  performance review (what performed well), staleness checks (old unposted
+  content), and failure triage. Works entirely through MCP tools.
+
+  <example>
+  Context: User wants to know what has not been cross-posted yet.
+  user: "What blog posts am I missing on Bluesky and Mastodon?"
+  assistant: "I'll launch the crier auditor to run a gap analysis across platforms."
+  <commentary>Gap analysis across platforms is the auditor's core job.</commentary>
+  </example>
+  <example>
+  Context: User wants to triage publishing failures.
+  user: "Some cross-posts failed last week, can you figure out why?"
+  assistant: "I'll launch the crier auditor to triage the failures and check platform health."
+  <commentary>Failure triage via crier_failures plus crier_doctor is an auditor workflow.</commentary>
+  </example>
 model: sonnet
 color: yellow
 tools:
-  - Bash
   - Read
   - AskUserQuestion
   - mcp__crier__crier_summary

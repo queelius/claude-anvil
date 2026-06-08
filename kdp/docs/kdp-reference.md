@@ -102,10 +102,10 @@ Inside margin = 0.5" + (0.125" per 150 pages) for Color
 - [ ] **Bleed**: Add 0.125" bleed on all sides (extends beyond trim)
 - [ ] **Safe zone**: Keep critical text/elements 0.125" inside trim line
 - [ ] **Spine width**: Calculate using KDP Cover Calculator
-  - Formula: (Page count × paper type multiplier) + 0.06"
+  - Formula: Page count × paper type multiplier
   - White paper: 0.002252" per page
   - Cream paper: 0.0025" per page
-  - Example: 300-page white = (300 × 0.002252) + 0.06 = 0.7356"
+  - Example: 300-page white = 300 × 0.002252 = 0.6756"
 - [ ] **Spine text**: Only include if book is 130+ pages (minimum spine width 0.3")
 - [ ] **ISBN/Barcode**: Do NOT add barcode if using free Amazon ASIN (KDP adds it)
 - [ ] **ISBN placement**: If using own ISBN, place barcode on back cover lower right
