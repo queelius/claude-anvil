@@ -1,0 +1,31 @@
+__pycache__/
+*.pyc
+*.egg-info/
+.venv/
+.uv/
+build/
+dist/
+
+# test / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# data outputs (not source)
+data/papers.db
+data/papers.db-shm
+data/papers.db-wal
+data/pdfs/
+data/text/
+out/
+.cache/
+
+# secrets
+.env
+.env.local
+
+# editor
+.vscode/
+.idea/
+*.swp
+.DS_Store
