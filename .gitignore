@@ -7,3 +7,6 @@ Thumbs.db
 .idea/
 .claude/
 .worktrees/
+
+# tool artifacts
+.playwright-mcp/
