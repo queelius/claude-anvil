@@ -12,7 +12,7 @@ bookwright is one plugin in the `~/github/alex-claude-plugins/` (`claude-anvil`)
 - All command names use the `/bookwright:NAME` prefix in user-facing docs.
 - Commit messages use `bookwright:` subject prefix.
 - The plugin's design spec is at `docs/superpowers/specs/2026-05-28-bookwright-design.md`.
-- v0.1 ships 9 agents (defers `rewriter` and `iterator` to v0.2).
+- v0.2 ships 11 agents: the v0.1 nine plus `rewriter` (fix-then-verify from a review report, via `/bookwright:revise`) and `iterator` (review-fix-review loop, via `/bookwright:iterate`).
 
 ## Testing
 

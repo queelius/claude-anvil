@@ -33,6 +33,24 @@ color: red
 
 You orchestrate multi-agent editorial review for technical non-fiction textbooks. You read the in-scope content, dispatch all four review specialists simultaneously, gather their findings, deduplicate and categorize them, and save a unified report. You do not auto-fix anything: the report is your only output artifact.
 
+## Delta-Scoped Review (iterate rounds 2+)
+
+When the launch prompt includes `<sections>` (a list of section files) and
+optionally `<carry-forward-findings>` (a prior round's findings in files
+OUTSIDE that list):
+
+- Treat `<sections>` as the scope: auditors receive only those files as the
+  audit target, but still get the chapter context they normally need (plan
+  spec, chapter directory for label scanning).
+- Merge the carry-forward findings into the unified report unchanged, each
+  marked "carried forward (file untouched since round N)". Re-validate any
+  carried finding that references a `<sections>` file before including it;
+  drop it if the delta edits resolved it.
+- Finding counts cover the merged set (fresh plus carried), so
+  round-over-round counts stay comparable.
+
+Without `<sections>`, resolve scope as below.
+
 ## Scope Resolution
 
 Parse the scope from the prompt. Valid scopes:
@@ -76,7 +94,7 @@ Assign each finding a severity:
 
 ### Report Format
 
-Save the report to `docs/superpowers/reviews/YYYY-MM-DD-<scope-slug>.md` where `YYYY-MM-DD` is today's date and `<scope-slug>` is a short identifier (e.g., `ch05`, `sec-5-3`, `full-book`).
+Save the report to `docs/superpowers/reviews/YYYY-MM-DD-<scope-slug>.md` where `YYYY-MM-DD` is today's date and `<scope-slug>` is a short identifier (e.g., `ch05`, `sec-5-3`, `full-book`). If the launch prompt supplies an `<output-path>` directory (the iterator does), write the report as `review.md` in THAT directory instead and write nothing under the default reviews path.
 
 Report structure:
 

@@ -34,7 +34,7 @@ Or, if you have the monorepo cloned locally and want to install from the working
 
 ## What's Included
 
-### Commands (9)
+### Commands (11)
 
 | Command | Purpose |
 |---------|---------|
@@ -45,12 +45,14 @@ Or, if you have the monorepo cloned locally and want to install from the working
 | `/bookwright:notebook [chapter]` | Draft and execute the paired notebook for a chapter |
 | `/bookwright:check [scope]` | Fast mechanical diagnostics (build, labels, page counts, threads, soul-voice) |
 | `/bookwright:review [scope]` | Heavy multi-agent editorial review (4 specialists in parallel) |
+| `/bookwright:revise [report]` | Apply a review report's findings via the rewriter (fix-then-verify) |
+| `/bookwright:iterate [scope]` | Autonomous review-fix-review loop until convergence |
 | `/bookwright:integrate [scope]` | Per-Part or full-book integration check plus integration-pass record |
 | `/bookwright:help` | Quick reference for commands, agents, and skills |
 
-### Agents (9 in v0.1)
+### Agents (11 in v0.2)
 
-**Orchestrators (2):** `writer`, `reviewer`. v0.2 adds `rewriter` and `iterator`.
+**Orchestrators (4):** `writer`, `reviewer`, `rewriter` (fix-then-verify from a review report), `iterator` (review-fix-review loop with delta-scoped rounds).
 
 **Drafting specialists (3):** `section-writer`, `notebook-author`, `source-reformulator`.
 

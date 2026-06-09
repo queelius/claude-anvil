@@ -17,10 +17,12 @@ Launch the `reviewer` orchestrator. Dispatches all four review specialists in pa
 
 ## Output
 
-A unified review report saved to `docs/superpowers/reviews/YYYY-MM-DD-<scope>.md`, with sections from each auditor: spec compliance, quality (cold-read), math correctness, cross-references. To apply fixes, run `/bookwright:draft` with the review report path as input (the writer orchestrator's fix mode). `/bookwright:integrate` is read-only verification, not a fix path.
+A unified review report saved to `docs/superpowers/reviews/YYYY-MM-DD-<scope>.md`, with sections from each auditor: spec compliance, quality (cold-read), math correctness, cross-references. To apply fixes, run `/bookwright:revise` (the rewriter orchestrator: fix-then-verify per finding, paired revision report); `/bookwright:iterate` loops review and revise to convergence. `/bookwright:integrate` is read-only verification, not a fix path.
 
 ## Distinction from /bookwright:check and /bookwright:integrate
 
 - `/bookwright:check` is fast, mechanical, no judgment.
 - `/bookwright:review` is heavy, editorial, full multi-agent dispatch.
+- `/bookwright:revise` applies a review report's findings (fix-then-verify).
+- `/bookwright:iterate` loops review and revise until convergence.
 - `/bookwright:integrate` is per-Part or full-book verification with a written integration-pass record.
