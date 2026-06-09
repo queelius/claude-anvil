@@ -1,7 +1,7 @@
 {
   "name": "vista",
   "description": "Surface salient research directions from highly-cited papers. Live OpenAlex search, PDF section extraction, structured catalog.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": {
     "name": "Alexander Towell",
     "email": "lex@metafunctor.com",
@@ -10,5 +10,11 @@
   "homepage": "https://github.com/queelius/vista",
   "repository": "https://github.com/queelius/vista",
   "license": "MIT",
-  "keywords": ["research", "literature", "future-work", "openalex", "papers"]
+  "keywords": [
+    "research",
+    "literature",
+    "future-work",
+    "openalex",
+    "papers"
+  ]
 }

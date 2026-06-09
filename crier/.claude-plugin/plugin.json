@@ -1,6 +1,6 @@
 {
   "name": "crier",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "Cross-post blog content to multiple platforms: audit, publish, rewrite, and track content distribution via the crier CLI",
   "author": {
     "name": "Alexander Towell",
@@ -9,5 +9,14 @@
   },
   "repository": "https://github.com/queelius/claude-anvil",
   "license": "MIT",
-  "keywords": ["cross-posting", "blog", "publishing", "devto", "hashnode", "bluesky", "mastodon", "content-distribution"]
+  "keywords": [
+    "cross-posting",
+    "blog",
+    "publishing",
+    "devto",
+    "hashnode",
+    "bluesky",
+    "mastodon",
+    "content-distribution"
+  ]
 }

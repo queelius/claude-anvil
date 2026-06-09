@@ -11,18 +11,18 @@ A Claude Code **plugin marketplace** (`queelius`). All plugins are distributed a
 
 | Plugin | Dir | Purpose | Version |
 |--------|-----|---------|---------|
-| **papermill** | `papermill/` | Academic paper lifecycle: thesis, lit survey, experiment, review, venue, submission | 0.6.0 |
-| **worldsmith** | `worldsmith/` | Documentation-first fiction worldbuilding (the "Silmarillion approach") | 0.11.0 |
-| **pub-pipeline** | `pub-pipeline/` | Publication workflows: R/CRAN/JOSS, Python/PyPI | 0.7.0 |
-| **mf** | `mf/` | Metafunctor site management: blog architecture, content workflows, crier | 1.1.0 |
-| **repoindex** | `repoindex/` | Agent-driven repository intelligence (repo-doctor, repo-polish, repo-explorer) plus five workflow slash commands. MCP-first over a local git catalog | 2.2.0 |
-| **alex-confidential** | `locksmith/` | Confidentiality toolkit: cryptoid, pagevault, gpg encryption | 0.2.0 |
-| **kdp** | `kdp/` | Amazon KDP book publishing: manuscript audit, listing craft, submission workflow | 0.4.1 |
-| **jot** | `jot/` | Journal-aware sessions that surface tasks, ideas, and plans from your jot journal | 0.3.0 |
-| **crier** | `crier/` | Cross-post blog content to multiple platforms via the crier CLI | 1.2.0 |
-| **research-agent** | `research-agent/` | Autonomous research agent with parallel sub-agent dispatch and a status/resume/synthesize control surface for managing long runs | 0.3.0 |
-| **vista** | `vista/` | Surface salient research directions from highly-cited papers. Live OpenAlex search, PDF section extraction, structured catalog | 0.1.0 |
-| **bookwright** | `bookwright/` | Non-fiction book authoring: LaTeX + paired computational notebooks, multi-agent drafting/review, design→plan→draft→integrate workflow | 0.1.0 |
+| **papermill** | `papermill/` | Academic paper lifecycle: thesis, lit survey, experiment, review, venue, submission | 0.7.0 |
+| **worldsmith** | `worldsmith/` | Documentation-first fiction worldbuilding (the "Silmarillion approach") | 0.12.0 |
+| **pub-pipeline** | `pub-pipeline/` | Publication workflows: R/CRAN/JOSS, Python/PyPI | 0.8.0 |
+| **mf** | `mf/` | Metafunctor site management: blog architecture, content workflows, crier | 1.2.0 |
+| **repoindex** | `repoindex/` | Agent-driven repository intelligence (repo-doctor, repo-polish, repo-explorer) plus five workflow slash commands. MCP-first over a local git catalog | 2.3.0 |
+| **alex-confidential** | `locksmith/` | Confidentiality toolkit: cryptoid, pagevault, gpg encryption | 0.3.0 |
+| **kdp** | `kdp/` | Amazon KDP book publishing: manuscript audit, listing craft, submission workflow | 0.5.0 |
+| **jot** | `jot/` | Journal-aware sessions that surface tasks, ideas, and plans from your jot journal | 0.4.0 |
+| **crier** | `crier/` | Cross-post blog content to multiple platforms via the crier CLI | 1.3.0 |
+| **research-agent** | `research-agent/` | Autonomous research agent with parallel sub-agent dispatch and a status/resume/synthesize control surface for managing long runs | 0.4.0 |
+| **vista** | `vista/` | Surface salient research directions from highly-cited papers. Live OpenAlex search, PDF section extraction, structured catalog | 0.2.0 |
+| **bookwright** | `bookwright/` | Non-fiction book authoring: LaTeX + paired computational notebooks, multi-agent drafting/review, design→plan→draft→integrate workflow | 0.1.1 |
 
 > **Note**: A `profiler/` directory exists locally as a symlink to `~/github/personal/profiles/` but is intentionally not in `marketplace.json` (the symlink targets an absolute path outside the repo, so a marketplace install would break for other users). Re-add when the plugin is properly in-tree or a git submodule.
 

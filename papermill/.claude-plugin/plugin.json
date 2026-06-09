@@ -1,7 +1,7 @@
 {
   "name": "papermill",
   "description": "Research paper lifecycle management: thesis refinement, literature surveys, experimental design, multi-agent drafting, editorial review, and publication venue matching",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "repository": "https://github.com/queelius/claude-anvil",
   "license": "MIT",
   "author": {
@@ -9,5 +9,13 @@
     "email": "lex@metafunctor.com",
     "url": "https://metafunctor.com"
   },
-  "keywords": ["academic", "papers", "research", "thesis", "literature-review", "JOSS", "multi-agent"]
+  "keywords": [
+    "academic",
+    "papers",
+    "research",
+    "thesis",
+    "literature-review",
+    "JOSS",
+    "multi-agent"
+  ]
 }

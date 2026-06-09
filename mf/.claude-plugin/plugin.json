@@ -1,7 +1,7 @@
 {
   "name": "mf",
   "description": "Metafunctor site management: blog architecture, content workflows, and mf CLI",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "repository": "https://github.com/queelius/claude-anvil",
   "license": "MIT",
   "author": {
@@ -9,5 +9,11 @@
     "email": "lex@metafunctor.com",
     "url": "https://metafunctor.com"
   },
-  "keywords": ["hugo", "metafunctor", "site-management", "blog", "static-site"]
+  "keywords": [
+    "hugo",
+    "metafunctor",
+    "site-management",
+    "blog",
+    "static-site"
+  ]
 }

@@ -1,6 +1,6 @@
 {
   "name": "pub-pipeline",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "Unified publication pipeline: R packages (CRAN/JOSS/JSS) and Python packages (PyPI)",
   "author": {
     "name": "Alexander Towell",
@@ -9,5 +9,13 @@
   },
   "repository": "https://github.com/queelius/claude-anvil",
   "license": "MIT",
-  "keywords": ["R", "CRAN", "JOSS", "PyPI", "publication", "academic", "audit"]
+  "keywords": [
+    "R",
+    "CRAN",
+    "JOSS",
+    "PyPI",
+    "publication",
+    "academic",
+    "audit"
+  ]
 }

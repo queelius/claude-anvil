@@ -1,7 +1,7 @@
 {
   "name": "research-agent",
   "description": "Autonomous research agent: iterates toward a goal through proofs, code, simulations, tests, and counterexample search",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "repository": "https://github.com/queelius/claude-anvil",
   "license": "MIT",
   "author": {
@@ -9,5 +9,12 @@
     "email": "lex@metafunctor.com",
     "url": "https://metafunctor.com"
   },
-  "keywords": ["research", "autonomous-agent", "proofs", "simulations", "counterexamples", "experiments"]
+  "keywords": [
+    "research",
+    "autonomous-agent",
+    "proofs",
+    "simulations",
+    "counterexamples",
+    "experiments"
+  ]
 }

@@ -1,7 +1,7 @@
 {
   "name": "alex-confidential",
   "description": "Confidentiality toolkit: smart routing across cryptoid (Hugo encryption), pagevault (HTML/file encryption), and gpg (file encryption/signing)",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "repository": "https://github.com/queelius/claude-anvil",
   "license": "MIT",
   "author": {
@@ -9,5 +9,12 @@
     "email": "lex@metafunctor.com",
     "url": "https://metafunctor.com"
   },
-  "keywords": ["encryption", "cryptography", "gpg", "cryptoid", "pagevault", "confidentiality"]
+  "keywords": [
+    "encryption",
+    "cryptography",
+    "gpg",
+    "cryptoid",
+    "pagevault",
+    "confidentiality"
+  ]
 }

@@ -12,7 +12,7 @@
       "name": "pub-pipeline",
       "source": "./pub-pipeline",
       "description": "Unified publication pipeline: R packages (CRAN/JOSS/JSS) and Python packages (PyPI)",
-      "version": "0.7.0",
+      "version": "0.8.0",
       "author": {
         "name": "Alexander Towell"
       }
@@ -21,7 +21,7 @@
       "name": "papermill",
       "source": "./papermill",
       "description": "Research paper lifecycle management: thesis refinement, literature surveys, experimental design, multi-agent drafting, editorial review, and publication venue matching",
-      "version": "0.6.0",
+      "version": "0.7.0",
       "author": {
         "name": "Alexander Towell"
       }
@@ -30,7 +30,7 @@
       "name": "worldsmith",
       "source": "./worldsmith",
       "description": "Documentation-first worldbuilding methodology for fiction projects. The Silmarillion approach: docs ARE the world, story text derives from them.",
-      "version": "0.11.0",
+      "version": "0.12.0",
       "author": {
         "name": "Alexander Towell"
       }
@@ -39,7 +39,7 @@
       "name": "mf",
       "source": "./mf",
       "description": "Metafunctor site management: blog architecture, content workflows, and mf CLI",
-      "version": "1.1.0",
+      "version": "1.2.0",
       "author": {
         "name": "Alexander Towell"
       }
@@ -48,7 +48,7 @@
       "name": "repoindex",
       "source": "./repoindex",
       "description": "Repository intelligence for Claude Code. MCP-first access to a local git catalog, three specialized agents (repo-doctor, repo-polish, repo-explorer), and five slash commands (/repo-week, /repo-status, /repo-audit, /repo-sprint, /repo-mirror) for recurring workflows.",
-      "version": "2.2.0",
+      "version": "2.3.0",
       "author": {
         "name": "Alexander Towell"
       }
@@ -57,7 +57,7 @@
       "name": "alex-confidential",
       "source": "./locksmith",
       "description": "Confidentiality toolkit: smart routing across cryptoid, pagevault, and gpg encryption tools",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "author": {
         "name": "Alexander Towell"
       }
@@ -66,7 +66,7 @@
       "name": "kdp",
       "source": "./kdp",
       "description": "Amazon KDP book publishing: manuscript audit, listing craft, and submission workflow",
-      "version": "0.4.1",
+      "version": "0.5.0",
       "author": {
         "name": "Alexander Towell"
       }
@@ -75,7 +75,7 @@
       "name": "jot",
       "source": "./jot",
       "description": "Journal-aware Claude Code sessions that surface relevant tasks, ideas, and plans from your jot journal",
-      "version": "0.3.0",
+      "version": "0.4.0",
       "author": {
         "name": "Alexander Towell"
       }
@@ -84,7 +84,7 @@
       "name": "crier",
       "source": "./crier",
       "description": "Cross-post blog content to multiple platforms: audit, publish, rewrite, and track content distribution via the crier CLI",
-      "version": "1.2.0",
+      "version": "1.3.0",
       "author": {
         "name": "Alexander Towell"
       }
@@ -93,7 +93,7 @@
       "name": "research-agent",
       "source": "./research-agent",
       "description": "Autonomous research agent: iterates toward a goal through proofs, code, simulations, tests, and counterexample search. Status, resume, and synthesize commands manage long-running research as a session.",
-      "version": "0.3.0",
+      "version": "0.4.0",
       "author": {
         "name": "Alexander Towell"
       }
@@ -102,7 +102,7 @@
       "name": "vista",
       "source": "./vista",
       "description": "Surface salient research directions from highly-cited papers. Live OpenAlex search, PDF section extraction, structured catalog, MCP tools for in-conversation lookups.",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "author": {
         "name": "Alexander Towell"
       }
@@ -111,7 +111,7 @@
       "name": "bookwright",
       "source": "./bookwright",
       "description": "Documentation-first methodology and multi-agent toolchain for technical non-fiction long-form manuscripts. The Bernoulli-textbook approach: design spec and chapter plans drive the manuscript.",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "author": {
         "name": "Alexander Towell"
       }
