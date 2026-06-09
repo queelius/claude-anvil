@@ -43,7 +43,7 @@ Two skills, independently triggered:
 YAML frontmatter with `name`, `description` (trigger phrases for auto-detection), and `version`. Body is lean methodology with references to detailed docs via `${CLAUDE_PLUGIN_ROOT}`. When adding references, verify the target file exists.
 
 ### Agents (`agents/*.md`)
-Four orchestrators and seven specialists. YAML frontmatter with `name`, `description` (with `<example>` blocks), `tools` (list), `model: fable`, and `color`.
+Four orchestrators and seven specialists. YAML frontmatter with `name`, `description` (with `<example>` blocks), `tools` (list), `model: inherit`, and `color`.
 
 **Orchestrators** (spawn specialists via Task tool):
 - **reviewer**: Multi-agent editorial review. Reads project context, launches 4 auditors in parallel, cross-verifies critical findings, synthesizes unified report to `.worldsmith/reviews/`.

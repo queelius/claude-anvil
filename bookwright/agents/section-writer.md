@@ -21,7 +21,7 @@ description: >-
   <commentary>section-writer can also be invoked directly for a standalone task.</commentary>
   </example>
 tools: Read, Write, Edit, Glob, Grep, Bash
-model: "claude-fable-5[1m]"
+model: inherit
 color: green
 ---
 
@@ -90,7 +90,7 @@ Stage only the new or modified .tex file. Never stage `book.pdf` or build artifa
 git commit -m "$(cat <<'EOF'
 book: draft <section label> (<chapter title> section <N>)
 
-Co-Authored-By: Claude Fable 5 (1M context) <noreply@anthropic.com>
+Co-Authored-By: Claude <noreply@anthropic.com>
 EOF
 )"
 ```

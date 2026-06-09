@@ -11,18 +11,18 @@ A Claude Code **plugin marketplace** (`queelius`). All plugins are distributed a
 
 | Plugin | Dir | Purpose | Version |
 |--------|-----|---------|---------|
-| **papermill** | `papermill/` | Academic paper lifecycle: thesis, lit survey, experiment, review, venue, submission | 0.8.0 |
-| **worldsmith** | `worldsmith/` | Documentation-first fiction worldbuilding (the "Silmarillion approach") | 0.13.0 |
-| **pub-pipeline** | `pub-pipeline/` | Publication workflows: R/CRAN/JOSS, Python/PyPI | 0.8.0 |
+| **papermill** | `papermill/` | Academic paper lifecycle: thesis, lit survey, experiment, review, venue, submission | 0.8.1 |
+| **worldsmith** | `worldsmith/` | Documentation-first fiction worldbuilding (the "Silmarillion approach") | 0.13.1 |
+| **pub-pipeline** | `pub-pipeline/` | Publication workflows: R/CRAN/JOSS, Python/PyPI | 0.8.1 |
 | **mf** | `mf/` | Metafunctor site management: blog architecture, content workflows, crier | 1.3.0 |
-| **repoindex** | `repoindex/` | Agent-driven repository intelligence (repo-doctor, repo-polish, repo-explorer) plus five workflow slash commands. MCP-first over a local git catalog | 2.3.0 |
+| **repoindex** | `repoindex/` | Agent-driven repository intelligence (repo-doctor, repo-polish, repo-explorer) plus five workflow slash commands. MCP-first over a local git catalog | 2.3.1 |
 | **alex-confidential** | `locksmith/` | Confidentiality toolkit: cryptoid, pagevault, gpg encryption | 0.3.0 |
 | **kdp** | `kdp/` | Amazon KDP book publishing: manuscript audit, listing craft, submission workflow | 0.6.0 |
 | **jot** | `jot/` | Journal-aware sessions that surface tasks, ideas, and plans from your jot journal | 0.4.0 |
 | **crier** | `crier/` | Cross-post blog content to multiple platforms via the crier CLI | 1.3.0 |
-| **research-agent** | `research-agent/` | Autonomous research agent with parallel sub-agent dispatch and a status/resume/synthesize control surface for managing long runs | 0.5.0 |
+| **research-agent** | `research-agent/` | Autonomous research agent with parallel sub-agent dispatch and a status/resume/synthesize control surface for managing long runs | 0.5.1 |
 | **vista** | `vista/` | Surface salient research directions from highly-cited papers. Live OpenAlex search, PDF section extraction, structured catalog | 0.2.0 |
-| **bookwright** | `bookwright/` | Non-fiction book authoring: LaTeX + paired computational notebooks, multi-agent drafting/review, design→plan→draft→integrate workflow | 0.2.0 |
+| **bookwright** | `bookwright/` | Non-fiction book authoring: LaTeX + paired computational notebooks, multi-agent drafting/review, design→plan→draft→integrate workflow | 0.2.1 |
 
 > **Note**: A `profiler/` directory exists locally as a symlink to `~/github/personal/profiles/` but is intentionally not in `marketplace.json` (the symlink targets an absolute path outside the repo, so a marketplace install would break for other users). Re-add when the plugin is properly in-tree or a git submodule.
 
@@ -61,6 +61,8 @@ YAML frontmatter with `description`. Most are minimal (3-5 lines) with a one-lin
 
 ### Agents (`agents/<name>.md`)
 YAML frontmatter with `name`, `description` (with `<example>` blocks showing trigger patterns), `tools` (list of allowed tools), `model`, and `color`. Body is the agent's system prompt.
+
+**Agent model policy.** Every plugin agent is a *subagent* (skills spawn the orchestrators via Task; orchestrators spawn specialists). Heavy agents (orchestrators, content writers, judgment auditors) use `model: inherit` so they run on whatever model the user selected for the session, choose Fable with `/model fable`. Do NOT pin `model: fable` in agent frontmatter: a subagent spawn that explicitly requests Fable can be rejected by an `availableModels` policy, the account's Fable access, or a Claude Code version older than v2.1.170, whereas `inherit` sidesteps all three and honors the user's choice. Mechanical auditors and cheap analysis agents (spec-auditor, cross-ref-auditor, format-validator, field-scout, software-auditor, community-auditor, surveyor, citation-verifier, repo-doctor, repo-explorer, the crier and jot agents) pin an explicit cheaper tier (`sonnet` or `haiku`). vista's `PREMIUM_MODEL = claude-fable-5` is exempt: it is a direct Anthropic API call from the vista CLI, not a Claude Code subagent spawn, so the restriction does not apply.
 
 ### Hooks (`hooks/hooks.json`)
 JSON with event handlers. Worldsmith uses three: `SessionStart` (command hook for ambient project detection), `PostToolUse` (prompt hook for propagation reminders on Write/Edit), `Stop` (prompt hook for completion verification).

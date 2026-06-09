@@ -31,7 +31,7 @@ The **pub-pipeline** skill (`skills/pub-pipeline/SKILL.md`) is a top-level route
 The JOSS pipeline uses a multi-agent pattern inspired by papermill. Two orchestrators spawn specialist agents in parallel:
 
 ```
-joss-writer (fable, blue)           joss-reviewer (fable, red)
+joss-writer (inherit, blue)        joss-reviewer (inherit, red)
   │                                  │
   ├─ field-scout (sonnet, cyan)      ├─ software-auditor (sonnet, yellow)
   │                                  ├─ community-auditor (haiku, green)

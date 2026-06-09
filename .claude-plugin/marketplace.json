@@ -12,7 +12,7 @@
       "name": "pub-pipeline",
       "source": "./pub-pipeline",
       "description": "Unified publication pipeline: R packages (CRAN/JOSS/JSS) and Python packages (PyPI)",
-      "version": "0.8.0",
+      "version": "0.8.1",
       "author": {
         "name": "Alexander Towell"
       }
@@ -21,7 +21,7 @@
       "name": "papermill",
       "source": "./papermill",
       "description": "Research paper lifecycle management: thesis refinement, literature surveys, experimental design, multi-agent drafting, editorial review, and publication venue matching",
-      "version": "0.8.0",
+      "version": "0.8.1",
       "author": {
         "name": "Alexander Towell"
       }
@@ -30,7 +30,7 @@
       "name": "worldsmith",
       "source": "./worldsmith",
       "description": "Documentation-first worldbuilding methodology for fiction projects. The Silmarillion approach: docs ARE the world, story text derives from them.",
-      "version": "0.13.0",
+      "version": "0.13.1",
       "author": {
         "name": "Alexander Towell"
       }
@@ -48,7 +48,7 @@
       "name": "repoindex",
       "source": "./repoindex",
       "description": "Repository intelligence for Claude Code. MCP-first access to a local git catalog, three specialized agents (repo-doctor, repo-polish, repo-explorer), and five slash commands (/repo-week, /repo-status, /repo-audit, /repo-sprint, /repo-mirror) for recurring workflows.",
-      "version": "2.3.0",
+      "version": "2.3.1",
       "author": {
         "name": "Alexander Towell"
       }
@@ -93,7 +93,7 @@
       "name": "research-agent",
       "source": "./research-agent",
       "description": "Autonomous research agent: iterates toward a goal through proofs, code, simulations, tests, and counterexample search. Status, resume, and synthesize commands manage long-running research as a session.",
-      "version": "0.5.0",
+      "version": "0.5.1",
       "author": {
         "name": "Alexander Towell"
       }
@@ -111,7 +111,7 @@
       "name": "bookwright",
       "source": "./bookwright",
       "description": "Documentation-first methodology and multi-agent toolchain for technical non-fiction long-form manuscripts. The Bernoulli-textbook approach: design spec and chapter plans drive the manuscript.",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "author": {
         "name": "Alexander Towell"
       }

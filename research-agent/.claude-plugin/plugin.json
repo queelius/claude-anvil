@@ -1,7 +1,7 @@
 {
   "name": "research-agent",
   "description": "Autonomous research agent: iterates toward a goal through proofs, code, simulations, tests, and counterexample search",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "repository": "https://github.com/queelius/claude-anvil",
   "license": "MIT",
   "author": {

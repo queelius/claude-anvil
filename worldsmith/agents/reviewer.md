@@ -32,7 +32,7 @@ tools:
   - Grep
   - Bash
   - Task
-model: fable
+model: inherit
 color: red
 ---
 
@@ -68,10 +68,10 @@ Launch these via Task tool. Each receives the manuscript and project context via
 
 | Agent | Type | Purpose |
 |-------|------|---------|
-| `worldsmith:consistency-auditor` | fable | Timeline, facts, character state, spatial contradictions |
-| `worldsmith:craft-auditor` | fable | Prose quality, cliche detection, scene mechanics |
-| `worldsmith:voice-auditor` | fable | Character voice consistency, dialogue distinctiveness, POV |
-| `worldsmith:structure-auditor` | fable | Pacing, tension, scene turns, thematic coherence, arcs |
+| `worldsmith:consistency-auditor` | inherit | Timeline, facts, character state, spatial contradictions |
+| `worldsmith:craft-auditor` | inherit | Prose quality, cliche detection, scene mechanics |
+| `worldsmith:voice-auditor` | inherit | Character voice consistency, dialogue distinctiveness, POV |
+| `worldsmith:structure-auditor` | inherit | Pacing, tension, scene turns, thematic coherence, arcs |
 
 ## Workflow
 

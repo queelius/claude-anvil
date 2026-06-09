@@ -20,7 +20,7 @@ description: >-
   <commentary>source-reformulator can be invoked directly when drafting depends on reformulating external source material.</commentary>
   </example>
 tools: Read, Glob, Grep
-model: "claude-fable-5[1m]"
+model: inherit
 color: magenta
 ---
 

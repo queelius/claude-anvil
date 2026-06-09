@@ -20,7 +20,7 @@ description: >-
   <commentary>quality-auditor is one of four parallel auditors launched by the reviewer orchestrator.</commentary>
   </example>
 tools: Read, Glob
-model: "claude-fable-5[1m]"
+model: inherit
 color: orange
 ---
 

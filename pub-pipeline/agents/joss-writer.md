@@ -27,7 +27,7 @@ tools:
   - Bash
   - Task
   - WebSearch
-model: fable
+model: inherit
 color: blue
 ---
 

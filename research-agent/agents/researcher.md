@@ -34,7 +34,7 @@ tools:
   - WebSearch
   - WebFetch
   - Task
-model: fable
+model: inherit
 color: yellow
 ---
 

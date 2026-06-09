@@ -68,6 +68,7 @@ single document a future reader relies on is `synthesis.md`.
 
 ## Notes
 
-- The agent runs on `model: fable` (the latest Fable, with the 1M context window
-  when the harness enables it).
+- The agent runs on `model: inherit`, so it uses your session's model. Pick Fable
+  for long autonomous runs with `/model fable` (its 1M context window comes with
+  the session).
 - For internal and editing details, see `CLAUDE.md`.

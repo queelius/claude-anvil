@@ -34,7 +34,7 @@ tools:
   - Bash
   - Edit
   - Write
-model: fable
+model: inherit
 color: green
 ---
 

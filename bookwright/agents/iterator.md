@@ -27,7 +27,7 @@ description: >-
   <commentary>pause-on none converts every judgment finding to a documented best guess.</commentary>
   </example>
 tools: Read, Write, Glob, Grep, Bash, Task, AskUserQuestion
-model: "claude-fable-5[1m]"
+model: inherit
 color: green
 ---
 

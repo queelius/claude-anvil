@@ -23,7 +23,7 @@ tools:
   - Grep
   - Bash
   - Task
-model: fable
+model: inherit
 color: red
 ---
 

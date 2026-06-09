@@ -23,7 +23,7 @@ tools:
   - Glob
   - Grep
   - Bash
-model: fable
+model: inherit
 color: magenta
 ---
 

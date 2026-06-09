@@ -39,30 +39,30 @@ Agents run autonomously and produce structured output files. The plugin has two 
 
 | Agent | Model | Description |
 |-------|-------|-------------|
-| **writer** | fable | Multi-agent writing orchestrator (lead author) — plans paper, spawns writers, integrates draft |
-| **literature-writer** | fable | Related work and background sections — narrative synthesis of prior work |
-| **formal-writer** | fable | Mathematical content — definitions, theorems, proofs, derivations |
-| **method-writer** | fable | Methodology and algorithms — experimental design, pseudocode, reproducibility |
-| **results-writer** | fable | Results, analysis, and discussion — evidence interpretation and implications |
+| **writer** | inherit | Multi-agent writing orchestrator (lead author) — plans paper, spawns writers, integrates draft |
+| **literature-writer** | inherit | Related work and background sections — narrative synthesis of prior work |
+| **formal-writer** | inherit | Mathematical content — definitions, theorems, proofs, derivations |
+| **method-writer** | inherit | Methodology and algorithms — experimental design, pseudocode, reproducibility |
+| **results-writer** | inherit | Results, analysis, and discussion — evidence interpretation and implications |
 
 ### Review System
 
 | Agent | Model | Description |
 |-------|-------|-------------|
-| **reviewer** | fable | Multi-agent review orchestrator (area chair) — spawns specialists and synthesizes unified report |
-| **reviser** | fable | Multi-agent revision orchestrator: routes findings to section writers, verifies fixes with the owning specialist |
-| **logic-checker** | fable | Proof correctness, logical chain integrity, assumption sufficiency |
-| **novelty-assessor** | fable | Contribution evaluation against literature context |
-| **methodology-auditor** | fable | Experimental design, statistical rigor, reproducibility |
-| **prose-auditor** | fable | Writing quality, narrative arc, notation consistency |
+| **reviewer** | inherit | Multi-agent review orchestrator (area chair) — spawns specialists and synthesizes unified report |
+| **reviser** | inherit | Multi-agent revision orchestrator: routes findings to section writers, verifies fixes with the owning specialist |
+| **logic-checker** | inherit | Proof correctness, logical chain integrity, assumption sufficiency |
+| **novelty-assessor** | inherit | Contribution evaluation against literature context |
+| **methodology-auditor** | inherit | Experimental design, statistical rigor, reproducibility |
+| **prose-auditor** | inherit | Writing quality, narrative arc, notation consistency |
 | **citation-verifier** | sonnet | Reference accuracy, missing citations, bibliography integrity |
 
 ### Shared Agents
 
 | Agent | Model | Description |
 |-------|-------|-------------|
-| **literature-scout-broad** | fable | Broad field survey — competing approaches, benchmarks, state of the art |
-| **literature-scout-targeted** | fable | Direct comparison finder — same problem, same techniques, overlapping claims |
+| **literature-scout-broad** | inherit | Broad field survey — competing approaches, benchmarks, state of the art |
+| **literature-scout-targeted** | inherit | Direct comparison finder — same problem, same techniques, overlapping claims |
 | **format-validator** | sonnet | Build verification, label resolution, venue formatting compliance |
 | **surveyor** | sonnet | Deep autonomous literature search with citation network exploration |
 

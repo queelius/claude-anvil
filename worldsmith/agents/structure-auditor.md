@@ -22,7 +22,7 @@ tools:
   - Read
   - Glob
   - Grep
-model: fable
+model: inherit
 color: yellow
 ---
 

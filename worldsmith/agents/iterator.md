@@ -30,7 +30,7 @@ tools:
   - Bash
   - Task
   - AskUserQuestion
-model: fable
+model: inherit
 color: green
 ---
 

@@ -25,7 +25,7 @@ tools:
   - Grep
   - Bash
   - Task
-model: fable
+model: inherit
 color: blue
 ---
 
@@ -38,16 +38,16 @@ Launch these via Task tool. Each receives section assignments and context via XM
 ### Literature Scouts (reused from review system, run first, in parallel)
 | Agent | Type | Purpose |
 |-------|------|---------|
-| `papermill:literature-scout-broad` | fable | Field survey — competing approaches, benchmarks, state of the art |
-| `papermill:literature-scout-targeted` | fable | Direct comparisons — same problem, same techniques, overlapping claims |
+| `papermill:literature-scout-broad` | inherit | Field survey — competing approaches, benchmarks, state of the art |
+| `papermill:literature-scout-targeted` | inherit | Direct comparisons — same problem, same techniques, overlapping claims |
 
 ### Section Writers (run after scouts, in parallel)
 | Agent | Type | Purpose |
 |-------|------|---------|
-| `papermill:literature-writer` | fable | Related work and background sections — narrative positioning |
-| `papermill:formal-writer` | fable | Definitions, theorems, proofs, derivations — mathematical content |
-| `papermill:method-writer` | fable | Methodology, algorithms, experimental setup — technical procedure |
-| `papermill:results-writer` | fable | Results, analysis, discussion — interpreting findings |
+| `papermill:literature-writer` | inherit | Related work and background sections — narrative positioning |
+| `papermill:formal-writer` | inherit | Definitions, theorems, proofs, derivations — mathematical content |
+| `papermill:method-writer` | inherit | Methodology, algorithms, experimental setup — technical procedure |
+| `papermill:results-writer` | inherit | Results, analysis, discussion — interpreting findings |
 
 ### Verification (run last)
 | Agent | Type | Purpose |

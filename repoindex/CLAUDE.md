@@ -16,7 +16,7 @@ Three agents:
 
 1. **`repo-doctor`** (sonnet): fixed triage workflow. "What needs attention across my repos?" Runs a health check across dirty repos, unpushed commits, quality gaps, stale repos, and publication gaps. Produces a prioritized action list.
 
-2. **`repo-polish`** (fable): single-repo release preparation. Audits a repo, generates boilerplate via `repoindex ops generate`, writes prose (README, descriptions) with AI judgment, re-audits.
+2. **`repo-polish`** (inherit): single-repo release preparation. Audits a repo, generates boilerplate via `repoindex ops generate`, writes prose (README, descriptions) with AI judgment, re-audits.
 
 3. **`repo-explorer`** (sonnet): open-ended analysis. "Which of my Python repos are on PyPI?" Cross-references tables with custom SQL and narrative synthesis.
 

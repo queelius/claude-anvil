@@ -23,7 +23,7 @@ tools:
   - Glob
   - Grep
   - AskUserQuestion
-model: fable
+model: inherit
 color: green
 ---
 

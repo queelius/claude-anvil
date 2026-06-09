@@ -27,7 +27,7 @@ description: >-
   <commentary>scope=book runs auditors across all chapters; findings are deduplicated and categorized.</commentary>
   </example>
 tools: Read, Glob, Grep, Task, Write
-model: "claude-fable-5[1m]"
+model: inherit
 color: red
 ---
 

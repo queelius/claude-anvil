@@ -20,7 +20,7 @@ tools:
   - Glob
   - Grep
   - WebSearch
-model: fable
+model: inherit
 color: cyan
 ---
 

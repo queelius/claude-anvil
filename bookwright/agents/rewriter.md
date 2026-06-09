@@ -28,7 +28,7 @@ description: >-
   <commentary>in iterate mode the output-path override directs the revision report to the round directory.</commentary>
   </example>
 tools: Read, Write, Edit, Glob, Grep, Bash, Task, AskUserQuestion
-model: "claude-fable-5[1m]"
+model: inherit
 color: white
 ---
 
