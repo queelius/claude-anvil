@@ -37,6 +37,7 @@ npm install
 - `kdp_cover_specs`: compute KDP cover dimensions and bleed from trim size and page count
 - `kdp_generate_cover`: generate a front cover image via DALL-E given art direction and specs
 - `kdp_generate_full_wrap`: generate a full-wrap paperback cover PDF (front + spine + back)
+- `kdp_validate_cover`: validate an existing cover file (eBook, paperback front, or full wrap) against KDP requirements via image metadata; mechanical, no generation
 
 The `.mcp.json` file at the plugin root registers the server so Claude Code starts it automatically when the plugin is active. The server is launched via `mcp/run.sh`, which handles `npm` invocation.
 

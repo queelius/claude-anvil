@@ -67,7 +67,9 @@ Verify covers meet KDP requirements. Full specs are in `${CLAUDE_PLUGIN_ROOT}/do
 
 **Find cover files** (Glob tool): `cover*.jpg`, `cover*.jpeg`, `cover*.tiff`, `ebook-cover.*` for eBook; `paperback-cover.pdf`, `full-cover.pdf`, `cover-print.*` for paperback.
 
-**Verify dimensions** (Bash tool):
+**Verify dimensions** (kdp_validate_cover MCP tool, preferred): call `kdp_validate_cover` with the cover path and `kind` (`ebook`, `paperback_front`, or `full_wrap`; print kinds also need `page_count`, `trim_size`, `paper_type` from the config). It returns a per-check pass/warn/fail table (dimensions, ratio, format, channels, file size, print resolution) computed from the image metadata; copy fails into Critical and warns into Warnings.
+
+**Fallback when the MCP server is unavailable** (Bash tool):
 - If `identify` (ImageMagick) is available: `identify -format "%wx%h" cover.jpg`
 - Otherwise: `file cover.jpg` often reports dimensions
 - eBook cover: recommended 1600x2560 pixels (W x H, ratio 1:1.6; hard minimum 1000 px on the longest side), RGB, JPEG or TIFF, under 50MB

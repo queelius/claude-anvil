@@ -4,6 +4,7 @@ import { z } from "zod";
 import { handleCoverSpecs } from "./tools/cover-specs.js";
 import { handleGenerateCover } from "./tools/generate-cover.js";
 import { handleGenerateFullWrap } from "./tools/generate-full-wrap.js";
+import { handleValidateCover, type CoverKind } from "./tools/validate-cover.js";
 
 const server = new McpServer({
   name: "kdp-cover",
@@ -90,6 +91,49 @@ server.tool(
       const result = await handleGenerateFullWrap(args);
       return {
         content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
+      };
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      return {
+        content: [{ type: "text", text: `Error: ${message}` }],
+        isError: true,
+      };
+    }
+  },
+);
+
+server.tool(
+  "kdp_validate_cover",
+  "Validate an existing cover file against KDP requirements: pixel dimensions, aspect ratio, format, channels, and file size for eBooks; computed wrap/front dimensions and print resolution for paperbacks. Mechanical check via image metadata, no generation.",
+  {
+    cover_path: z.string().describe("Path to the cover image (or wrap PNG) to validate"),
+    kind: z
+      .enum(["ebook", "paperback_front", "full_wrap"])
+      .describe("What the file is supposed to be"),
+    page_count: z
+      .number()
+      .int()
+      .min(24)
+      .optional()
+      .describe("Required for print kinds: page count to compute expected dimensions"),
+    trim_size: z
+      .string()
+      .default("5.5x8.5")
+      .describe('Trim size "WxH" in inches (print kinds)'),
+    paper_type: z
+      .enum(["white", "cream"])
+      .default("cream")
+      .describe("Paper type (print kinds; affects spine width)"),
+  },
+  async (args) => {
+    try {
+      const result = await handleValidateCover({
+        ...args,
+        kind: args.kind as CoverKind,
+      });
+      return {
+        content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
+        ...(result.valid ? {} : { isError: false }),
       };
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);

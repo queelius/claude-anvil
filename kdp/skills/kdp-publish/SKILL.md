@@ -163,9 +163,11 @@ Generate or verify cover files for the book. See `${CLAUDE_PLUGIN_ROOT}/docs/kdp
       - `isbn`: if the user has one
       - `back_color`: from `kdp.cover.color_scheme`, or let the tool auto-extract from the front cover
 
-   c. **Show the full-wrap preview** (Read tool): Read the preview PNG file to display the complete wraparound cover. Ask the user to verify spine text, back cover blurb readability, and overall composition.
+   c. **Validate the wrap** (kdp_validate_cover MCP tool): Call `kdp_validate_cover` with the preview PNG, `kind: "full_wrap"`, and the same `page_count`/`trim_size`/`paper_type`. Any `fail` check means regenerate before showing the user. Use the same tool with `kind: "ebook"` on the front cover when publishing an eBook.
 
-   d. **Save full-wrap path** (Edit tool): Save the full-wrap PDF path to `.claude/kdp.local.md` under `kdp.cover.full_wrap`.
+   d. **Show the full-wrap preview** (Read tool): Read the preview PNG file to display the complete wraparound cover. Ask the user to verify spine text, back cover blurb readability, and overall composition.
+
+   e. **Save full-wrap path** (Edit tool): Save the full-wrap PDF path to `.claude/kdp.local.md` under `kdp.cover.full_wrap`.
 
 ### Phase 7: KDP Dashboard Submission
 
