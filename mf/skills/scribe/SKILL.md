@@ -19,21 +19,16 @@ This is intentional. Voice fidelity is hard. Validating that the corpus has inte
 
 ### 1. Read the corpus
 
-Get title, date, description, and tags for every post. There are two paths, and the second is fully self-contained:
+Get title, date, description, and tags for every post. Three paths, in preference order:
 
-- **If the crier plugin is installed**, use its `crier_search` MCP tool as an accelerator:
-  ```
-  crier_search(limit=300)   # all posts; metafunctor has ~200, headroom for growth
-  ```
-- **Otherwise, or if `crier_search` returns truncated content**, read the front matter directly. Resolve the metafunctor site root the way the `mf` skill does (the `MF_SITE_ROOT` env var, or the configured site root), then `Glob` `content/post/**/index.md` under it and read the YAML front matter. You only need title, date, description, and tags. Do not read the body for the smallest scribe.
+1. **`mf posts list --json` (primary)**: one Bash call returns the whole corpus as a JSON array with `slug`, `title`, `date`, `description`, `tags` (plus categories/series/featured/draft). Works from any directory (mf resolves the site root itself), and the scribe filters map natively:
+   - `/scribe 5y` (time window): `mf posts list --json --since <ISO date>` (or months, e.g. `60m`; the CLI accepts `YYYY-MM-DD` or `30d/4w/3m` forms, not years)
+   - `/scribe --tag philosophy`: `mf posts list --json -t philosophy`
+   - Requires an mf build that includes `description` in the JSON (added 2026-06-09); if `description` is missing from the output, fall through.
+2. **`crier_search` (if the crier plugin is installed)**: `crier_search(limit=300)`.
+3. **Glob fallback (fully self-contained)**: resolve the metafunctor site root the way the `mf` skill does (the `MF_SITE_ROOT` env var, or the configured site root), then `Glob` `content/post/**/index.md` and read the YAML front matter.
 
-`crier_search` is an optional dependency, not a hard one; the Glob path stands alone.
-
-You can optionally filter:
-- `/scribe 5y` (last 5 years; useful for narrowing a 200+ post corpus)
-- `/scribe --tag philosophy` (filter to a tag's universe)
-
-Default is the full corpus.
+You only need title, date, description, and tags; do not read post bodies for the smallest scribe. Default is the full corpus.
 
 ### 2. Find themes
 

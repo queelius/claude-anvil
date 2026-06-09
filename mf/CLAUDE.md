@@ -25,9 +25,10 @@ CLI is the mechanics. The skill turns a natural-language request into the right
 
 mf creates and updates content; the separate **crier** plugin distributes it.
 The pipeline is mf to Hugo to crier. Never reimplement cross-posting here; point
-at `/crier` instead. The `scribe` skill may use crier's `crier_search` MCP tool
-as an optional accelerator, but it must keep its self-contained Glob fallback so
-it works when crier is not installed. If you add a hard crier dependency
+at `/crier` instead. The `scribe` skill reads the corpus via `mf posts list --json`
+first (the CLI includes `description` as of 2026-06-09), with crier's
+`crier_search` and a self-contained Glob path as fallbacks, so it works when
+crier is not installed. If you add a hard crier dependency
 anywhere, declare it explicitly.
 
 ## Conventions to preserve when editing the skill

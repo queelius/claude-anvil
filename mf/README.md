@@ -16,9 +16,9 @@ workflows, and cross-posting via crier.
 | Command | `/scribe` | Trigger the scribe theme-discovery skill |
 
 Cross-posting lives in the separate **crier** plugin (`/crier`), not here: mf
-creates and updates content, crier distributes it. The `scribe` skill can use
-crier's `crier_search` tool as an optional accelerator but falls back to a
-self-contained Glob path when crier is not installed.
+creates and updates content, crier distributes it. The `scribe` skill reads the
+corpus via `mf posts list --json`, with crier's `crier_search` and a
+self-contained Glob path as fallbacks.
 
 ## Install
 
