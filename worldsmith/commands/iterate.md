@@ -1,7 +1,7 @@
 ---
 description: Autonomous review-fix-review loop until convergence or iteration cap
 allowed-tools: Read, Glob, Grep, Task
-argument-hint: "[work-name] [--max-iterations N] [--threshold high|medium|zero] [--pause-on high|all|none]"
+argument-hint: "[work-name] [--max-iterations N] [--threshold high|medium|zero] [--pause-on high|all|none] [--closing-review on|off]"
 ---
 
 # /worldsmith:iterate
@@ -27,6 +27,7 @@ The author resumes control only at the end-of-loop checkpoint, not per-finding. 
 | `--max-iterations N` | 8 | Hard cap on rounds |
 | `--threshold high\|medium\|zero` | `high` | Stop when no findings remain at this severity or worse |
 | `--pause-on high\|all\|none` | `high` | Which judgments to defer to the end-of-loop checkpoint |
+| `--closing-review on\|off` | `on` | Run one delta-scoped review after the loop's final fixes so the summary's remaining-finding counts are real, not pre-fix |
 
 Default behavior is aggressive: iterate until zero HIGH findings remain (up to 8 rounds), best-guess routine creative judgments, only pause for plot/character/world-stakes decisions.
 
@@ -41,6 +42,10 @@ The summary report includes a best-effort cost estimate so future runs can be ca
 The iterator stops earlier than the cap when:
 
 - **Converged**: no findings at the configured threshold remain
+
+Rounds 2+ are delta-scoped: the reviewer re-audits only the files the prior
+round's revision touched (at full manuscript context) and carries forward
+untouched findings, which cuts the dominant per-round reviewer cost.
 - **Plateau**: a round produces zero new fixes and zero new deferred judgments (no further progress possible)
 
 Both are reported in the final summary with the reason.

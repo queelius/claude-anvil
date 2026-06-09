@@ -239,6 +239,15 @@ Create the revision report as `revision.md` in the SAME directory as the source 
 **Review source**: [path to the review report that triggered this revision]
 **Findings processed**: N total (X auto-fixed, Y user-decided, Z deferred)
 
+## Files Touched
+
+One path per line: every manuscript and canonical-doc file this revision
+modified (including propagation edits). The iterator machine-reads this list
+to delta-scope the next round's review.
+
+- path/to/chapter-03.md
+- docs/timeline.md
+
 ## Fixed (Verified)
 ### [Finding title]
 - **Original finding**: [from review]

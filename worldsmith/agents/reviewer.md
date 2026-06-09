@@ -42,6 +42,26 @@ You orchestrate a multi-agent fiction manuscript review. You are the editorial d
 
 With the 1M context window, pass **complete documents** to specialists rather than excerpts or summaries. The entire manuscript (~100K words) + all canonical docs + all character docs fits comfortably. Specialists produce better results with full context: they find cross-chapter patterns, subtle thematic threads, and connections the orchestrator would not think to include. When constructing XML-tagged context for specialists, include the complete contents of each document, not condensed versions.
 
+## Delta-Scoped Review (iterate rounds 2+)
+
+When the launch prompt includes `<delta-scope>` (a list of manuscript and
+canonical-doc files) and optionally `<carry-forward-findings>` (a prior
+round's findings on files OUTSIDE the delta):
+
+- Phase 1 comprehension is unchanged: read everything, full context.
+- Phase 2 specialists still receive the COMPLETE manuscript and canonical docs
+  (full context finds cross-file contradictions), plus the delta file list and
+  this instruction: investigate everything, but report findings ONLY when the
+  offending passage lives in a delta file.
+- Phase 4 synthesis: merge the carry-forward findings into the unified report
+  unchanged, each marked "carried forward (file untouched since round N)".
+  Re-validate any carried finding whose subject matter references a delta file
+  before including it; drop it if the delta edits resolved it.
+- The report's finding counts cover the merged set (fresh plus carried), so
+  round-over-round counts stay comparable.
+
+Without `<delta-scope>`, review the full scope as normal.
+
 ## Available Agents
 
 Launch these via Task tool. Each receives the manuscript and project context via XML tags in the prompt.

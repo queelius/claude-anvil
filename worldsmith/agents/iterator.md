@@ -60,6 +60,7 @@ Parse from the iterator's launch prompt:
 | `--max-iterations N` | 8 | Hard cap on iteration count |
 | `--threshold high\|medium\|zero` | `high` | Convergence severity gate |
 | `--pause-on high\|all\|none` | `high` | Which judgments to defer to end-of-loop checkpoint |
+| `--closing-review on\|off` | `on` | Delta-scoped recount after post-review fixes, so the summary's final counts are real |
 | `<work-name>` | primary work | Multi-work scope target |
 
 Validate flags before starting. If `--max-iterations` is 0 or negative, error out. If `--threshold` is invalid, error out.
@@ -106,7 +107,7 @@ Write `${session_dir}/state.md` with run config:
 (updated as rounds complete)
 ```
 
-Initialize internal state: `deferred_judgments=[]`, `prior_findings=null`, `total_fixed=0`, `total_regressions=0`. The `round` counter is owned solely by the Phase 3 for-loop; never initialize or increment it elsewhere.
+Initialize internal state: `deferred_judgments=[]`, `prior_findings=null`, `prior_files_touched=null`, `files_touched_since_last_review=[]`, `total_fixed=0`, `total_regressions=0`. The `round` counter is owned solely by the Phase 3 for-loop; never initialize or increment it elsewhere.
 
 ### Phase 3: Iteration Loop
 
@@ -125,6 +126,21 @@ Prompt includes:
   path during iterate rounds. All else proceeds normally.
   </instructions>
 ```
+
+For rounds 2+, delta-scope the review (cheaper, and counts stay honest). Add:
+
+```
+  <delta-scope>{prior_files_touched}</delta-scope>
+  <carry-forward-findings>
+  {prior round's findings located in files NOT in prior_files_touched}
+  </carry-forward-findings>
+```
+
+The reviewer audits only the delta files (at full manuscript context) and
+merges the carry-forwards into its unified report; see reviewer.md
+"Delta-Scoped Review". Round 1 always reviews the full scope.
+
+After dispatching the reviewer, reset `files_touched_since_last_review=[]`.
 
 Wait for reviewer to complete.
 
@@ -186,8 +202,9 @@ Read `${session_dir}/round-NNN/revision.md`. Extract:
 - `fixed_count`: number of findings successfully fixed and verified
 - `retry_failures`: count of findings that exhausted retry budget
 - `new_deferred`: deferred-judgments YAML block (list of finding objects)
+- `files_touched`: the "## Files Touched" path list
 
-Append `new_deferred` to the running `deferred_judgments` list. Add `fixed_count` to `total_fixed`.
+Append `new_deferred` to the running `deferred_judgments` list. Add `fixed_count` to `total_fixed`. Set `prior_files_touched = files_touched` and append the same paths to `files_touched_since_last_review`.
 
 #### Step 3.7: Plateau check
 
@@ -262,7 +279,27 @@ Prompt includes:
   </fix-guidance>
 ```
 
-Wait for completion. Read `${session_dir}/final-revision/revision.md`. Add its `fixed_count` to `total_fixed`.
+Wait for completion. Read `${session_dir}/final-revision/revision.md`. Add its `fixed_count` to `total_fixed` and append its "## Files Touched" paths to `files_touched_since_last_review`.
+
+### Phase 5.5: Closing Recount (when `--closing-review on`)
+
+The loop's exit paths that apply fixes AFTER the last review (a cap or plateau
+round's fix pass, or the Phase 5 final revision) leave the last review's
+counts stale. If `closing_review` is on and `files_touched_since_last_review`
+is non-empty, launch the reviewer one final time, delta-scoped:
+
+```
+Task: worldsmith:reviewer
+Prompt includes:
+  <work-scope>...</work-scope>
+  <output-dir>{session_dir}/closing-review/</output-dir>
+  <delta-scope>{files_touched_since_last_review}</delta-scope>
+  <carry-forward-findings>{last review's findings on untouched files}</carry-forward-findings>
+```
+
+Use the closing review's merged finding counts as the summary's Final state.
+If `closing_review` is off (or nothing was touched after the last review),
+use the last review's counts and label them honestly (see Phase 6).
 
 ### Phase 6: Summary Report
 
@@ -289,6 +326,7 @@ Write `${session_dir}/summary.md`:
 {table from state.md round log}
 
 ## Final state
+- Source: closing review (post-fix recount) | round {N} review, BEFORE the final fixes (closing review off)
 - HIGH findings remaining: {count}
 - MEDIUM findings remaining: {count}
 - LOW findings remaining: {count}
