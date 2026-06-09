@@ -82,7 +82,7 @@ If the package is already on CRAN, skip to Phase 3.
 2. `devtools::check(args = "--as-cran")` — final check
 3. Test on other platforms:
    - `devtools::check_win_devel()` — Windows (win-builder)
-   - `rhub::check_for_cran()` — Multiple platforms via R-hub
+   - `rhub::rhub_check()`: multiple platforms via R-hub v2 (one-time setup: `rhub::rhub_setup()`; use `rhub::rc_submit()` for non-GitHub repos). The old `rhub::check_for_cran()` is defunct since rhub v2.
 4. `devtools::submit_cran()` — submit
 5. Confirm via email link
 6. After acceptance: `usethis::use_github_release()`, then `usethis::use_dev_version()`

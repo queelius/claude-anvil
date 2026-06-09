@@ -164,7 +164,7 @@
 
 5. **Multi-platform check** via R-hub:
    ```r
-   rhub::check_for_cran()
+   rhub::rhub_check()  # rhub v2; one-time rhub::rhub_setup(); rc_submit() for non-GitHub repos
    ```
    Tests on Linux, Windows, and macOS with different R versions.
 
@@ -282,7 +282,7 @@
 |------|---------|
 | Check locally | `devtools::check(args = "--as-cran")` |
 | Check on Windows | `devtools::check_win_devel()` |
-| Check on multiple platforms | `rhub::check_for_cran()` |
+| Check on multiple platforms | `rhub::rhub_check()` (rhub v2; one-time `rhub_setup()`; `rc_submit()` for non-GitHub repos) |
 | Validate URLs | `urlchecker::url_check()` |
 | Reverse dependency check | `revdepcheck::revdep_check(num_workers = 4)` |
 | Prepare cran-comments | `usethis::use_cran_comments()` |

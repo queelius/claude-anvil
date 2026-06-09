@@ -9,17 +9,17 @@ import {
 describe("calculateSpineWidth", () => {
   it("calculates white paper spine width", () => {
     const result = calculateSpineWidth(300, "white");
-    expect(result).toBeCloseTo(0.7356, 4);
+    expect(result).toBeCloseTo(0.6756, 4);
   });
 
   it("calculates cream paper spine width", () => {
     const result = calculateSpineWidth(300, "cream");
-    expect(result).toBeCloseTo(0.81, 4);
+    expect(result).toBeCloseTo(0.75, 4);
   });
 
   it("calculates minimum page count spine width", () => {
     const result = calculateSpineWidth(24, "white");
-    expect(result).toBeCloseTo(0.1140, 3);
+    expect(result).toBeCloseTo(0.054, 3);
   });
 });
 
@@ -31,10 +31,10 @@ describe("calculateCoverDimensions", () => {
       paperType: "cream",
     });
 
-    expect(dims.spineWidthInches).toBeCloseTo(0.81, 2);
-    expect(dims.totalWidthInches).toBeCloseTo(12.06, 2);
+    expect(dims.spineWidthInches).toBeCloseTo(0.75, 2);
+    expect(dims.totalWidthInches).toBeCloseTo(12.0, 2);
     expect(dims.totalHeightInches).toBeCloseTo(8.75, 2);
-    expect(dims.totalWidthPx).toBe(Math.round(12.06 * 300));
+    expect(dims.totalWidthPx).toBe(Math.round(12.0 * 300));
     expect(dims.totalHeightPx).toBe(Math.round(8.75 * 300));
     expect(dims.hasSpineText).toBe(true);
     expect(dims.backZone).toBeDefined();
@@ -80,5 +80,17 @@ describe("ensureContrast", () => {
   it("darkens a light color that has poor contrast with white", () => {
     const result = ensureContrast("#ffff99", "#ffffff");
     expect(contrastRatio(result, "#ffffff")).toBeGreaterThanOrEqual(4.5);
+  });
+});
+
+describe("trim size validation", () => {
+  it("rejects malformed trim sizes instead of yielding NaN", () => {
+    expect(() =>
+      calculateCoverDimensions({
+        pageCount: 200,
+        trimSize: "A4",
+        paperType: "white",
+      }),
+    ).toThrow(/Invalid trim_size/);
   });
 });

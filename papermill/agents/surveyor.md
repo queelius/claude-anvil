@@ -74,7 +74,7 @@ You will receive:
 
 ## Output
 
-Write your results to a file called `.papermill-survey-results.md` in the project root. Structure it with:
+Write your results to `.papermill/survey-results.md` (create the `.papermill/` directory if it does not exist). Structure it with:
 - Summary statistics (N references found by category)
 - Full reference list with classifications
 - Updated gap analysis

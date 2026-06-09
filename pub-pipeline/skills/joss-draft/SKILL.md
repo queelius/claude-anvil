@@ -132,7 +132,7 @@ bibliography: paper.bib
 
 # Summary
 
-[2-3 paragraphs: What the package does, at a high level, for a
+[1-3 short paragraphs: What the package does, at a high level, for a
 non-specialist audience. Include the core abstraction and key
 capabilities. Mention the language and any notable design choices.]
 

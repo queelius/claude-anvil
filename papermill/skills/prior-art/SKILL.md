@@ -142,9 +142,9 @@ When launching, pass the agent:
 - The search queries from Step 2 (plus any new ones discovered during the survey)
 - The current gap analysis from Step 7
 
-The agent writes its results to `.papermill-survey-results.md` in the project root. After it completes:
+The agent writes its results to `.papermill/survey-results.md`. After it completes:
 
-1. Read `.papermill-survey-results.md` (Read tool).
+1. Read `.papermill/survey-results.md` (Read tool).
 2. Present a summary to the user (number of new references by category, updated gap analysis).
 3. Ask the user to confirm which new references to keep — present them in batches of 3-5, same as Step 6.
 4. Append confirmed BibTeX entries to the `.bib` file (Edit tool).

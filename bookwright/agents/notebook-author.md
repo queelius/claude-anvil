@@ -34,7 +34,7 @@ Read all of the following before producing a single cell:
 
 1. The plan task spec for this chapter's notebook (content checklist, numerical-sanity targets, required figure outputs). The plan lives under `docs/superpowers/plans/`.
 2. `docs/superpowers/bookwright.config.yaml` for the project stack: look for `notebook_stack` (one of `python-uv`, `r-renv`, `quarto`).
-3. `book/CLAUDE.md` for the notebook naming convention and the directory where notebooks live (typically `python/notebooks/` or `book/notebooks/`).
+3. `book/CLAUDE.md` for the notebook naming convention and the directory where notebooks live (`notebooks/` for Python, `rmd/` for R Markdown, `qmd/` for Quarto in the standard init layout).
 4. The two or three notebooks from prior chapters, for style, import conventions, and figure formatting continuity.
 
 Do not write a single cell until you have read all four.

@@ -60,7 +60,11 @@ if grep -qE '\balex\.sty\b|\btexttt\{alex\.sty\}' "$TMP"; then
 fi
 
 if [[ ${#LEAKS[@]} -gt 0 ]]; then
-    echo "{\"systemMessage\": \"LaTeX-macro-leak hook blocked the write to ${FILE_PATH}. Reader-facing prose must not reveal LaTeX source-tool detail. Found:\\n$(printf -- '- %s\\n' "${LEAKS[@]}")\"}"
+    # Plain text on stderr: with exit 2 the hook protocol feeds stderr to Claude
+    # (JSON-on-stdout is the exit-0 path), and plain text avoids JSON escaping
+    # of backslashes in LaTeX macro names.
+    printf 'LaTeX-macro-leak hook blocked the write to %s. Reader-facing prose must not reveal LaTeX source-tool detail. Found:\n' "$FILE_PATH" >&2
+    printf -- '- %s\n' "${LEAKS[@]}" >&2
     exit 2
 fi
 

@@ -19,6 +19,10 @@ Configured API platforms are usually `devto`, `hashnode`, `bluesky`, `mastodon`.
 
 ### 1. Scan
 
+Run `crier_doctor()` first and note any platform in an error state: skip those
+platforms in the proposal (or flag them as "needs config fix") rather than
+proposing actions guaranteed to fail at execute time.
+
 Run `crier_search(since=<scope>)` to get recent files with metadata.
 
 For each file, check status with `crier_article(<canonical_url_or_file>)`. Note which platforms it's missing from.
@@ -37,7 +41,10 @@ For each candidate post, draft the cross-post plan:
 - **Long-form platforms** (devto, hashnode): no rewrite needed, use the full body.
 - **Short-form platforms** (bluesky, mastodon): generate a rewrite. Read the article first (use `Read` tool on the source file), then write a rewrite that:
   - Leads with the most specific or provocative claim. **Not** "I wrote a post about X."
-  - Stays under the budget: **bluesky ~280 chars** (the canonical URL eats ~80), **mastodon ~460**.
+  - Stays under the budget: crier appends `\n\n<canonical URL>` before enforcing
+    the platform limit, so budget = limit minus (URL length + 2). For typical
+    metafunctor URLs that means **bluesky ~230 chars** (limit 300) and
+    **mastodon ~430** (limit 500).
   - Contains no canonical URL: crier appends it automatically.
   - Doesn't say "new blog post" or "check out my latest." Just say the thing.
   - Can be more nuanced on mastodon than bluesky. Bluesky is one punch.

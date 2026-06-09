@@ -91,7 +91,7 @@ export async function generateCoverImage(
     throw error;
   }
 
-  const imageData = response.data[0];
+  const imageData = response.data?.[0];
   if (!imageData?.b64_json) {
     throw new Error("OpenAI returned no image data");
   }

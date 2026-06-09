@@ -108,7 +108,7 @@ bibliography: paper.bib
 
 **Required sections** (all mandatory for 2025+ submissions):
 
-1. **Summary** (2-3 paragraphs) — What the package does for a non-specialist. Include the core abstraction, key capabilities, and language. One code example if it clarifies the design.
+1. **Summary** (1-3 short paragraphs): What the package does for a non-specialist. Include the core abstraction, key capabilities, and language. One code example if it clarifies the design.
 
 2. **Statement of Need** (1-2 paragraphs) — Research problem, target audience, gap in existing tools. Be specific: "researchers in X who need Y" not "the scientific community".
 

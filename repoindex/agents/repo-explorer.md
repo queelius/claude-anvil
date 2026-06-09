@@ -69,8 +69,11 @@ Four main tables, all joined through `repo_id`:
 - `timestamp`, `ref`, `message`, `author`
 
 **tags**: classification labels (auto-derived + user-assigned)
-- `repo_id`, `tag`, `source` (user, implicit, github, gitea, pyproject, pypi, cran)
+- `repo_id`, `tag`, `source` (user, implicit, github, gitea, pyproject, pypi, cran, zenodo, go, npm)
 - Auto-populated tags include `topic:python`, `lang:python`, `has:ci`, `published:pypi`
+
+View caveat: avoid `v_repo_stats` (it references pre-migration column names
+and errors); `v_active_repos` and `v_stale_repos` work.
 
 ## Analysis patterns
 

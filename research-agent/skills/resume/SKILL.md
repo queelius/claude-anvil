@@ -13,7 +13,7 @@ Continue a paused or interrupted research-agent run.
 
 ## Step 1: Verify .research/ exists
 
-Use the Read tool on `.research/state.md`. If the file does not exist, tell the user there is no research to resume here and suggest `/research-agent:research` to start fresh.
+Use the Read tool on `.research/state.md`. If `state.md` is missing but `.research/goal.md` exists (a run interrupted before its first REFLECT), still resume: the researcher reorients from goal.md and log.md and rebuilds state.md. Only when `.research/` itself is absent should you tell the user there is no research to resume and suggest `/research-agent:research`.
 
 ## Step 2: Quick state preview
 

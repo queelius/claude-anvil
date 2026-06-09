@@ -25,16 +25,20 @@ design.
   cross-posting catch-up). Keep them thin; logic lives in the skill/agents.
 - **Agents**: `cross-poster` (autonomous bulk publishing), `auditor` (read-only
   gap, performance, staleness, and failure analysis). Each agent's `tools` list
-  should grant only the `mcp__crier__*` tools it uses, plus `Read` and
-  `AskUserQuestion`. Do not grant `Bash`: the agents do not shell out, and the
-  SessionStart hook runs outside the agents.
+  should grant only the crier MCP tools it uses, plus `Read` and
+  `AskUserQuestion`. IMPORTANT: because the server is plugin-bundled, the tools
+  register as `mcp__plugin_crier_crier__crier_*` (NOT `mcp__crier__crier_*`);
+  an allowlist with the short prefix matches nothing and locks the agent out.
+  Do not grant `Bash`: the agents do not shell out, and the SessionStart hook
+  runs outside the agents.
 
 ## MCP tool inventory and the count-drift trap
 
 The `crier` MCP server exposes ~20 `crier_*` tools (archive, article,
 campaign_plan, campaign_run, check, delete, doctor, failures, list_remote,
 missing, publications, publish, query, reconcile, record, search, sql, stats,
-stats_refresh, summary). Do NOT hardcode a tool count in any description: an
+stats_refresh, summary), surfaced in sessions under the
+`mcp__plugin_crier_crier__` prefix. Do NOT hardcode a tool count in any description: an
 earlier "17 tools" claim went stale. If you must reference the count, keep it in
 sync or drop the number.
 

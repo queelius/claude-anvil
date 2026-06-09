@@ -16,8 +16,8 @@ Cross-reference open journal entries with external signals (git history, codebas
 ## Step 1: Gather Candidates
 
 Determine scope:
-- If an argument is provided, use it as the tag filter: `jot list --tags=<arg> --json`
-- If no argument, detect project context from `basename "$PWD"` via `jot tags --fuzzy <basename> --json`, then filter by that tag
+- If an argument is provided, use it as the tag filter: `jot list --tags=<arg> --status=open --json` plus `jot list --tags=<arg> --status=in_progress --json` (without the status filters, done/archived entries become triage candidates)
+- If no argument, detect project context from `basename "$PWD"` via `jot tags --fuzzy <basename> --json`, then filter by that tag with the same two status-filtered queries
 - If no project context, use all open entries: `jot list --status=open --json` and `jot list --status=in_progress --json`
 
 Also gather stale entries: `jot stale --days 30 --json` (scoped to tag if available).
@@ -28,10 +28,12 @@ For each candidate entry, search git history for related work:
 
 ```bash
 # Search commit messages for keywords from the entry title
-git log --oneline --since="$(entry.created)" --grep="<keyword>" 2>/dev/null
+# (substitute <entry-created-date> with the ISO date from the entry's JSON;
+# do not paste these literally, since $(...) would execute as a command)
+git log --oneline --since="<entry-created-date>" --grep="<keyword>" 2>/dev/null
 
 # Check recent commits touching files related to the entry's tags/content
-git log --oneline --since="$(entry.created)" -- "*<keyword>*" 2>/dev/null
+git log --oneline --since="<entry-created-date>" -- "*<keyword>*" 2>/dev/null
 ```
 
 Extract 2-3 keywords from each entry title (drop stopwords like "the", "a", "fix", "add", "implement"). Search for each keyword independently and look for overlapping commits.

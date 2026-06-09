@@ -98,7 +98,7 @@ Naming conventions that work well for user-source tags:
 - `published:<registry>` is already reserved for implicit publication tags.
 - Project-domain tags: short nouns like `ml`, `cli`, `dsl`, `paper`, `plugin`.
 
-Use `mcp__repoindex__tag` to add/remove user tags. Filter by tag with the `--tag` flag (accepted by `copy`, `link`, `ops` subcommands, and `export`; supports `*` wildcards, for example `--tag 'work/*'`), or from `run_sql` with the `EXISTS (SELECT 1 FROM tags WHERE t.repo_id = r.id AND t.tag = '...')` pattern.
+Use `mcp__repoindex__tag` to add/remove user tags. Filter by tag with the `--tag` flag (accepted by `copy`, `link`, `ops` subcommands, and `export`; supports `*` wildcards, for example `--tag 'work/*'`), or from `run_sql` with the `EXISTS (SELECT 1 FROM tags t WHERE t.repo_id = r.id AND t.tag = '...')` pattern.
 
 ## Anti-patterns to avoid
 

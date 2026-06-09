@@ -1,5 +1,7 @@
 # pagevault Reference
 
+Verified against pagevault 0.4.2.
+
 ## Overview
 
 Password-protect regions of HTML files or wrap arbitrary files into self-contained encrypted
@@ -27,6 +29,10 @@ template:
 users:
   alice: "alice-password"
   bob: "bob-password"
+
+# Managed globs (optional): paths that a bare `pagevault sync` re-encrypts
+managed:
+  - "_locked/**/*.html"
 ```
 
 Create with `pagevault config init`. Add to `.gitignore`.
@@ -64,8 +70,9 @@ pagevault mark page.html -s "#secret" --hint "Contact admin"
 
 ### Inspect and Verify
 ```bash
-pagevault info encrypted.html               # Show metadata (no password needed)
-pagevault check encrypted.html -p "pw"      # Verify password (exit 0 = correct)
+pagevault inspect encrypted.html            # Show metadata (no password needed)
+pagevault inspect encrypted.html --check -p "pw"   # Verify password (exit 0 = correct)
+pagevault inspect encrypted.html --check -p "pw" -u alice  # Multi-user check
 pagevault audit                             # Health check config and passwords
 ```
 
@@ -74,6 +81,17 @@ pagevault audit                             # Health check config and passwords
 pagevault config init                       # Create .pagevault.yaml
 pagevault config show                       # Display current config
 pagevault config where                      # Find config file location
+pagevault config set KEY VALUE              # Update a config value
+pagevault config user add alice             # Add a user (prompts for password)
+pagevault config user list                  # List users
+pagevault config user passwd alice          # Change a user's password
+pagevault config user rm alice              # Remove a user
+```
+
+### Dev Preview
+```bash
+pagevault dev serve _locked/                # Local HTTP preview (WebCrypto needs
+                                            # http(s); file:// breaks decryption)
 ```
 
 ### Sync (Re-encrypt)
@@ -118,7 +136,7 @@ Priority order (highest first):
 
 ```bash
 # After Hugo builds HTML output:
-hugo -o build/
+hugo -d build/
 pagevault lock build/posts/ -r --css styles/pagevault.css
 # Deploy build/ to static host
 ```

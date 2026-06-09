@@ -52,9 +52,13 @@ def _download(url: str, dest: Path, client: httpx.Client) -> bool:
             log.warning("non-PDF content-type from %s: %s", url, ctype)
             return False
         tmp = dest.with_suffix(dest.suffix + ".part")
-        with open(tmp, "wb") as fh:
-            for chunk in r.iter_bytes():
-                fh.write(chunk)
+        try:
+            with open(tmp, "wb") as fh:
+                for chunk in r.iter_bytes():
+                    fh.write(chunk)
+        except BaseException:
+            tmp.unlink(missing_ok=True)
+            raise
         # Sanity check: PDFs start with %PDF-
         with open(tmp, "rb") as fh:
             head = fh.read(8)

@@ -31,7 +31,7 @@ self-contained Glob path when crier is not installed.
 
 - **Content creation**: Draft posts, sync academic papers into blog format, manage series
 - **Site health**: Taxonomy audits, broken link checks, metadata validation
-- **Cross-posting**: Audit unpublished content, generate platform-specific rewrites, track what's been posted where
+- **Cross-posting hand-off**: After content changes, route distribution to the crier plugin (`/crier`); mf itself never cross-posts
 
 The mf skill works from any directory — it resolves the site root automatically.
 

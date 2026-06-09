@@ -1,5 +1,7 @@
 # gpg Reference
 
+Verified against gpg (GnuPG) 2.4.x.
+
 ## Overview
 
 GNU Privacy Guard — standard tool for file encryption, digital signatures, and public key
@@ -140,7 +142,7 @@ done
 ### Sign encrypted Hugo output
 ```bash
 cryptoid encrypt --content-dir content/
-hugo -o public/
+hugo -d public/
 # Sign the built site
 for f in public/**/*.html; do gpg --detach-sign "$f"; done
 ```

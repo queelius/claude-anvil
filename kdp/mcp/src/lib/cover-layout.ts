@@ -5,7 +5,10 @@ const PAPER_MULTIPLIER = {
 
 const BLEED_INCHES = 0.125;
 const DPI = 300;
-const MIN_SPINE_TEXT_PAGES = 130;
+// Single source of truth for "is the spine wide enough for text".
+// 0.3" is a conservative readability threshold (white paper: ~134+ pages,
+// cream: 120+); the KDP hard floor for spine text is 79 pages.
+export const SPINE_TEXT_MIN_WIDTH_INCHES = 0.3;
 
 export type PaperType = "white" | "cream";
 
@@ -43,6 +46,11 @@ export function calculateCoverDimensions(opts: {
   trimSize: string;
   paperType: PaperType;
 }): CoverDimensions {
+  if (!/^\d+(\.\d+)?x\d+(\.\d+)?$/.test(opts.trimSize)) {
+    throw new Error(
+      `Invalid trim_size "${opts.trimSize}": expected WIDTHxHEIGHT in inches, e.g. "6x9" or "5.5x8.5"`,
+    );
+  }
   const [trimWidthStr, trimHeightStr] = opts.trimSize.split("x");
   const trimWidth = parseFloat(trimWidthStr);
   const trimHeight = parseFloat(trimHeightStr);
@@ -88,7 +96,7 @@ export function calculateCoverDimensions(opts: {
     totalWidthPx,
     totalHeightPx,
     bleedInches: BLEED_INCHES,
-    hasSpineText: opts.pageCount >= MIN_SPINE_TEXT_PAGES,
+    hasSpineText: spineWidth >= SPINE_TEXT_MIN_WIDTH_INCHES,
     frontZone,
     spineZone,
     backZone,

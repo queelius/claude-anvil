@@ -26,7 +26,7 @@ Use the Read tool on `.research/state.md`. If the file does not exist, tell the 
 
 ## Step 2: Check whether already synthesized
 
-Use the Glob tool for `.research/synthesis.md`. If it already exists, ask the user whether they want to overwrite (re-synthesize, perhaps because more cycles have happened since) or stop.
+Use the Glob tool for `.research/synthesis.md`. If it already exists, ask the user whether they want to overwrite (re-synthesize, which makes sense after `/research-agent:resume` reopened the concluded run on explicit confirmation) or stop.
 
 ## Step 3: Launch the researcher with synthesis framing
 

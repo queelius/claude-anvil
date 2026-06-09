@@ -251,10 +251,10 @@ After the manual question, check if `repoindex` is available (Bash tool: `comman
 1. Query for other papermill-tracked projects:
 
    ```bash
-   repoindex sql "SELECT name, path FROM repos WHERE path IN (SELECT repo_path FROM files WHERE name = 'state.md' AND relative_path LIKE '.papermill/%')" --json
+   repoindex sql "SELECT name, path FROM repos" --json
    ```
 
-2. Filter out the current project from results.
+2. For each returned `path`, keep only repos where `[ -f "$path/.papermill/state.md" ]` holds (the repoindex DB has no per-file table, so the papermill filter happens on the filesystem). Filter out the current project.
 
 3. If matches are found, present them:
 

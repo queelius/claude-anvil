@@ -86,7 +86,7 @@ Iterate until the user approves.
 
 ## Step 6: Update State File
 
-Once approved, update `.papermill/state.md` (Edit tool):
+Once approved, update `.papermill/state.md` (Edit tool). If `.papermill/state.md` does not exist, skip this step and suggest `/papermill:init`. Updates:
 
 - Set `stage` to `outlining` (or `drafting` if progressing).
 - Append the outline to the markdown body under a `## Outline` heading.

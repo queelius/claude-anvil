@@ -23,7 +23,7 @@ Entry fields: `title` (string), `type` (idea/task/note/plan/log), `tags` (array 
 
 ## Output Formats
 
-Default output is table format. Global flags control output: `--json` (JSON output; note that `list`/`stale`/`show` emit a concatenated stream of pretty-printed objects, so parse with `jq -s`, while `search`/`tags` emit strict one-object-per-line JSONL), `--table` (columnar), `--markdown` or `--md` (markdown list). The `--fuzzy` global flag enables Levenshtein-based fuzzy matching for tags and search queries across all commands. Always prefer `--json` when parsing results programmatically.
+Default output is table format. Global flags control output: `--json` (JSON output; note that `list`/`stale`/`show` and `tags <tag>` (which delegates to list) emit a concatenated stream of pretty-printed objects, so parse with `jq -s`, while `search` and the summary forms of `tags` (no-arg or `--fuzzy`) emit strict one-object-per-line JSONL), `--table` (columnar), `--markdown` or `--md` (markdown list). The `--fuzzy` global flag enables Levenshtein-based fuzzy matching for tags and search queries across all commands. Always prefer `--json` when parsing results programmatically.
 
 ## Commands
 
@@ -56,8 +56,8 @@ jot list --tags=api --since=7d             # Recent entries tagged 'api'
 jot list --priority=high --sort=priority   # High priority, sorted
 jot list --due=today                        # Due today
 jot list --due=overdue                      # Overdue items
-jot list --json --limit=10                 # Machine-readable, limited
-jot list --verbose                          # Show status, priority, tags columns
+jot list --json | jq -s '.[:10]'           # Machine-readable, newest 10 (see --limit caveat)
+jot list --verbose                          # Show status, priority, due columns
 jot list --search="GraphQL" --type=note    # Content search within list
 
 # Search content (dedicated full-text search)
@@ -92,7 +92,10 @@ All filter flags on the `list` command (alias: `ls`):
 - `--due`/`-d` — Filter by due date (today, week, overdue, or specific date)
 - `--search`/`-q` — Content search within filtered results
 - `--sort` — Sort field (created, modified, title, priority). Default: created descending
-- `--limit`/`-n` — Limit number of results
+- `--limit`/`-n`: Limit number of results. CAVEAT: the limit is applied in
+  file order BEFORE sorting and before `--due`/`--search` post-filters, so it
+  returns the oldest N entries and can return zero search matches; for "newest
+  N", omit `--limit` and truncate client-side (`--json | jq -s '.[:N]'`)
 - `--reverse`/`-r` — Reverse sort order (ascending)
 - `--verbose`/`-v` — Show all columns (status, priority, due)
 
@@ -106,7 +109,10 @@ The `search` command takes a positional query argument and supports:
 - `--tags` — Filter by tag
 - `--status`/`-s` — Filter by status
 - `--priority`/`-p` — Filter by priority
-- `--context`/`-C` — Lines of context around content matches (integer)
+- `--context`/`-C`: Lines of context around content matches (integer).
+  Human output only: ignored under `--json`, whose shape is always one line
+  per entry (`{"slug","title","matches"}`); use `jot show <slug> --json` to
+  read matched content
 
 Search is case-insensitive and matches against titles and content. Results show the slug, title, and matching lines with highlights.
 
@@ -167,6 +173,9 @@ The `rm` command (aliases: `remove`, `delete`) permanently deletes a single entr
 jot export > backup.json                    # JSON export (default)
 jot export --markdown > backup.md          # Markdown export
 jot export --type=task --status=open       # Filtered export
+jot export --tag=cran --since=2026-01-01   # NOTE: singular --tag (unlike every
+                                            # other command's --tags); flags are
+                                            # --type, --status, --tag, --since
 
 # Import
 jot import backup.json                      # Import from export file
@@ -241,7 +250,7 @@ jot purge --older-than 6m --force --yes     # Clean up old archived entries
 - Tags are the primary project-scoping mechanism. Use tags to find and group project-related entries.
 - The `tags` command provides enriched summaries showing TAG, COUNT, TYPES (with breakdown), OPEN, DONE, and LATEST modification date for each tag.
 - The `--fuzzy` flag enables Levenshtein-based fuzzy matching for tags and search. Use it when the exact tag name or search term is uncertain.
-- Due dates accept relative formats: `3d` (3 days), `1w` (1 week), `today`, `tomorrow`, and absolute dates as `YYYY-MM-DD`.
+- Due dates accept relative formats on `add`: `3d` (3 days), `1w` (1 week), `today`, `tomorrow`, and absolute dates as `YYYY-MM-DD`. Other commands store the due string as given, so prefer absolute dates outside `add`.
 - Duration strings for `--since`, `--older-than`, etc. accept: `7d` (days), `2w` (weeks), `6m` (months), `1y` (years).
 - The list command defaults to descending order (newest first). Use `--reverse` for ascending.
 - The `archive` and `purge` commands are safe by default: archive is dry-run without `--confirm`, purge requires both `--force` and interactive confirmation (or `--yes`).

@@ -21,4 +21,4 @@ started to, began to, tried to, managed to, continued to
 
 ## Adverb Dialogue Tags
 
-<!-- regex: said \w+ly -->
+<!-- regex: (said|asked|replied|whispered|shouted) \w+(?<!l)ly -->

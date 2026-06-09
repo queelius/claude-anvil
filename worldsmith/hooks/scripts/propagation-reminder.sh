@@ -45,6 +45,37 @@ if [ "$is_manuscript" = "0" ] && [ "$is_doc" = "0" ]; then
   esac
 fi
 
+# Multi-work projects: match the manuscript and lore dirs configured in
+# project.yaml (env vars exported by detect-worldsmith-project.sh), mirroring
+# check-fiction-cliches.sh
+PROJECT_DIR="${CLAUDE_PROJECT_DIR:-.}"
+if [ -n "${WORLDSMITH_WORK_COUNT:-}" ] && [ "${WORLDSMITH_WORK_COUNT:-0}" -gt 0 ]; then
+  for i in $(seq 0 $((WORLDSMITH_WORK_COUNT - 1))); do
+    ms_var="WORLDSMITH_WORK_${i}_MANUSCRIPT"
+    ms_rel="${!ms_var:-}"
+    if [ "$is_manuscript" = "0" ] && [ -n "$ms_rel" ]; then
+      ms_abs="$PROJECT_DIR/${ms_rel%/}"
+      case "$file_path" in
+        "$ms_abs"|"$ms_abs"/*) is_manuscript=1 ;;
+      esac
+    fi
+    lore_var="WORLDSMITH_WORK_${i}_LORE"
+    lore_rel="${!lore_var:-}"
+    if [ "$is_doc" = "0" ] && [ -n "$lore_rel" ]; then
+      lore_abs="$PROJECT_DIR/${lore_rel%/}"
+      case "$file_path" in
+        "$lore_abs"|"$lore_abs"/*) is_doc=1 ;;
+      esac
+    fi
+  done
+fi
+if [ "$is_doc" = "0" ] && [ -n "${WORLDSMITH_LORE_DIR:-}" ]; then
+  lore_abs="$PROJECT_DIR/${WORLDSMITH_LORE_DIR%/}"
+  case "$file_path" in
+    "$lore_abs"|"$lore_abs"/*) is_doc=1 ;;
+  esac
+fi
+
 # Not a worldbuilding file — exit silently
 if [ "$is_doc" = "0" ] && [ "$is_manuscript" = "0" ]; then
   exit 0

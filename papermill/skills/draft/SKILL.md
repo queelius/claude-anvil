@@ -110,9 +110,9 @@ Then ask: "Would you like to review specific sections, or run `/papermill:review
 
 ## Step 6: Update State File
 
-Update `.papermill/state.md` (Edit tool):
+Update `.papermill/state.md` (Edit tool). If `.papermill/state.md` does not exist, skip this step and suggest `/papermill:init`. Updates:
 
-- Set `stage` to `drafting` or `draft-complete`
+- Set `stage` to `drafting` (the schema's stage enum has no draft-complete value; the review skill advances the stage to `review`)
 - Append a timestamped note documenting the draft:
 
 ```

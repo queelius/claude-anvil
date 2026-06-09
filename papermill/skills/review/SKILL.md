@@ -92,7 +92,7 @@ Then ask: "Would you like to go through the findings in detail, or address the c
 
 ## Step 6: Update State File
 
-Update `.papermill/state.md` (Edit tool):
+Update `.papermill/state.md` (Edit tool). If `.papermill/state.md` does not exist, skip this step and suggest `/papermill:init`. Updates:
 
 Add a review record to `review_history`:
 

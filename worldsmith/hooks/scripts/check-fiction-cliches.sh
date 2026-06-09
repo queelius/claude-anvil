@@ -4,7 +4,7 @@
 # Runs as a PostToolUse hook on Write|Edit for fiction files (.tex, .md, .mdx, .txt).
 #
 # If it fires, rewrite the passage to show the sensation through physical
-# detail or action rather than naming it. See fiction plugin SKILL.md.
+# detail or action rather than naming it. See the worldsmith prose-craft skill.
 set -euo pipefail
 
 # Gate: only run in worldsmith projects
@@ -75,6 +75,10 @@ if [ -z "$text" ]; then
   exit 0
 fi
 
+# Normalize typographic punctuation so curly-quote manuscripts still match the
+# straight-quote patterns below
+text=$(printf '%s' "$text" | sed "s/\xe2\x80\x99/'/g; s/\xe2\x80\x98/'/g; s/\xe2\x80\x9c/\"/g; s/\xe2\x80\x9d/\"/g")
+
 violations=""
 
 # --- Stock body reactions (show it, don't name the sensation) ---
@@ -141,9 +145,12 @@ rushed hurriedly
 PHRASES
 
 # --- Fancy dialogue tags (use "said" or a physical beat instead) ---
+# Only flag tag words on lines that contain dialogue quotes; bare narration
+# ("The king declared war") is legitimate prose.
+quoted_lines=$(printf '%s\n' "$text" | grep -F '"' || true)
 while IFS= read -r phrase; do
   [ -z "$phrase" ] && continue
-  if echo "$text" | grep -qi -F "$phrase"; then
+  if [ -n "$quoted_lines" ] && printf '%s\n' "$quoted_lines" | grep -qi -F "$phrase"; then
     violations="${violations}- \"${phrase}\" (use \"said\" or a physical beat instead)\n"
   fi
 done <<'PHRASES'
@@ -161,9 +168,9 @@ PHRASES
 # --- Report ---
 
 if [ -n "$violations" ]; then
-  msg=$(printf "Fiction cliche check failed on %s:\n%b\nRewrite to show the sensation through physical detail or action. See fiction plugin SKILL.md." "$file_path" "$violations")
-  json_msg=$(echo "$msg" | jq -Rs .)
-  echo "{\"systemMessage\": ${json_msg}}" >&2
+  # Plain text on stderr: with exit 2, the hook protocol feeds stderr to Claude
+  # (JSON-on-stdout is the exit-0 path), and plain text avoids escaping issues.
+  printf "Fiction cliche check failed on %s:\n%b\nRewrite to show the sensation through physical detail or action. See the worldsmith prose-craft skill.\n" "$file_path" "$violations" >&2
   exit 2
 fi
 

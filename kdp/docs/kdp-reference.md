@@ -14,7 +14,7 @@
 ### Manuscript Formatting
 
 #### File Format Requirements
-- [ ] **eBook**: DOCX (recommended), EPUB 2.0.1/3.0, HTML, MOBI, or KPF
+- [ ] **eBook**: DOCX (recommended), EPUB, or KPF (MOBI is no longer accepted for new uploads, dropped in 2021)
 - [ ] **Paperback**: PDF (print-ready) or DOCX (converted by KDP)
 - [ ] **Hardcover**: PDF (print-ready) only
 - [ ] File size under 650MB for eBooks (typically not an issue for text)
@@ -86,8 +86,8 @@ Inside margin = 0.5" + (0.125" per 150 pages) for Color
 ### Cover Requirements
 
 #### eBook Cover
-- [ ] **Minimum dimensions**: 2560 × 1600 pixels (width × height)
-- [ ] **Ideal dimensions**: 2560 × 1600 or larger (up to 10,000px on longest side)
+- [ ] **Recommended dimensions**: 1600 × 2560 pixels (width × height, ratio 1:1.6)
+- [ ] **Hard minimum**: 1000 px on the longest side (the recommended size or larger is better, up to 10,000 px)
 - [ ] **Aspect ratio**: 1.6:1 (height should be 1.6× width)
 - [ ] **File format**: JPEG (.jpg) or TIFF (.tiff)
 - [ ] **Color mode**: RGB
@@ -106,7 +106,7 @@ Inside margin = 0.5" + (0.125" per 150 pages) for Color
   - White paper: 0.002252" per page
   - Cream paper: 0.0025" per page
   - Example: 300-page white = 300 × 0.002252 = 0.6756"
-- [ ] **Spine text**: Only include if book is 130+ pages (minimum spine width 0.3")
+- [ ] **Spine text**: Only include if spine width is at least 0.3" (white paper: ~134+ pages, cream: 120+). 0.3" is a conservative readability threshold; the KDP hard floor for spine text is 79 pages
 - [ ] **ISBN/Barcode**: Do NOT add barcode if using free Amazon ASIN (KDP adds it)
 - [ ] **ISBN placement**: If using own ISBN, place barcode on back cover lower right
 
@@ -141,7 +141,7 @@ Inside margin = 0.5" + (0.125" per 150 pages) for Color
 
 #### BISAC Category Codes
 - [ ] **Purpose**: Industry-standard subject classification (Book Industry Study Group)
-- [ ] **Selection**: Choose up to 2 categories (or 3 for print books)
+- [ ] **Selection**: Choose up to 3 categories yourself in the KDP dashboard (the old request-more-via-support path is retired)
 - [ ] **Strategy**: Pick specific subcategories (better than broad categories)
 - [ ] **Competition**: Check bestseller rank in chosen categories
 - [ ] **Top-level BISAC categories** (examples):
@@ -290,7 +290,7 @@ Inside margin = 0.5" + (0.125" per 150 pages) for Color
 2. **Create new title**: Kindle eBook
 3. **Enter metadata**: Title, author, description, keywords, categories
 4. **Upload manuscript**: DOCX/EPUB/PDF (eBook file)
-5. **Upload cover**: 2560×1600px JPEG/TIFF
+5. **Upload cover**: 1600×2560 px (W×H) JPEG/TIFF
 6. **Preview**: Use online previewer or download Kindle Previewer app
 7. **Set pricing**: Choose territories, royalty tier, price
 8. **Publish**: Review and click "Publish Your Kindle eBook"
@@ -327,7 +327,7 @@ Inside margin = 0.5" + (0.125" per 150 pages) for Color
   - [ ] Connect blog/Twitter feed (optional)
 - [ ] **Categories**: Request additional categories via KDP support (can have up to 10 total)
 - [ ] **Editorial reviews**: Add blurbs, testimonials in Author Central
-- [ ] **A+ Content**: For certain authors, enhanced product descriptions available
+- [ ] **A+ Content**: Available to all KDP publishers; enhanced product descriptions with rich media
 
 ### Marketing Launch (Week 1-4)
 - [ ] **Price promotion**: Consider launch pricing ($0.99 or $2.99 for eBook)
@@ -365,7 +365,7 @@ Inside margin = 0.5" + (0.125" per 150 pages) for Color
 6. **Low-quality interior**: Blurry images, unreadable text, poor formatting
 
 ### Cover Issues
-7. **Resolution too low**: Under 2560×1600px for eBook, under 300 DPI for print
+7. **Resolution too low**: Below 1000 px longest side (eBook hard minimum; 1600×2560 recommended), under 300 DPI for print
 8. **Text cut off**: Cover elements extend beyond safe zone
 9. **Incorrect aspect ratio**: eBook cover not 1.6:1 ratio
 10. **Bleed issues**: Print cover missing bleed or elements in bleed area
@@ -415,6 +415,8 @@ Inside margin = 0.5" + (0.125" per 150 pages) for Color
 ## Advanced Features
 
 ### Kindle Vella (Serialized Stories)
+
+> Discontinued: Amazon shut down Kindle Vella in February 2025. Kept for historical reference only.
 - [ ] **Format**: Episodic fiction (chapters released serially)
 - [ ] **Payment**: Readers buy tokens, you earn per token spent
 - [ ] **Best for**: Building audience with ongoing series
@@ -461,7 +463,7 @@ Inside margin = 0.5" + (0.125" per 150 pages) for Color
 
 | Format | Trim Size | Margins | File Type | Cover Size |
 |--------|-----------|---------|-----------|------------|
-| **eBook** | N/A | N/A | DOCX/EPUB | 2560×1600px (1.6:1) |
+| **eBook** | N/A | N/A | DOCX/EPUB | 1600×2560 px (1:1.6) |
 | **Paperback** | 5.5×8.5 to 8.5×11 | 0.25-0.875" (varies) | PDF/DOCX | Calculator-based |
 | **Hardcover** | 5.5×8.5 to 8.5×11 | 0.25-0.875" (varies) | PDF only | Calculator-based |
 

@@ -102,85 +102,7 @@ Verify that `dist/` now contains:
 - `package-name-X.Y.Z.tar.gz` (source distribution)
 - `package_name-X.Y.Z-py3-none-any.whl` (wheel)
 
-### 8. Test Upload to TestPyPI
-
-Upload to TestPyPI (test.pypi.org) to verify the upload process and package metadata before publishing to production PyPI.
-
-**Upload to TestPyPI** (Bash tool):
-```bash
-cd /path/to/package && twine upload --repository testpypi dist/*
-```
-
-User will be prompted for TestPyPI credentials:
-- Username: `__token__`
-- Password: TestPyPI API token (starts with `pypi-`)
-
-If the user does not have a TestPyPI account or token, provide instructions:
-1. Create account at https://test.pypi.org/account/register/
-2. Generate API token at https://test.pypi.org/manage/account/token/
-3. Store token in `~/.pypirc` or enter when prompted
-
-### 9. Test Install from TestPyPI
-
-Verify the package installs correctly from TestPyPI.
-
-**Install from TestPyPI** (Bash tool):
-```bash
-pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ package-name
-```
-
-The `--extra-index-url` flag allows dependencies to be installed from production PyPI while the target package comes from TestPyPI.
-
-**Verify installation**:
-```bash
-python -c "import package_name; print(package_name.__version__)"
-```
-
-If import fails or version is incorrect, investigate and fix before publishing to production PyPI.
-
-### 10. Publish to PyPI
-
-Upload to production PyPI.
-
-**Final upload** (Bash tool):
-```bash
-cd /path/to/package && twine upload dist/*
-```
-
-User will be prompted for PyPI credentials:
-- Username: `__token__`
-- Password: PyPI API token (starts with `pypi-`)
-
-If the user does not have a PyPI account or token, provide instructions:
-1. Create account at https://pypi.org/account/register/
-2. Generate API token at https://pypi.org/manage/account/token/
-3. Scope the token to this specific project (recommended) or use account-wide token
-4. Store token in `~/.pypirc` for future uploads
-
-### 11. Post-Publication Tasks
-
-After successful publication, verify the package is installable and complete post-release tasks.
-
-**Verify installation** (Bash tool):
-```bash
-pip install package-name
-python -c "import package_name; print(package_name.__version__)"
-```
-
-**Create GitHub release** (Bash tool):
-```bash
-git tag -a vX.Y.Z -m "Release vX.Y.Z"
-git push origin vX.Y.Z
-gh release create vX.Y.Z --title "vX.Y.Z" --notes "PyPI release: https://pypi.org/project/package-name/X.Y.Z/"
-```
-
-**Additional recommendations**:
-- Update project documentation with installation instructions
-- Announce release on relevant channels (blog, social media, mailing lists)
-- Monitor PyPI project page for download statistics
-- Set up GitHub Actions for automated publishing (see Trusted Publishers below)
-
-### 12. Produce Audit Report
+### 8. Produce Pre-Publication Audit Report
 
 Format the pre-publication audit as a structured markdown report:
 
@@ -220,14 +142,94 @@ Format the pre-publication audit as a structured markdown report:
 ## Issues Found
 
 ### Critical (Must Fix Before Publishing)
-1. [Issue description] — [how to fix]
+1. [Issue description]: [how to fix]
 
 ### Warnings (Should Fix)
-1. [Issue description] — [recommendation]
+1. [Issue description]: [recommendation]
 
 ## Recommended Next Steps
 1. [Ordered list of actions]
 ```
+
+Do not proceed to TestPyPI or PyPI upload unless the audit Status is READY.
+
+### 9. Test Upload to TestPyPI
+
+Upload to TestPyPI (test.pypi.org) to verify the upload process and package metadata before publishing to production PyPI.
+
+**Upload to TestPyPI** (Bash tool):
+```bash
+cd /path/to/package && twine upload --repository testpypi dist/*
+```
+
+User will be prompted for TestPyPI credentials:
+- Username: `__token__`
+- Password: TestPyPI API token (starts with `pypi-`)
+
+If the user does not have a TestPyPI account or token, provide instructions:
+1. Create account at https://test.pypi.org/account/register/
+2. Generate API token at https://test.pypi.org/manage/account/token/
+3. Store token in `~/.pypirc` or enter when prompted
+
+### 10. Test Install from TestPyPI
+
+Verify the package installs correctly from TestPyPI.
+
+**Install from TestPyPI** (Bash tool):
+```bash
+pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ package-name
+```
+
+The `--extra-index-url` flag allows dependencies to be installed from production PyPI while the target package comes from TestPyPI.
+
+**Verify installation**:
+```bash
+python -c "import package_name; print(package_name.__version__)"
+```
+
+If import fails or version is incorrect, investigate and fix before publishing to production PyPI.
+
+### 11. Publish to PyPI
+
+Upload to production PyPI.
+
+**Final upload** (Bash tool):
+```bash
+cd /path/to/package && twine upload dist/*
+```
+
+User will be prompted for PyPI credentials:
+- Username: `__token__`
+- Password: PyPI API token (starts with `pypi-`)
+
+If the user does not have a PyPI account or token, provide instructions:
+1. Create account at https://pypi.org/account/register/
+2. Generate API token at https://pypi.org/manage/account/token/
+3. Scope the token to this specific project (recommended) or use account-wide token
+4. Store token in `~/.pypirc` for future uploads
+
+### 12. Post-Publication Tasks
+
+After successful publication, verify the package is installable and complete post-release tasks.
+
+**Verify installation** (Bash tool):
+```bash
+pip install package-name
+python -c "import package_name; print(package_name.__version__)"
+```
+
+**Create GitHub release** (Bash tool):
+```bash
+git tag -a vX.Y.Z -m "Release vX.Y.Z"
+git push origin vX.Y.Z
+gh release create vX.Y.Z --title "vX.Y.Z" --notes "PyPI release: https://pypi.org/project/package-name/X.Y.Z/"
+```
+
+**Additional recommendations**:
+- Update project documentation with installation instructions
+- Announce release on relevant channels (blog, social media, mailing lists)
+- Monitor PyPI project page for download statistics
+- Set up GitHub Actions for automated publishing (see Trusted Publishers below)
 
 ## Reference Files
 
@@ -236,7 +238,7 @@ For complete PyPI requirements, metadata specifications, and publishing best pra
 
 ## Important Notes
 
-- **Version immutability**: Once a version is published to PyPI, it cannot be deleted or re-uploaded. Increment the version for any changes. Use `X.Y.Z.postN` for post-release fixes or `X.Y.Z+1` for new features.
+- **Version immutability**: Once a version is published to PyPI, it cannot be deleted or re-uploaded. Increment the version for any changes. Bump the patch version for fixes and the minor version for features; reserve `.postN` for metadata-only corrections. (Avoid `+suffix` forms: PEP 440 local versions are rejected by PyPI.)
 
 - **Clean dist/ before building**: Always `rm -rf dist/*` before running `python -m build`. Stale artifacts from previous builds can cause confusion or upload wrong files.
 

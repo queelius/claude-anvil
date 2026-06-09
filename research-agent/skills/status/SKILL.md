@@ -20,11 +20,12 @@ If absent, tell the user there is no research run here and suggest
 
 ## Step 2: Read core state files
 
-Read in order (Read tool):
+Read in order (Read tool), degrading gracefully on partial runs:
 
-1. `.research/goal.md` for the original goal and eval script path
-2. `.research/state.md` for sub-problem statuses, hypothesis statuses, and current focus
-3. `.research/log.md` for the last 10 cycle entries (read the full file if it is short, otherwise tail with Bash: `tail -200 .research/log.md`)
+1. `.research/goal.md` for the original goal and eval script path (the only required file; if missing, treat the directory as not a research run)
+2. `.research/state.md` if it exists; when missing, report "initialized, no cycles yet" and skip the sub-problem and hypothesis sections
+3. `.research/log.md` if it exists, for the last 10 cycle entries (read the full file if it is short, otherwise tail with Bash: `tail -200 .research/log.md`); when missing, skip the recent-activity section
+4. `.research/scores.jsonl` if it exists: one JSON object per eval run; this is the preferred source for the eval trend (fall back to parsing log.md when absent)
 
 ## Step 3: Inventory artifacts
 
@@ -58,6 +59,7 @@ Output a structured summary:
 | in-progress | N |
 | resolved | N |
 | abandoned | N |
+| unresolved (terminal) | N |
 
 Currently focused sub-problem: {description}
 

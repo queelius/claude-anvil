@@ -46,6 +46,7 @@ through this directory; treat it as the cross-mode interface.
   goal.md         # Verbatim user goal + eval script path. Written once in fresh mode; never edited.
   state.md        # Current beliefs: sub-problems, hypotheses, current focus. Updated every REFLECT.
   log.md          # Append-only cycle log. The defense against context compression.
+  scores.jsonl    # One JSON line per eval run: {cycle, attempt, exit, score, ts}. Status reads this for the eval trend.
   attempts/       # One subdirectory per attempt: NNN-<slug>/notes.md plus artifacts.
   findings/       # Confirmed results promoted out of attempts/.
   synthesis.md    # Final deliverable. Presence => the run has concluded.

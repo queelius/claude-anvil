@@ -131,7 +131,7 @@ Offer to fix issues directly:
 
 ## Step 6: Update State File
 
-After all issues are resolved:
+After all issues are resolved (if `.papermill/state.md` does not exist, skip this step and suggest `/papermill:init`):
 
 - Set `stage` to `submission` in `.papermill/state.md` (Edit tool).
 - Append a timestamped note: "Pre-flight check passed. Ready for submission to [venue]."

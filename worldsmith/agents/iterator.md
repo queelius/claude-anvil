@@ -106,7 +106,7 @@ Write `${session_dir}/state.md` with run config:
 (updated as rounds complete)
 ```
 
-Initialize internal state: `round=0`, `deferred_judgments=[]`, `prior_findings=null`, `total_fixed=0`, `total_regressions=0`.
+Initialize internal state: `deferred_judgments=[]`, `prior_findings=null`, `total_fixed=0`, `total_regressions=0`. The `round` counter is owned solely by the Phase 3 for-loop; never initialize or increment it elsewhere.
 
 ### Phase 3: Iteration Loop
 
@@ -120,8 +120,9 @@ Prompt includes:
   <work-scope>{work_name}, manuscript at {manuscript_path}</work-scope>
   <output-dir>{session_dir}/round-{NNN}/</output-dir>
   <instructions>
-  Write your review report to {output-dir}/review.md instead of the
-  default .worldsmith/reviews/ path. All else proceeds normally.
+  Write ALL reports under {output-dir}/: the unified review.md plus the
+  four specialist reports. Nothing goes to the default .worldsmith/reviews/
+  path during iterate rounds. All else proceeds normally.
   </instructions>
 ```
 
@@ -207,7 +208,7 @@ Append a row to the Round Log in `state.md`:
 - Retry failures: F2
 ```
 
-Set `prior_findings` = current findings. Increment `round`. Continue loop.
+Set `prior_findings` = current findings. Continue the loop (the for-loop header advances `round`; do not increment it manually).
 
 ### Phase 4: Deferred-Judgment Checkpoint
 

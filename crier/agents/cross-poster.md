@@ -22,12 +22,12 @@ color: cyan
 tools:
   - Read
   - AskUserQuestion
-  - mcp__crier__crier_search
-  - mcp__crier__crier_missing
-  - mcp__crier__crier_check
-  - mcp__crier__crier_publish
-  - mcp__crier__crier_article
-  - mcp__crier__crier_query
+  - mcp__plugin_crier_crier__crier_search
+  - mcp__plugin_crier_crier__crier_missing
+  - mcp__plugin_crier_crier__crier_check
+  - mcp__plugin_crier_crier__crier_publish
+  - mcp__plugin_crier_crier__crier_article
+  - mcp__plugin_crier_crier__crier_query
 ---
 
 # Cross-Poster Agent
@@ -70,7 +70,9 @@ crier_search(since="2w")
 2. Write a rewrite following these rules:
    - Lead with the most interesting insight, not a summary
    - No meta-language ("New post:", "I wrote about")
-   - Stay under the character limit (bluesky 300, mastodon 500)
+   - Stay under the URL-aware budget: crier appends the canonical URL plus two
+     newlines before enforcing the limit, so target ~230 chars on bluesky
+     (limit 300) and ~430 on mastodon (limit 500)
    - Crier appends the canonical URL automatically
 3. `crier_publish(file_path, platform, rewrite_content=rewrite, rewrite_author="claude-code")`
 4. Confirm with the returned token

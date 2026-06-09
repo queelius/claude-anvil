@@ -86,7 +86,7 @@ A correct proof that is hard to follow is almost as bad as an incorrect one. Hel
 
 ## Step 7: Update State File
 
-Append a note to `.papermill/state.md` (Edit tool) documenting the proof work:
+Append a note to `.papermill/state.md` (Edit tool) documenting the proof work. If `.papermill/state.md` does not exist, skip this step and suggest `/papermill:init`. The note format:
 
 ```
 - YYYY-MM-DD (proof): Developed proof of [theorem name]. Strategy: [strategy]. Status: [draft/verified/complete].

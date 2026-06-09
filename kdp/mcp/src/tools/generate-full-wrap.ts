@@ -6,6 +6,7 @@ import { PDFDocument } from "pdf-lib";
 import {
   calculateCoverDimensions,
   ensureContrast,
+  SPINE_TEXT_MIN_WIDTH_INCHES,
   type PaperType,
 } from "../lib/cover-layout.js";
 import { handleCoverSpecs, type CoverSpecsOutput } from "./cover-specs.js";
@@ -37,8 +38,8 @@ export interface FullWrapOutput {
 
 // ── Thresholds ─────────────────────────────────────────────────────────────
 
-const SPINE_TOO_NARROW_INCHES = 0.3; // < 0.3" → no text
-const SPINE_TITLE_ONLY_INCHES = 0.5; // 0.3"–0.5" → title only
+const SPINE_TOO_NARROW_INCHES = SPINE_TEXT_MIN_WIDTH_INCHES; // shared threshold
+const SPINE_TITLE_ONLY_INCHES = 0.5; // threshold-0.5" renders title only
 
 const DPI = 300;
 const POINTS_PER_INCH = 72;
@@ -75,23 +76,11 @@ export async function createBackCover(opts: {
       .replace(/>/g, "&gt;")
       .replace(/"/g, "&quot;");
 
-  const escapedBlurb = escapeXml(blurb);
   const barcodeRect = isbn
     ? `<rect x="${barcodeX}" y="${barcodeY}" width="${barcodeW}" height="${barcodeH}" fill="white" rx="4"/>`
     : `<rect x="${barcodeX}" y="${barcodeY}" width="${barcodeW}" height="${barcodeH}" fill="white" rx="4" opacity="0.15"/>`;
 
-  const svgString = `<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">
-  <rect width="${width}" height="${height}" fill="${bgColor}"/>
-  <foreignObject x="${marginPx}" y="${marginPx}" width="${textWidth}" height="${textAreaHeight}">
-    <body xmlns="http://www.w3.org/1999/xhtml" style="margin:0;padding:0;">
-      <p style="font-family:serif;font-size:${fontSize}px;color:white;line-height:1.5;word-wrap:break-word;">${escapedBlurb}</p>
-    </body>
-  </foreignObject>
-  ${barcodeRect}
-</svg>`;
-
-  // sharp may not support foreignObject/xhtml — use plain SVG text with tspan wrapping instead
+  // sharp does not support foreignObject/xhtml; plain SVG text with tspan wrapping
   const words = blurb.split(" ");
   const charsPerLine = Math.floor(textWidth / (fontSize * 0.55));
   const lines: string[] = [];
@@ -109,6 +98,13 @@ export async function createBackCover(opts: {
   if (currentLine) lines.push(currentLine);
 
   const lineHeight = Math.round(fontSize * 1.5);
+  // Vertical overflow guard: long blurbs must not render across the barcode
+  // zone or off-panel. Clamp to the lines that fit and ellipsize.
+  const maxLines = Math.max(1, Math.floor(textAreaHeight / lineHeight));
+  if (lines.length > maxLines) {
+    lines.length = maxLines;
+    lines[maxLines - 1] = lines[maxLines - 1].replace(/\s+\S*$/, "") + " ...";
+  }
   const tspans = lines
     .map(
       (line, i) =>
@@ -221,18 +217,31 @@ export async function handleGenerateFullWrap(
   const bgColor = ensureContrast(rawBgColor, "#ffffff");
 
   // ── Create blank canvas ─────────────────────────────────────────────────
+  // Background is the back-cover color, not black: the 0.125" bleed border
+  // must carry printable art (a stock KDP rejection reason is missing bleed),
+  // and a bgColor canvas makes the back/spine bleed seamless with the back panel.
   const canvas = sharp({
     create: {
       width: totalW,
       height: totalH,
       channels: 3,
-      background: { r: 0, g: 0, b: 0 },
+      background: {
+        r: parseInt(bgColor.slice(1, 3), 16),
+        g: parseInt(bgColor.slice(3, 5), 16),
+        b: parseInt(bgColor.slice(5, 7), 16),
+      },
     },
   });
 
-  // ── Resize front cover to fit front zone ───────────────────────────────
+  // ── Resize front cover to fill front zone PLUS its bleed ───────────────
+  // The front panel owns the right/top/bottom bleed on its side of the wrap;
+  // extend the art so the trim line never exposes an unprinted border. Size
+  // from canvas geometry (right edge, full height) rather than adding bleed
+  // px, so independent rounding can never overflow the canvas.
   const frontBuffer = await sharp(input.front_cover_path)
-    .resize(frontZone.width, frontZone.height, { fit: "cover" })
+    .resize(totalW - frontZone.x, totalH, {
+      fit: "cover",
+    })
     .png()
     .toBuffer();
 
@@ -253,11 +262,11 @@ export async function handleGenerateFullWrap(
       left: backZone.x,
       top: backZone.y,
     },
-    // Front cover
+    // Front cover (placed at the bleed-extended origin: top of canvas)
     {
       input: frontBuffer,
       left: frontZone.x,
-      top: frontZone.y,
+      top: 0,
     },
   ];
 

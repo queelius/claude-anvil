@@ -19,7 +19,9 @@ When invoked with no arguments, build a concise project summary dashboard.
    - If no matching tags are found, fall back to the global journal overview (see step 4).
 
 2. If project tags are found, gather project data by running these commands:
-   - `jot list --tags=<tag> --status=open --json --limit=20` to get open items.
+   - `jot list --tags=<tag> --status=open --json | jq -s '.[:20]'` to get open items
+     (truncate client-side: the CLI's `--limit` is applied before sorting, so it
+     returns the OLDEST entries, not the most recent).
    - `jot list --tags=<tag> --status=in_progress --json` to get in-progress items.
    - `jot stale --tags=<tag> --days 30 --json` to get stale items needing attention.
 
@@ -33,7 +35,7 @@ When invoked with no arguments, build a concise project summary dashboard.
 
 4. If no project context is found (no matching tags), show a global overview:
    - Run `jot tags --json` for the full tag overview.
-   - Run `jot list --type=task --status=open --json --limit=10` for top open tasks.
+   - Run `jot list --type=task --status=open --json | jq -s '.[:10]'` for top open tasks.
    - Present a brief global journal summary showing tag distribution and top tasks.
 
 ## With Arguments: Natural Language Router
@@ -53,7 +55,7 @@ When invoked with arguments, interpret them as a natural language instruction an
 | "tag overview" | `jot tags` |
 | "high priority tasks" | `jot list --type=task --priority=high --status=open --json` |
 | "what's blocked" | `jot list --status=blocked --json` |
-| "recent entries" | `jot list --json --limit=10` |
+| "recent entries" | `jot list --json \| jq -s '.[:10]'` |
 
 ### Routing Rules
 

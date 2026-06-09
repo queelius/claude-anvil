@@ -11,6 +11,7 @@ from __future__ import annotations
 import json
 import logging
 import re
+import sqlite3
 import sys
 from typing import Any
 
@@ -439,10 +440,25 @@ def status() -> str:
 # SQL escape hatch
 # ---------------------------------------------------------------------------
 
-_FORBIDDEN_SQL = re.compile(
-    r"\b(insert|update|delete|drop|alter|create|attach|detach|replace|pragma\s+\w+\s*=)\b",
-    re.IGNORECASE,
-)
+# Connection-level escapes the engine guard below cannot fully contain.
+# Everything else (INSERT/UPDATE/DELETE/DROP/VACUUM INTO/...) is blocked at the
+# engine: run_sql executes on a mode=ro connection with PRAGMA query_only=ON,
+# so keyword false-positives (a LIKE '%update%' literal, the replace() scalar
+# function) no longer reject legitimate read-only queries.
+_FORBIDDEN_SQL = re.compile(r"\b(attach|detach|vacuum|pragma)\b", re.IGNORECASE)
+
+
+def _readonly_conn() -> sqlite3.Connection:
+    """A dedicated read-only connection to the store's database file."""
+    store = _store()
+    db_file = store.conn.execute("PRAGMA database_list").fetchone()[2]
+    if not db_file:  # in-memory store (tests): reuse the conn, engine-guarded
+        store.conn.execute("PRAGMA query_only=ON")
+        return store.conn
+    conn = sqlite3.connect(f"file:{db_file}?mode=ro", uri=True)
+    conn.row_factory = sqlite3.Row
+    conn.execute("PRAGMA query_only=ON")
+    return conn
 
 
 @mcp.tool()
@@ -455,14 +471,19 @@ def run_sql(query: str, limit: int = 200) -> str:
     """
     if _FORBIDDEN_SQL.search(query):
         return json.dumps({"error": "only read-only queries allowed"})
-    store = _store()
     q = query.strip().rstrip(";")
     if not re.search(r"\blimit\b", q, re.IGNORECASE):
         q = f"{q} LIMIT {int(limit)}"
+    conn = _readonly_conn()
     try:
-        rows = [dict(r) for r in store.conn.execute(q)]
+        rows = [dict(r) for r in conn.execute(q)]
     except Exception as e:
         return json.dumps({"error": str(e)})
+    finally:
+        if conn is not _store().conn:
+            conn.close()
+        else:
+            conn.execute("PRAGMA query_only=OFF")
     return json.dumps({"row_count": len(rows), "rows": rows},
                       ensure_ascii=False, indent=2)
 

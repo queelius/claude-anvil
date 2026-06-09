@@ -50,7 +50,7 @@ Four tables in `~/.repoindex/index.db`:
 - **repos**: core identity (`name`, `path`), git status (`is_clean`, `ahead`, `behind`), metadata (`language`, `description`, `keywords`), boolean flags (`has_readme`, `has_license`, `has_ci`, `has_citation`, `has_codemeta`, `has_funding`, `has_contributors`, `has_changelog`), and forge metadata abstracted across GitHub/Gitea (`forge_owner`, `forge_name`, `forge_description`, `forge_id`, `stars`, `topics`, `is_archived`)
 - **publications**: registry packages (`pypi`/`cran`/`zenodo`/`npm`/`cargo`/`docker`/`rubygems`/`go`), `published` flag, `downloads_total`/`downloads_30d`, `doi`
 - **events**: git activity (`commit`/`git_tag`/`branch`/`merge`) with timestamps
-- **tags**: classification tags, auto-derived from metadata. Source attribution: `user`, `implicit`, `github`, `gitea`, `pyproject`, `pypi`, `cran`
+- **tags**: classification tags, auto-derived from metadata. Source attribution: `user`, `implicit`, `github`, `gitea`, `pyproject`, `pypi`, `cran`, `zenodo`, `go`, `npm`
 
 All joins go through `repo_id` foreign key.
 

@@ -60,19 +60,20 @@ present. There are three modes: **fresh**, **resume**, **synthesize**.
 
 Triggered by `<goal>...</goal>` (no `<mode>` tag). Used by `/research-agent:research` for a new research run.
 
-1. Create the `.research/` directory structure:
+1. If `.research/` already exists, do NOT overwrite it: a prior run lives there. Archive it first (`mkdir -p .research-archive && mv .research .research-archive/<UTC-timestamp>`) and note the archival in your first log entry, or stop and tell the orchestrator to use resume mode instead. `goal.md` is written once per run and `log.md` is append-only; fresh mode must never clobber either.
+
+2. Create the `.research/` directory structure:
    ```
    .research/
    ├── goal.md
    ├── log.md
    ├── state.md
+   ├── scores.jsonl
    ├── attempts/
    └── findings/
    ```
 
-2. Write `goal.md` with the verbatim goal and eval script path.
-
-3. If an eval script was provided, verify it exists and is executable. Run it once to establish a baseline score. Log the baseline.
+3. Write `goal.md` with the verbatim goal and eval script path.
 
 4. Write the initial `log.md` header:
    ```markdown
@@ -87,15 +88,17 @@ Triggered by `<goal>...</goal>` (no `<mode>` tag). Used by `/research-agent:rese
    ---
    ```
 
-5. Begin the DECOMPOSE phase.
+5. If an eval script was provided, verify it exists and is executable, then run it once from the working directory to establish a baseline. Log the baseline to `log.md` and append the first record to `scores.jsonl` (see Eval Script Contract). If the baseline run exits 0, the goal is already achieved by external measure: record that and go directly to the Termination Protocol instead of starting the loop. If the script is missing or not executable, log the problem and fall back to self-evaluation; do not abort.
+
+6. Begin the DECOMPOSE phase.
 
 ### Mode: resume
 
 Triggered by `<mode>resume</mode>`. Used by `/research-agent:resume`.
 
-1. Read `.research/state.md` in full to reload current beliefs, sub-problem statuses, hypothesis statuses, and current focus.
+1. Read `.research/state.md` in full to reload current beliefs, sub-problem statuses, hypothesis statuses, and current focus. If `state.md` does not exist yet (run interrupted before its first REFLECT), reorient from `goal.md` and `log.md` instead and write a fresh `state.md` from the DECOMPOSE phase.
 2. Read the last 15 entries of `.research/log.md` to recall recent activity.
-3. If `.research/synthesis.md` already exists, do NOT start new cycles; tell the orchestrator the research is already concluded and point at synthesis.md.
+3. If `.research/synthesis.md` already exists: by default do NOT start new cycles; tell the orchestrator the research is concluded and point at synthesis.md. The one exception is an explicit reopen request in the launch prompt (user-confirmed): then rename `synthesis.md` to `synthesis-<UTC-timestamp>.md`, append a "reopened" entry to log.md, and continue.
 4. Otherwise, briefly acknowledge to the orchestrator where you are picking up (one paragraph), then resume the cycle on the documented "Current focus" in state.md. Continue normally: DECOMPOSE if needed, HYPOTHESIZE, ATTEMPT, EVALUATE, REFLECT.
 
 ### Mode: synthesize
@@ -110,6 +113,18 @@ Triggered by `<mode>synthesize</mode>`. Used by `/research-agent:synthesize`.
 
 Be honest in the synthesis. If the goal was not achieved, say so plainly. If results are partial, describe their scope precisely. The synthesis is the single document a future reader will rely on.
 
+## Eval Script Contract
+
+When an eval script is provided, invoke it from the working directory (the `<working_directory>` you were given anchors all `.research/` paths) with no arguments, and interpret it as:
+
+- Exit 0: goal achieved by external measure.
+- Exit 1: goal not yet achieved. If the last stdout line matches `score: <float>`, record the float as the current score.
+- Any other exit code: script error. Log it and fall back to self-evaluation for that cycle; never treat a script error as a score.
+
+After every eval run, append one JSON line to `.research/scores.jsonl`:
+`{"cycle": N, "attempt": "NNN-slug", "exit": <code>, "score": <float or null>, "ts": "<ISO 8601>"}`.
+The status skill reads this file for the eval trend, so keep it strictly one JSON object per line.
+
 ## The Research Loop
 
 You operate in a continuous cycle. Each iteration moves through these phases:
@@ -122,7 +137,7 @@ Break the goal into sub-problems and open questions. Write them to `state.md` as
 # Research State
 
 ## Sub-problems
-1. [sub-problem] - status: open | in-progress | resolved | abandoned
+1. [sub-problem] - status: open | in-progress | resolved | abandoned (plus `unresolved`, terminal-only: set during synthesis for sub-problems still open at conclusion)
 2. ...
 
 ## Hypotheses
@@ -176,7 +191,7 @@ Choose the most appropriate modality and execute:
 - Write the statement first, then develop the proof term
 - Lean compiler errors are useful signal, not noise
 
-Each attempt gets its own directory: `attempts/NNN-<descriptive-slug>/` containing:
+Each attempt gets its own directory: `attempts/NNN-<descriptive-slug>/`. NNN is a zero-padded three-digit number allocated as (max existing NNN in `attempts/`) + 1, scanned from disk at allocation time, so resumed runs continue the sequence instead of restarting at 001. When spawning parallel sub-agents, pre-create each child's attempt directory yourself and pass it as an absolute path; children never allocate their own numbers. Each attempt directory contains:
 - `notes.md`: what you tried, what happened, your interpretation
 - Any artifacts: code files, proof documents, simulation scripts, output data
 
@@ -184,7 +199,7 @@ Each attempt gets its own directory: `attempts/NNN-<descriptive-slug>/` containi
 
 After each attempt, evaluate the result:
 
-1. **If eval script exists:** Run it from the project root. Check exit code (0 = goal achieved) and parse stdout for score/feedback.
+1. **If eval script exists:** Run it per the Eval Script Contract above (exit 0 = achieved; exit 1 + optional `score: <float>` last line; other exits = script error, self-evaluate this cycle) and append the result to `.research/scores.jsonl`.
 2. **If no eval script:** Reason against the goal. Write a structured self-assessment:
    - What did this attempt accomplish?
    - Does it move us closer to the goal? By how much?
@@ -253,8 +268,11 @@ You make all decisions yourself. Here are guidelines for common judgment calls:
 - You have a definitive counterexample disproving the main claim
 - You have exhausted all reasonable approaches and can articulate why the goal appears unachievable
 - You have partial results that represent genuine progress, and further iteration is unlikely to yield more
+- Stall rule: roughly 5 consecutive cycles with no new information and a flat or declining eval trend means conclude (invoke the Termination Protocol) rather than grinding
 
 **When in doubt, try something.** A failed attempt with a clear conclusion is always better than analysis paralysis. Log your reasoning, attempt it, and learn from the result.
+
+Every ~10 cycles, refresh an `## Outcome so far` block (3-6 sentences) in `state.md`. It is the rolling seed of a partial synthesis: if the run dies unexpectedly, the next reader still gets a current summary without replaying the whole log.
 
 ## Logging Discipline
 

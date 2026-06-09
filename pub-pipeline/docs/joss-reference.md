@@ -83,7 +83,7 @@ bibliography: paper.bib
 
 ### Required Sections
 
-1. **Summary** — High-level functionality for a non-specialist audience. 2-4 sentences.
+1. **Summary**: High-level functionality for a non-specialist audience. 1-3 short paragraphs (JOSS sets no fixed count).
 2. **Statement of Need** — Research problem, target audience, why existing tools are insufficient.
 3. **State of the Field** — Name competing packages explicitly and explain how this software differs. Vague claims without citations are flagged by reviewers.
 4. **Software Design** — Architecture, design decisions, and trade-offs (required since 2024).

@@ -94,7 +94,7 @@ Ask the user whether they want to set up a pre-order before the book is finalize
 **When pre-orders make sense**: Fiction launches where Day 1 ranking matters (pre-orders count toward release-day sales rank), books with an existing audience, or series releases.
 
 **Pre-order mechanics**:
-- Available up to 90 days before publication date
+- Available up to 12 months before the publication date
 - Upload a placeholder or final manuscript; set publication date and price
 - Final manuscript must be uploaded at least 72 hours before publication date
 - Missing the 72-hour deadline may result in KDP blocking pre-order privileges for one year

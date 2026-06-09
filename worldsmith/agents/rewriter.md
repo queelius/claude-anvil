@@ -156,6 +156,23 @@ The iterator reads this section to build the end-of-loop user checkpoint.
 
 When invoked directly (not from iterator), iterate mode is irrelevant: the existing `/worldsmith:revise` flow takes over and the deferred-judgments section is omitted.
 
+#### Final-revise mode (invocation by the iterator orchestrator)
+
+Trigger: the launch prompt contains:
+
+```xml
+<mode>final-revise</mode>
+<output-dir>...</output-dir>
+<work-scope>...</work-scope>
+<fix-guidance>list of {finding_id, location, chosen_option, rationale}</fix-guidance>
+```
+
+In final-revise mode:
+
+- Skip Phase 2 triage entirely: findings arrive pre-decided in `<fix-guidance>`, so there is nothing to classify and AskUserQuestion is never used.
+- Apply each decided fix through the normal Phase 3 dispatch and Phase 4 verification.
+- Write the revision report to `<output-dir>/revision.md` with the Fixed (User-Decided) section populated. No deferred-judgments section: nothing can be deferred here.
+
 ### Phase 3: Parallel Fix Dispatch
 
 Group auto-fixable findings by specialist and passage proximity. Launch writer specialists in parallel for independent fix groups.
@@ -213,7 +230,7 @@ Apply verified fixes and update the doc ecosystem:
 
 ### Phase 6: Report
 
-Create the revision report. For multi-work projects, use `.worldsmith/reviews/YYYY-MM-DD/work-name/revision.md`. For single-work projects, use `.worldsmith/reviews/YYYY-MM-DD/revision.md`:
+Create the revision report as `revision.md` in the SAME directory as the source review report (the directory you read `review.md` from in Phase 1), so the pair stays together even when revising an older review. In iterate and final-revise modes, the `<output-dir>` override governs instead:
 
 ```markdown
 # Revision Report

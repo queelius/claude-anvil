@@ -134,29 +134,18 @@ Before writing the final report:
 
 ### Phase 6: Write Report
 
-Create the output directory:
+Resolve the report directory first:
 
-```bash
-mkdir -p .worldsmith/reviews/YYYY-MM-DD
-```
+- Default: `.worldsmith/reviews/YYYY-MM-DD` (today's actual date). For multi-work projects, append the work name: `.worldsmith/reviews/YYYY-MM-DD/work-name`. Single-work projects (no project.yaml) keep the flat path.
+- Override: if the launch prompt supplies an `<output-dir>` (the iterator orchestrator does), use THAT directory for EVERY file in this phase, the unified report and all four specialist reports alike. When an override is present, write nothing under the default `.worldsmith/reviews/` path.
 
-(Replace YYYY-MM-DD with today's actual date.)
+Create the report directory (`mkdir -p <report-dir>`), then write individual specialist reports:
+- `<report-dir>/consistency-auditor.md`
+- `<report-dir>/craft-auditor.md`
+- `<report-dir>/voice-auditor.md`
+- `<report-dir>/structure-auditor.md`
 
-For multi-work projects, include the work name in the directory path:
-
-```bash
-mkdir -p .worldsmith/reviews/YYYY-MM-DD/work-name
-```
-
-For single-work projects (no project.yaml), use the existing flat path `.worldsmith/reviews/YYYY-MM-DD/`.
-
-Write individual specialist reports:
-- `.worldsmith/reviews/YYYY-MM-DD/consistency-auditor.md`
-- `.worldsmith/reviews/YYYY-MM-DD/craft-auditor.md`
-- `.worldsmith/reviews/YYYY-MM-DD/voice-auditor.md`
-- `.worldsmith/reviews/YYYY-MM-DD/structure-auditor.md`
-
-Write the unified report to `.worldsmith/reviews/YYYY-MM-DD/review.md`:
+Write the unified report to `<report-dir>/review.md`:
 
 ```markdown
 # Multi-Agent Editorial Review

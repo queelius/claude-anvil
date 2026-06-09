@@ -61,7 +61,9 @@ Filters: `--type` (idea/task/note/plan/log), `--status` (open/in_progress/done/b
 ```bash
 jot search "authentication" --json       # search titles and content
 jot search "api" --type=task --json      # search with filters
-jot search "deploy" --context=3 --json   # include surrounding lines
+jot search "deploy" --json               # one line per entry: {slug,title,matches}
+# Note: --context affects human output only and is ignored under --json;
+# to read matched content, follow up with `jot show <slug> --json`
 ```
 
 ### Tag Overview

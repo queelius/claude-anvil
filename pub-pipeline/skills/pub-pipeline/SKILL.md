@@ -18,6 +18,7 @@ Check the current working directory for project type indicators:
 |-------|-------------|----------|
 | `DESCRIPTION` file with `Package:` field | R package | `/r-publish` (the `r-pub-pipeline` skill) |
 | `pyproject.toml` or `setup.py` or `setup.cfg` | Python package | `/pypi-publish` (the `pypi-publish` skill) |
+| `.tex` sources plus a built `.pdf`, no package files | Academic paper | Not handled here: tell the user this looks like a paper and point at the papermill plugin |
 | Multiple types detected | Ambiguous | Ask the user which workflow to run |
 | None detected | Unknown | Ask the user what they want to publish |
 
@@ -26,8 +27,9 @@ Check the current working directory for project type indicators:
 ### Step 1: Detect project type (Glob tool)
 
 Search the current directory for:
-- `DESCRIPTION` (R package indicator — verify it contains a `Package:` field)
+- `DESCRIPTION` (R package indicator; verify it contains a `Package:` field)
 - `pyproject.toml`, `setup.py`, `setup.cfg` (Python package indicators)
+- `*.tex` plus a built `*.pdf` with neither of the above (academic paper: route the user to papermill)
 
 ### Step 2: Load user config (Read tool)
 

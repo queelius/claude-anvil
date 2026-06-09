@@ -78,3 +78,56 @@ References
 """.strip()
     found = _heads(text)
     assert "Much longer" in found["conclusion"].content
+
+
+def test_combined_and_dotless_heading_forms():
+    # Combined closing headings must classify as future_work, and dotless
+    # roman numerals must parse.
+    cases = [
+        ("Conclusions and Future Work", "future_work"),
+        ("Conclusion and Future Work", "future_work"),
+        ("Limitations and Future Work", "future_work"),
+        ("Summary and Future Work", "future_work"),
+        ("7 CONCLUSION", "conclusion"),
+        ("VII CONCLUSION", "conclusion"),
+        ("Outlook", "future_work"),
+    ]
+    for line, expected in cases:
+        assert SECTION_PATTERNS[expected].match(line), \
+            f"{expected} pattern should match {line!r}"
+
+
+def test_refs_heading_variants_terminate_capture():
+    text = "\n".join([
+        "Conclusion",
+        "We summarize the contributions here.",
+        "More concluding prose follows in this paragraph.",
+        "Further detail on scope and impact.",
+        "Closing thoughts on the approach overall.",
+        "Acknowledgements",
+        "We thank grant 12345 and the anonymous reviewers.",
+        "Appendix A",
+        "Proof of Theorem 1 goes here.",
+    ])
+    secs = _heads(text)
+    assert "conclusion" in secs
+    content = secs["conclusion"].content
+    assert "thank grant" not in content, "British Acknowledgements must terminate capture"
+    assert "Proof of Theorem" not in content, "Numbered appendix must terminate capture"
+
+
+def test_numbered_future_work_items_are_not_headings():
+    text = "\n".join([
+        "Future Work",
+        "We see several promising directions ahead.",
+        "There are many things left to explore here.",
+        "Several concrete avenues stand out to us.",
+        "1. Better calibration under distribution shift across many domains",
+        "2. Extending the framework to multimodal settings with new losses",
+        "References",
+    ])
+    secs = _heads(text)
+    assert "future_work" in secs
+    content = secs["future_work"].content
+    assert "Better calibration" in content, "enumerated items are content, not headings"
+    assert "multimodal settings" in content

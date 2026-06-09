@@ -24,25 +24,26 @@ log = logging.getLogger(__name__)
 # "VI.", "6.1", or "Chapter 7".
 SECTION_PATTERNS: dict[str, re.Pattern] = {
     "future_work": re.compile(
-        r"^\s*(?:\d+(?:\.\d+)*\.?\s+|[IVX]+\.\s+)?"
-        r"(future\s+work|future\s+research|future\s+directions?|open\s+(?:problems?|questions?|directions?))"
+        r"^\s*(?:\d+(?:\.\d+)*\.?\s+|[IVX]+\.?\s+)?"
+        r"(?:(?:conclusions?|limitations?|summary|discussion)\s+and\s+)?"
+        r"(future\s+work|future\s+research|future\s+directions?|open\s+(?:problems?|questions?|directions?)|outlook)"
         r"\s*[:\.]?\s*$",
         re.IGNORECASE,
     ),
     "limitations": re.compile(
-        r"^\s*(?:\d+(?:\.\d+)*\.?\s+|[IVX]+\.\s+)?"
+        r"^\s*(?:\d+(?:\.\d+)*\.?\s+|[IVX]+\.?\s+)?"
         r"(limitations?|threats\s+to\s+validity|caveats)"
         r"\s*[:\.]?\s*$",
         re.IGNORECASE,
     ),
     "discussion": re.compile(
-        r"^\s*(?:\d+(?:\.\d+)*\.?\s+|[IVX]+\.\s+)?"
+        r"^\s*(?:\d+(?:\.\d+)*\.?\s+|[IVX]+\.?\s+)?"
         r"(discussion|discussion\s+and\s+(?:future\s+work|conclusions?))"
         r"\s*[:\.]?\s*$",
         re.IGNORECASE,
     ),
     "conclusion": re.compile(
-        r"^\s*(?:\d+(?:\.\d+)*\.?\s+|[IVX]+\.\s+)?"
+        r"^\s*(?:\d+(?:\.\d+)*\.?\s+|[IVX]+\.?\s+)?"
         r"(conclusions?|concluding\s+remarks|summary\s+and\s+conclusions?)"
         r"\s*[:\.]?\s*$",
         re.IGNORECASE,
@@ -55,8 +56,11 @@ GENERIC_HEADING = re.compile(
     r"^\s*(?:\d+(?:\.\d+)*\.?\s+|[IVX]+\.\s+|[A-Z]\.\s+)"
     r"[A-Z][A-Za-z0-9\-:,&\s]{2,80}\s*$"
 )
-REFS_HEADING = re.compile(r"^\s*(references|bibliography|acknowledgments?|appendix)\s*$",
-                          re.IGNORECASE)
+REFS_HEADING = re.compile(
+    r"^\s*(?:\d+(?:\.\d+)*\.?\s+|[IVX]+\.?\s+)?"
+    r"(references|bibliography|acknowledge?ments?|appendix(?:\s+[A-Z0-9]+)?|appendices|supplementary\s+material)"
+    r"\s*[:\.]?\s*$",
+    re.IGNORECASE)
 MAX_SECTION_LINES = 200  # safety cap
 
 
@@ -148,8 +152,13 @@ def find_sections(text: str) -> list[ExtractedSection]:
             if any(p.match(stripped) for p in SECTION_PATTERNS.values()):
                 break
             # Stop at a likely generic heading after at least a couple lines.
+            # Exception: long numbered lines ("2. Better calibration under
+            # distribution shift across many domains") are enumerated content,
+            # not headings; require the numbered form to be short and
+            # title-like before treating it as a terminator.
             if len(body) > 3 and GENERIC_HEADING.match(stripped) and len(stripped) < 80:
-                break
+                if not (stripped[:1].isdigit() and len(stripped.split()) > 6):
+                    break
 
             body.append(l)
             blank_streak = blank_streak + 1 if not stripped else 0

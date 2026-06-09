@@ -23,12 +23,17 @@ needs protecting, apply it, and optionally sign the result.
 ### Decision Tree
 
 ```
-Is this a Hugo site with markdown content files?
+Is the target Hugo MARKDOWN content (files under content/)?
   YES -> cryptoid
-  NO  -> Is this HTML, a static site, or files meant for browser viewing?
+  NO  -> Is this HTML, built site output, assets (PDFs, images), or files
+         meant for browser viewing?
     YES -> pagevault
     NO  -> gpg
 ```
+
+Note the Hugo carve-out: cryptoid encrypts markdown content only. Hugo assets
+(PDFs, images in static/) and built HTML output go to pagevault, even on a
+Hugo site.
 
 Override: the user may explicitly name a tool regardless of context. Honor that.
 
@@ -63,6 +68,7 @@ cryptoid decrypt --content-dir content/          # Restore plaintext
 cryptoid status --content-dir content/ --verbose # Show encryption state
 cryptoid rewrap --content-dir content/           # Re-wrap after user changes
 cryptoid rewrap --rekey                          # New CEK for forward secrecy
+cryptoid validate --content-dir content/         # Pre-build health check
 cryptoid hugo install                            # Install shortcode + JS
 ```
 
@@ -98,7 +104,7 @@ pagevault lock site/ --site               # Bundle entire site
 pagevault lock page.html -s "#secret"     # Encrypt only matching selector
 pagevault unlock _locked/page.html        # Decrypt back
 pagevault mark page.html -s ".private"    # Add encryption tags
-pagevault info encrypted.html             # Show metadata without password
+pagevault inspect encrypted.html          # Show metadata without password
 pagevault config init                     # Create .pagevault.yaml
 pagevault sync _locked/ -r               # Re-encrypt after password change
 ```

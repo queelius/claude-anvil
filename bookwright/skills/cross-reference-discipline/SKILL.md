@@ -72,7 +72,7 @@ A forward ref undocumented in either place is a bug.
 
 ## Integration-check baseline
 
-When `/bookwright:integrate` runs, it greps `book.log` for `Reference undefined`. It expects the set of unresolved refs to match the documented baseline. Any UNEXPECTED unresolved ref is a FAIL.
+When `/bookwright:integrate` runs, it greps `book.log` with `grep "undefined" book/book.log | grep -iE "reference|citation"` (the literal string "Reference undefined" never appears in LaTeX logs). It expects the set of unresolved refs to match the documented baseline. Any UNEXPECTED unresolved ref is a FAIL.
 
 When you add a new section, EITHER its labels resolve immediately (the section file defines them) OR you add the labels to the documented baseline as expected forward refs in the integration-pass record.
 

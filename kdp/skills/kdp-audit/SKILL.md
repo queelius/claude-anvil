@@ -70,7 +70,7 @@ Verify covers meet KDP requirements. Full specs are in `${CLAUDE_PLUGIN_ROOT}/do
 **Verify dimensions** (Bash tool):
 - If `identify` (ImageMagick) is available: `identify -format "%wx%h" cover.jpg`
 - Otherwise: `file cover.jpg` often reports dimensions
-- eBook cover: minimum 2560x1600 pixels, aspect ratio approximately 1.6:1, RGB, JPEG or TIFF, under 50MB
+- eBook cover: recommended 1600x2560 pixels (W x H, ratio 1:1.6; hard minimum 1000 px on the longest side), RGB, JPEG or TIFF, under 50MB
 - Paperback cover PDF: minimum 300 DPI, spine width `page_count * 0.002252"` (white paper) or `0.0025"` (cream)
 
 **Cover content requirements**: title readable at thumbnail size, author name present, high contrast, no prohibited content. Report actual vs. required dimensions. If cover files are absent, flag as a critical gap.

@@ -130,3 +130,19 @@ def test_begin_and_finish_run_records_provenance():
     row = s.conn.execute("SELECT * FROM runs WHERE id = ?", (run_id,)).fetchone()
     assert row["finished_at"] is not None
     assert "discover" in row["notes"]
+
+
+def test_upsert_preserves_fetch_provenance():
+    # A re-discover builds Papers with pdf_path=None; it must not clobber the
+    # pdf_path/fetched_at that the fetch stage recorded.
+    s = _store()
+    s.upsert_paper(_paper("W9"))
+    s.conn.execute(
+        "UPDATE papers SET pdf_path='/tmp/w9.pdf', fetched_at='2026-01-01' WHERE id='W9'"
+    )
+    s.conn.commit()
+    s.upsert_paper(_paper("W9", cited_by_count=123))  # re-discover
+    row = s.get_paper("W9")
+    assert row["pdf_path"] == "/tmp/w9.pdf", "re-discover must not reset pdf_path"
+    assert row["fetched_at"] == "2026-01-01"
+    assert row["cited_by_count"] == 123, "other columns still update"

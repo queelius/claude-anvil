@@ -90,8 +90,9 @@ If `paper.md` exists, validate against JOSS format requirements.
 **Citation cross-reference** (Bash tool):
 ```bash
 # Extract citation keys from paper.md and cross-reference against paper.bib
-grep -oP '@[\w]+' paper.md | sort -u > /tmp/paper_keys.txt
-grep -oP '^\s*@\w+\{(\w+)' paper.bib | grep -oP '\w+$' | sort -u > /tmp/bib_keys.txt
+# (strip the @ from paper keys so both lists hold bare keys; allow :-. in keys)
+grep -oP '(?<=@)[\w:.-]+' paper.md | sort -u > /tmp/paper_keys.txt
+grep -oP '^\s*@\w+\{\K[\w:.-]+' paper.bib | sort -u > /tmp/bib_keys.txt
 comm -23 /tmp/paper_keys.txt /tmp/bib_keys.txt
 ```
 All citation keys in paper.md must have matching BibTeX entries. Report any missing.
@@ -143,7 +144,7 @@ Format the report following this structure:
 
 ### Development History
 - [ ] or [x] 6+ months public development
-- [ ] or [x] Multiple contributors
+- (info) Multiple contributors: encouraged by JOSS but not required; note it, do not fail solo-maintainer packages on it
 - [ ] or [x] Issues/PRs activity
 - [ ] or [x] Tagged releases
 

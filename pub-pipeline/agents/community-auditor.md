@@ -64,8 +64,8 @@ gh repo view --json hasIssuesEnabled
 # First commit date
 git log --reverse --format="%ai" | head -1
 
-# Total months of history
-git log --format="%ai" | tail -1
+# Latest commit date (compute months elapsed between this and the first commit)
+git log -1 --format="%ai"
 
 # Commit count
 git rev-list --count HEAD

@@ -26,7 +26,7 @@ A CLI toolkit + site architecture guide for metafunctor.com. Works from any dire
 |-----------|------|-------|
 | `content/post/` | Blog posts | Date-prefixed dirs: `2024-01-slug/index.md` |
 | `content/papers/` | Research papers | Generated from paper_db via `mf papers generate` |
-| `content/publications/` | Peer-reviewed subset | Generated from paper_db via `mf pubs generate` |
+| `content/publications/` | Publication lifecycle registry | Independent pubs_db managed via `mf pubs` (add, update, log, pull); NOT derived from paper_db at runtime |
 | `content/projects/` | Software projects | Generated from projects_db via `mf projects generate` |
 | `content/series/` | Multi-part series | Landing pages with `_index.md` |
 | `content/writing/` | Fiction/creative | `writing_type: "novel"`, `"essay"`, `"short-story"` |
@@ -100,6 +100,8 @@ make push           # Build + git push to GitHub Pages
 | Projects | GitHub repos | DB + overrides + generate | Yes (projects_db.json) |
 | Papers | LaTeX sources | DB + sync + generate | Yes (paper_db.json) |
 | Series | mf series_db | DB + sync + landing pages | Yes (series_db.json) |
+| Publications | Venue lifecycle (submissions, acceptances, DOIs) | `mf pubs` add/update/log/pull/check | Yes (pubs_db.json, independent of paper_db) |
+| Packages | PyPI/CRAN registries | DB + sync + generate | Yes (packages_db.json) |
 | Posts | The .md file | `mf posts` (list, create, set, tag, feature) | No |
 | Writing | The .md file | None | No |
 | Medical | The .md file | None | No |
@@ -119,19 +121,23 @@ When users describe what they want, map to the right mf workflow:
 | "deploy", "push to prod" | Pre-deploy (below) |
 | "feature X", "star this paper" | `mf {type} feature <slug>` |
 | "tag X with Y" | `mf {type} tag <slug> --add Y` |
-| "sync papers/projects" | `mf papers sync` / `mf projects sync` |
+| "sync papers" | `mf papers status` (staleness), then `mf papers ingest <slug>` + `mf papers generate --slug <slug>` |
+| "sync projects" | `mf projects sync` |
 | "cross-post", "share on socials" | Use `/crier` skill instead |
 | "what content do I have" | `mf analytics summary` |
 | "find broken links" | `mf health links` |
 | "clean up tags" | `mf taxonomy audit` then `mf taxonomy normalize` |
 
 ### New Paper
-1. `mf papers process path/to/paper.tex`
-2. `mf papers set <slug> stars 5` (and any other metadata)
-3. `mf papers generate --slug <slug>`
-4. `mf pubs generate` (updates publications if peer-reviewed)
-5. `make deploy`
-6. Cross-post: use `/crier`
+1. Build the paper in its own repo first (`make html pdf` there); the slug must already exist in paper_db
+2. `mf papers ingest <slug>` (pulls the built HTML/PDF into the site)
+3. `mf papers set <slug> stars 5` (and any other metadata)
+4. `mf papers generate --slug <slug>`
+5. If peer-reviewed, register it in the independent publications registry: `mf pubs add` / `mf pubs update`
+6. `make deploy`
+7. Cross-post: use `/crier`
+
+Check staleness anytime with `mf papers status`; preview drift with `mf papers diff`.
 
 ### New Project
 1. Add to `.mf/projects_db.json` (or `mf projects import`)
@@ -156,11 +162,12 @@ When users describe what they want, map to the right mf workflow:
 7. `mf taxonomy audit` — near-duplicate terms
 
 ### Pre-Deploy
-1. `mf integrity check` — database ok?
-2. `hugo --gc --minify` — Hugo build errors?
-3. `mf health links` — no broken links?
-4. `make deploy` — build to docs/
-5. `make push` — push to GitHub Pages
+1. `mf status`: any render drift between DBs and generated pages?
+2. `mf integrity check`: database ok?
+3. `hugo --gc --minify`: Hugo build errors?
+4. `mf health links`: no broken links?
+5. `make deploy`: build to docs/
+6. `make push`: push to GitHub Pages
 
 ## Decision Guidance
 
@@ -168,37 +175,38 @@ When users describe what they want, map to the right mf workflow:
 
 | Group | Key verbs | Notes |
 |-------|-----------|-------|
-| `papers` | process, sync, generate, set, feature, tag | LaTeX → DB → Hugo |
-| `projects` | import, sync, generate, refresh, set, feature, hide, bundle | GitHub → DB → Hugo |
+| `papers` | ingest, generate, diff, status, set, feature, tag, zenodo, fetch-cff | Built paper repo → DB → Hugo |
+| `projects` | import, sync, generate, refresh, set, feature, hide, make-rich, list-rich, clean, diff, fetch-codemeta | GitHub → DB → Hugo |
 | `series` | create, sync, add, set, feature, tag, delete | DB → landing pages |
 | `packages` | sync, generate, set, feature, tag | PyPI/CRAN → DB → Hugo |
 | `posts` | create, list, set, unset, tag, feature | Direct front matter edits (no DB) |
-| `pubs` | generate, list | Subset of papers (peer-reviewed) |
+| `pubs` | add, update, log, pull, check, stats, zenodo | Independent lifecycle registry (`migrate` is a one-time paper_db seed) |
 | `content` | match-projects, about, list-projects, audit | Cross-content linking |
 | `taxonomy` | audit, orphans, stats, normalize | Tag/category hygiene |
 | `health` | links, descriptions, images, drafts, stale | Content quality checks |
 | `analytics` | summary, gaps, tags, timeline, suggestions | Content insights |
 | `integrity` | check, fix, orphans | Database consistency |
-| `backup` | list, restore | Backup management |
+| `backup` | list, rollback, clean, status | Backup management |
 | `config` | show | Configuration display |
 
 ### Generate vs Sync
 
 - **generate** = rebuild Hugo pages from database (safe, idempotent)
 - **sync** = pull from external sources into database, then generate (may change DB)
-- When in doubt, `generate` first — it's read-only on the database
+- When in doubt, `generate` first; it's read-only on the database
+- Preview drift before acting: `mf status` (render-drift dashboard across papers, projects, packages, pubs) or `mf <group> diff` for one group
 
 ### Ordering Rules
 
 - Always `sync` before `generate` if you want fresh data
 - Always `generate` (or `sync`) before `make deploy`
-- Run `mf pubs generate` after any paper change (publications derive from papers)
+- Papers and publications are independent registries at runtime: a paper change does NOT auto-update pubs (use `mf pubs update`/`log` when venue status changes; `mf pubs migrate` exists only as a one-time seed from paper_db)
 
 ### Tips
 
-- Most `set` commands accept `--regenerate` to auto-rebuild Hugo pages after the edit
+- `--regenerate` (auto-rebuild Hugo pages after the edit) exists on `papers set` and `projects set` only
 - Use `mf --help` and `mf <group> --help` at runtime for exact flags
-- All commands accept `--dry-run` for preview
+- Dry-run is the global `mf -n`/`mf --dry-run` flag (plus select subcommands like `content audit`)
 - `--json` output available on most `list` and health commands
 
 ## Cross-Repo Usage
@@ -209,7 +217,7 @@ The mf CLI resolves the site root in this order:
 3. Global config at `~/.config/mf/config.yaml`
 
 ```bash
-# One-time setup (from any directory):
+# One-time setup (from any directory; or run `mf init` in the site repo):
 mkdir -p ~/.config/mf
 echo "site_root: ~/github/repos/metafunctor" > ~/.config/mf/config.yaml
 

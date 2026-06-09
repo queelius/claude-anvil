@@ -37,9 +37,12 @@ Then, while it runs:
 
 ## The eval contract (optional)
 
-If you pass an eval script, the agent runs it to score its progress: exit 0 means
-the goal is achieved, and stdout is parsed for a score where available. Without a
-script, the agent self-evaluates.
+If you pass an eval script, the agent runs it from the working directory with no
+arguments. Exit 0 means the goal is achieved; exit 1 means not yet (and if the
+last stdout line is `score: <float>`, that float is recorded); any other exit
+code is treated as a script error and the agent self-evaluates that cycle.
+Results accumulate in `.research/scores.jsonl`. Without a script, the agent
+self-evaluates throughout.
 
 ## Where output lands
 

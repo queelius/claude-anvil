@@ -70,7 +70,7 @@ SELECT name,
   CASE WHEN has_ci = 0 THEN 1 ELSE 0 END AS no_ci
 FROM repos
 WHERE (has_license = 0 OR has_readme = 0 OR has_ci = 0)
-  AND is_archived = 0
+  AND COALESCE(is_archived, 0) = 0
 ORDER BY (no_license + no_readme + no_ci) DESC
 LIMIT 30
 ```
@@ -105,19 +105,27 @@ ORDER BY r.name
 
 ### 7. Version drift
 
-Repos where the local version differs from the published version:
+Published packages whose latest git tag differs from the registry version
+(the tag-vs-registry comparison the database can answer directly):
 
 ```sql
-SELECT r.name, p.registry, p.package_name, p.current_version
+WITH latest_tags AS (
+  SELECT repo_id, ref, MAX(timestamp) AS ts
+  FROM events WHERE type = 'git_tag' GROUP BY repo_id
+)
+SELECT r.name, p.registry, p.package_name, p.current_version,
+       t.ref AS latest_git_tag
 FROM publications p
 JOIN repos r ON p.repo_id = r.id
+JOIN latest_tags t ON t.repo_id = r.id
 WHERE p.published = 1
+  AND TRIM(t.ref, 'v') != TRIM(COALESCE(p.current_version, ''), 'v')
 ORDER BY r.name
 LIMIT 20
 ```
 
-(This lists published packages; comparing them against the local manifest
-version is the repo-polish agent's job, since it has file-read access.)
+(Deeper local-manifest comparison is the repo-polish agent's job, since it
+has file-read access.)
 
 ## Synthesis
 

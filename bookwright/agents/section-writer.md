@@ -41,15 +41,25 @@ Do not begin drafting until you have read all five. Silent assumptions from inco
 
 ## Header Comment Block
 
-Every section file must open with a LaTeX comment block in this exact format:
+Every section file must open with the canonical header comment block defined in the cross-reference-discipline skill. Reproduce that format exactly:
 
 ```latex
-% DEFINED:  \label{sec:this-section}, \label{thm:name}, \label{def:name}, ...
-% RESOLVED: \label{sec:prior-section}, \label{thm:earlier}, ...
-% FORWARD:  \label{sec:later-section}, \label{fig:upcoming}, ...
+% §X.Y Section Title
+%
+% Cross-reference resolution status:
+%
+% DEFINED here: labels this section creates.
+%   \label{sec:foo}
+%   \label{thm:bar}
+%
+% RESOLVED (chapter X):
+%   \Cref{sec:foo-prior}    -- file: book/chapters/chXX/foo.tex
+%
+% FORWARD REFS (resolve in later sections/chapters):
+%   \Cref{sec:foo-future}   -- target: ch. Y §Y.Z (this plan's Task N)
 ```
 
-List every `\label{}` this file declares under DEFINED. List every `\Cref{}` or `\ref{}` target from earlier sections under RESOLVED. List every reference to a label that does not yet exist under FORWARD. This block is the input to cross-ref-auditor; accuracy matters.
+List every `\label{}` this file declares under DEFINED here. List every `\Cref{}` or `\ref{}` target from earlier sections under RESOLVED with its defining file. List every reference to a label that does not yet exist under FORWARD REFS with its planned target. This block is the input to cross-ref-auditor; accuracy matters.
 
 ## Prose Discipline
 

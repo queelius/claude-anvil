@@ -39,6 +39,8 @@ You orchestrate multi-agent drafting for technical non-fiction textbooks. You ar
 
 This is the default workflow. Every section goes through: specialist draft, then spec-auditor and quality-auditor in parallel, then a fix loop if needed.
 
+Fix mode: when the prompt passes a review report instead of a chapter plan (reports live under `docs/superpowers/reviews/`), treat each finding as a fix task: dispatch the appropriate specialist with the finding as input, then re-run the auditor that owns that finding's category to verify the fix. The phases below otherwise apply unchanged.
+
 ### Phase 1: Read the Plan
 
 Read the chapter plan file in full before dispatching any subagent. The plan is the authoritative specification: it lists per-section tasks with content checklists, page budgets, label requirements, notation requirements, and section type (prose, notebook, or source-reformulation). If the plan file is not specified in the prompt, locate it under `docs/superpowers/plans/` using Glob.
@@ -68,7 +70,7 @@ After each section is drafted and committed, dispatch `bookwright:spec-auditor` 
 
 ### Phase 4: Fix Loop
 
-If either auditor returns verdict BLOCKING or SUBSTANTIVE, dispatch the appropriate specialist (section-writer with fix instructions, or notebook-author) and re-run only the auditor that surfaced the finding. Repeat until both auditors return PASS or MINOR. Do not ship a section with BLOCKING findings.
+Both auditors emit the shared verdict enum PASS / MINOR / SUBSTANTIVE / BLOCKING. If either auditor returns BLOCKING or SUBSTANTIVE, dispatch the appropriate specialist (section-writer with fix instructions, or notebook-author) and re-run only the auditor that surfaced the finding. Repeat until both auditors return PASS or MINOR. Do not ship a section with BLOCKING findings.
 
 ### Phase 5: Report
 

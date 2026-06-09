@@ -1,5 +1,7 @@
 # cryptoid Reference
 
+Verified against cryptoid 0.2.0.
+
 ## Overview
 
 Client-side encrypted content for Hugo static sites. AES-256-GCM with PBKDF2-SHA256
@@ -77,6 +79,9 @@ cryptoid encrypt --content-dir DIR [--config PATH] [--dry-run]
 cryptoid decrypt --content-dir DIR [--config PATH]
 cryptoid status --content-dir DIR [--config PATH] [--verbose]
 cryptoid rewrap --content-dir DIR [--config PATH] [--rekey]
+cryptoid validate --content-dir DIR [--config PATH]   # config well-formedness,
+                                                      # group refs, decryptability,
+                                                      # content-hash verification
 ```
 
 ### User/Group Management
@@ -93,6 +98,21 @@ cryptoid config generate-salt [--apply] [--config PATH]
 cryptoid config show [--config PATH] [--show-passwords]
 cryptoid config status
 cryptoid config validate --content-dir DIR [--config PATH]
+```
+
+### Global Config
+
+A global config at `~/.config/cryptoid/config.yaml` is auto-merged into every
+project config, so shared users/groups live in one place:
+
+```bash
+cryptoid init --global                     # Create the global config
+cryptoid config add-user alice --global    # Add a user globally
+cryptoid config add-group team --global    # Add a group globally
+cryptoid config generate-salt --global
+cryptoid config set-admin alice            # Admin USER with universal access
+                                           # (distinct from the admin group)
+cryptoid config set-content-dir content/   # Default content dir for this project
 ```
 
 ## Security Parameters

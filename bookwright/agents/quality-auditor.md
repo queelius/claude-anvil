@@ -82,9 +82,9 @@ PROSE-CRAFT
   [PASS/FAIL] Sentence-length check
   [NOTE] <any other prose observations>
 
-VERDICT: "ships as is" / "minor polish" / "substantive revision needed"
+VERDICT: PASS / MINOR / SUBSTANTIVE / BLOCKING
 ```
 
-"Ships as is" means no BLOCKING findings and at most two MINOR items. "Minor polish" means one or more SUBSTANTIVE findings that are straightforward to fix, no BLOCKING. "Substantive revision needed" means at least one BLOCKING finding or three or more SUBSTANTIVE findings.
+This is the shared auditor verdict enum (the writer orchestrator's fix loop keys on it), derived from the findings without overlap: BLOCKING if any finding is BLOCKING; otherwise SUBSTANTIVE if any finding is SUBSTANTIVE; otherwise MINOR if any finding is MINOR; otherwise PASS.
 
 Do not propose rewrites. Describe what is wrong precisely enough that the author can fix it without further guidance. Do not edit any file.

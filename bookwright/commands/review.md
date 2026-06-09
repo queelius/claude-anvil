@@ -17,7 +17,7 @@ Launch the `reviewer` orchestrator. Dispatches all four review specialists in pa
 
 ## Output
 
-A unified review report saved to `docs/superpowers/reviews/YYYY-MM-DD-<scope>.md`, with sections from each auditor: spec compliance, quality (cold-read), math correctness, cross-references. The user can then run `/bookwright:integrate` to apply fixes if any auditor surfaced substantive findings.
+A unified review report saved to `docs/superpowers/reviews/YYYY-MM-DD-<scope>.md`, with sections from each auditor: spec compliance, quality (cold-read), math correctness, cross-references. To apply fixes, run `/bookwright:draft` with the review report path as input (the writer orchestrator's fix mode). `/bookwright:integrate` is read-only verification, not a fix path.
 
 ## Distinction from /bookwright:check and /bookwright:integrate
 

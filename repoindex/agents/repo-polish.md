@@ -110,21 +110,24 @@ Produce a structured checklist:
 ### Step 3: Deterministic fixes
 
 Run each with `--dry-run` first, show the user, execute on approval.
-`ops generate` has no single-repo selector yet, so for a single repo run
-it from inside the repo (or with `-d <path>`); use the filter flags
-(`--language`/`--tag`/`--recent`) only when you intend a collection-wide run.
+
+IMPORTANT scoping rule: `ops generate` has NO single-repo path selector. It
+targets the whole collection (filtered only by `--language`/`--tag`/`--recent`),
+and running it from inside a repo does NOT scope it to that repo. To scope to
+one repo, tag it first with a temporary work tag, pass `--tag`, and remove the
+tag when done:
 
 ```bash
-# Single repo: run from the repo's path so generation is scoped to it
-cd /path/to/REPO
+# 1. Scope: tag the target repo (via the tag MCP tool)
+#    mcp__repoindex__tag(repo=REPO, action="add", tag="work/polish-target")
 
-# Citation metadata (reads pyproject.toml + config author)
-repoindex ops generate citation --dry-run -d /path/to/REPO
-repoindex ops generate zenodo --dry-run -d /path/to/REPO
-repoindex ops generate codemeta --dry-run -d /path/to/REPO
+# 2. Citation metadata (reads pyproject.toml + config author)
+repoindex ops generate citation --tag work/polish-target --dry-run
+repoindex ops generate zenodo --tag work/polish-target --dry-run
+repoindex ops generate codemeta --tag work/polish-target --dry-run
 
 # Documentation scaffolding
-repoindex ops generate mkdocs --dry-run -d /path/to/REPO
+repoindex ops generate mkdocs --tag work/polish-target --dry-run
 repoindex ops set-pages REPO --branch gh-pages --path / --dry-run
 
 # Forge metadata (cross-platform; dispatches through forge_id)
@@ -132,10 +135,13 @@ repoindex ops set-topics REPO topic1 topic2 --dry-run
 repoindex ops set-description REPO "..." --dry-run
 
 # Missing boilerplate
-repoindex ops generate license --license mit --dry-run -d /path/to/REPO
-repoindex ops generate gitignore --lang python --dry-run -d /path/to/REPO
-repoindex ops generate code-of-conduct --dry-run -d /path/to/REPO
-repoindex ops generate contributing --dry-run -d /path/to/REPO
+repoindex ops generate license --license mit --tag work/polish-target --dry-run
+repoindex ops generate gitignore --lang python --tag work/polish-target --dry-run
+repoindex ops generate code-of-conduct --tag work/polish-target --dry-run
+repoindex ops generate contributing --tag work/polish-target --dry-run
+
+# 3. Unscope when done
+#    mcp__repoindex__tag(repo=REPO, action="remove", tag="work/polish-target")
 ```
 
 ### Step 4: AI-assisted improvements
@@ -195,9 +201,8 @@ AI-assisted tasks (README writing) remain per-repo since each needs codebase con
 |------|--------|
 | `--dry-run` | Preview without writing (always use first) |
 | `--force` | Overwrite existing files (preserves DOI) |
-| `--from-pyproject` | Read data from pyproject.toml |
-| `-d <path>` | Scope generation to a single repo by path |
-| `--language`/`--tag`/`--recent` | Scope a collection-wide run to a filtered subset |
+| `--language`/`--tag`/`--recent` | Scope an `ops generate` run to a filtered subset (the ONLY scoping mechanism; pyproject.toml is read automatically) |
+| `-d <path>` | Exists on `repoindex refresh` only, not on `ops generate` |
 
 Author info comes from `~/.repoindex/config.yaml` (name, email, orcid, affiliation).
 Project info comes from `pyproject.toml` (name, version, description, license, keywords).

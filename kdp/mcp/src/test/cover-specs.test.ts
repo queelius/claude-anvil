@@ -9,7 +9,7 @@ describe("handleCoverSpecs", () => {
       paper_type: "cream",
     });
 
-    expect(result.spine_width_inches).toBeCloseTo(0.685, 2);
+    expect(result.spine_width_inches).toBeCloseTo(0.625, 2);
     expect(result.total_width_inches).toBeGreaterThan(11);
     expect(result.total_height_inches).toBeCloseTo(8.75, 2);
     expect(result.total_width_px).toBeGreaterThan(3000);

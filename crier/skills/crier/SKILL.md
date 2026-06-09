@@ -22,7 +22,7 @@ Crier cross-posts blog content to multiple platforms. The blog is the source of 
 | medium    | import | none   | No          | User imports from canonical URL |
 | twitter   | paste  | 280    | Yes         | Copy-paste only                |
 | threads   | paste  | 500    | Yes         | Copy-paste only                |
-| linkedin  | paste  | none   | No          | Copy-paste only                |
+| linkedin  | paste  | 3000   | No          | Copy-paste only                |
 
 ## Rewrite Guidelines
 
@@ -37,7 +37,11 @@ and pass it via `crier_publish(rewrite_content=...)`.
 4. **Match platform voice:**
    - Bluesky: conversational, personal, like talking to a friend
    - Mastodon: slightly more formal, technical audience
-5. **Stay under the limit.** Bluesky 300 chars, Mastodon 500.
+5. **Budget for the appended URL.** Crier appends `\n\n<canonical URL>` to the
+   rewrite and then enforces the platform limit on the combined text, so the
+   real budget is `limit - (URL length + 2)`: roughly 230 chars on Bluesky
+   (limit 300) and 430 on Mastodon (limit 500) for typical metafunctor URLs.
+   Over-budget rewrites fail at the confirmed publish step, not at preview.
 
 ### Anti-patterns
 
@@ -56,9 +60,12 @@ Bluesky rewrite: "What if a single HTML file could encrypt anything you drop int
 ### Quick publish (single file)
 
 1. `crier_check(file_path)` to validate
-2. `crier_publish(file_path, platform, dry_run=True)` to preview
+2. `crier_publish(file_path, platform)` with no token: returns a preview plus a `confirmation_token`
 3. `crier_publish(file_path, platform, confirmation_token=...)` to execute
-4. For short-form: read the article, write rewrite, pass as `rewrite_content`
+4. For short-form: read the article, write the rewrite, pass it as `rewrite_content` on BOTH calls
+
+(`dry_run=True` is a separate no-side-effects preview; it does NOT return a
+confirmation token, so it cannot start the two-step flow.)
 
 ### Audit and bulk publish
 
@@ -70,6 +77,9 @@ Bluesky rewrite: "What if a single HTML file could encrypt anything you drop int
 ### Important rules
 
 - DevTo sanitizes tags: no hyphens, max 4 tags, lowercase
-- Medium is import-only: publish registers the URL, user must import manually
+- Medium is import-only: `crier_publish` refuses import-mode platforms with an
+  error; give the user the canonical URL to import on Medium, or use the CLI
+  (`crier publish <file> --to medium`)
 - Twitter/LinkedIn are paste-only: content goes to clipboard
-- `--long-form` flag (CLI) or filter by `is_short_form` to skip social platforms
+- To skip social platforms: `crier audit --long-form` (CLI), or read the
+  `crier://platforms` MCP resource and filter on `is_short_form`

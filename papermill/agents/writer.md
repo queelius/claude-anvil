@@ -206,7 +206,7 @@ Fix any build issues yourself (Edit tool). The manuscript must compile cleanly.
    - `literature-context.md` — merged scout output
    - `writing-plan.md` — the section assignment table
 3. **Update `.papermill/state.md`**:
-   - Set `stage` to `drafting` or `draft-complete`
+   - Set `stage` to `drafting` (the schema's stage enum has no draft-complete value)
    - Add a draft record to the notes
 
 ## Format Conventions

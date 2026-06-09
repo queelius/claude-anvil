@@ -1,6 +1,6 @@
 ---
 description: Per-Part or full-book integration check with a written integration-pass record
-allowed-tools: Read, Write, Bash, Glob, Grep
+allowed-tools: Read, Write, Bash, Glob, Grep, Task
 argument-hint: "[part | book] [name]"
 ---
 
@@ -11,7 +11,7 @@ Run the integration check that mirrors the Bernoulli textbook's Plan 4/8/13/15/1
 ## What it does
 
 1. Run `/bookwright:check book` (or the appropriate scope) and capture results.
-2. Verify the cross-reference map: chapter labels defined exactly once, expected forward refs match the baseline, no unexpected unresolved refs.
+2. Verify the cross-reference map by dispatching `bookwright:cross-ref-auditor` (Task tool): chapter labels defined exactly once, expected forward refs match the baseline, no unexpected unresolved refs. The auditor also generates the cross-reference map table for the record.
 3. Compute per-Part page totals against spec targets.
 4. Run a running-thread inventory across the chapters in scope.
 5. Run the soul-voice and macro-leak audits.

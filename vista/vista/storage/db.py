@@ -97,8 +97,14 @@ class Store:
         d = asdict(p)
         cols = list(d.keys())
         placeholders = ",".join(":" + c for c in cols)
+        # pdf_path/fetched_at are owned by the fetch stage; a re-discover (or a
+        # live MCP cache_work) builds Papers with pdf_path=None and must not
+        # reset fetch provenance on already-fetched rows.
         updates = ",".join(
-            f"{c}=excluded.{c}" for c in cols if c not in ("id", "discovered_at")
+            (f"{c}=COALESCE(excluded.{c}, papers.{c})"
+             if c in ("pdf_path", "fetched_at")
+             else f"{c}=excluded.{c}")
+            for c in cols if c not in ("id", "discovered_at")
         )
         sql = (
             f"INSERT INTO papers ({','.join(cols)}) VALUES ({placeholders}) "

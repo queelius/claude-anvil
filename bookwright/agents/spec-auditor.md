@@ -93,9 +93,9 @@ CROSS-REF HEADER BLOCK
   [PASS/FAIL/NOTE] <observation>
   ...
 
-VERDICT: PASS / NEEDS REVISION / BLOCKING
+VERDICT: PASS / MINOR / SUBSTANTIVE / BLOCKING
 ```
 
-PASS means all checklist items present and in order, budget within tolerance, labels correct, header block accurate. NEEDS REVISION means one or more FAIL items that are not showstoppers. BLOCKING means a missing required theorem, definition, or multiple checklist failures that make the section unfit for review.
+This is the shared auditor verdict enum (the writer orchestrator's fix loop keys on it). PASS means all checklist items present and in order, budget within tolerance, labels correct, header block accurate. MINOR means only cosmetic FAIL items that do not require a revision pass. SUBSTANTIVE means one or more FAIL items that require revision but are not showstoppers. BLOCKING means a missing required theorem, definition, or multiple checklist failures that make the section unfit for review.
 
 Do not propose fixes. Report findings only.

@@ -22,17 +22,17 @@ color: yellow
 tools:
   - Read
   - AskUserQuestion
-  - mcp__crier__crier_summary
-  - mcp__crier__crier_query
-  - mcp__crier__crier_missing
-  - mcp__crier__crier_search
-  - mcp__crier__crier_list_remote
-  - mcp__crier__crier_failures
-  - mcp__crier__crier_stats
-  - mcp__crier__crier_stats_refresh
-  - mcp__crier__crier_sql
-  - mcp__crier__crier_doctor
-  - mcp__crier__crier_check
+  - mcp__plugin_crier_crier__crier_summary
+  - mcp__plugin_crier_crier__crier_query
+  - mcp__plugin_crier_crier__crier_missing
+  - mcp__plugin_crier_crier__crier_search
+  - mcp__plugin_crier_crier__crier_list_remote
+  - mcp__plugin_crier_crier__crier_failures
+  - mcp__plugin_crier_crier__crier_stats
+  - mcp__plugin_crier_crier__crier_stats_refresh
+  - mcp__plugin_crier_crier__crier_sql
+  - mcp__plugin_crier_crier__crier_doctor
+  - mcp__plugin_crier_crier__crier_check
 ---
 
 # Cross-Posting Auditor

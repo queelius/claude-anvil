@@ -24,7 +24,11 @@ If the goal is unclear, ask the user to clarify before proceeding. If no eval sc
 
 If an eval script path was given, verify it exists (Read tool). If it does not exist, tell the user and ask whether to proceed with self-evaluation instead.
 
-## Step 3: Launch the Agent
+## Step 3: Check for an Existing Run
+
+If `.research/` already exists in this directory (Glob tool), do not launch fresh. Tell the user a prior run lives here and offer: `/research-agent:resume` to continue it, or archiving it (`mv .research .research-archive/<timestamp>`) before starting fresh. The agent itself also refuses to clobber `goal.md`/`log.md`.
+
+## Step 4: Launch the Agent
 
 Spawn the researcher agent (Agent tool, `subagent_type: research-agent:researcher`) with this prompt structure:
 
