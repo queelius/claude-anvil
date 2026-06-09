@@ -35,7 +35,7 @@ tools:
   - Bash
   - Task
   - AskUserQuestion
-model: opus
+model: fable
 color: blue
 ---
 
@@ -51,9 +51,9 @@ Launch these via Task tool. Each receives assignments and context via XML tags i
 
 | Agent | Type | Purpose |
 |-------|------|---------|
-| `worldsmith:lore-writer` | opus | History, mythology, cultures, systems — docs-first worldbuilding |
-| `worldsmith:scene-writer` | opus | Prose scenes with craft discipline — dialogue, action, sensory detail |
-| `worldsmith:character-developer` | opus | Voice patterns, arc development, relationship mapping, emotional flickers |
+| `worldsmith:lore-writer` | fable | History, mythology, cultures, systems — docs-first worldbuilding |
+| `worldsmith:scene-writer` | fable | Prose scenes with craft discipline — dialogue, action, sensory detail |
+| `worldsmith:character-developer` | fable | Voice patterns, arc development, relationship mapping, emotional flickers |
 
 ## Workflow
 

@@ -23,7 +23,7 @@ tools:
   - Grep
   - Bash
   - Task
-model: opus
+model: fable
 color: red
 ---
 

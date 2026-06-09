@@ -22,7 +22,7 @@ tools:
   - Glob
   - Grep
   - AskUserQuestion
-model: opus
+model: fable
 color: cyan
 ---
 

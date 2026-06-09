@@ -26,7 +26,7 @@ And the repoindex MCP server configured in `~/.claude.json`:
 | Name | Purpose | Model |
 |------|---------|-------|
 | `repo-doctor` | Collection health triage. "What needs attention?" | sonnet |
-| `repo-polish` | Single-repo release preparation (audit, generate, improve) | opus |
+| `repo-polish` | Single-repo release preparation (audit, generate, improve) | fable |
 | `repo-explorer` | Open-ended collection analysis with custom SQL | sonnet |
 
 ## Slash commands

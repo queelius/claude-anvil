@@ -22,7 +22,7 @@ description: >-
   <commentary>notebook-author can be invoked directly via the /bookwright:notebook slash command.</commentary>
   </example>
 tools: Read, Write, Bash, Glob
-model: "claude-opus-4-8[1m]"
+model: "claude-fable-5[1m]"
 color: cyan
 ---
 
@@ -90,7 +90,7 @@ Commit only after execution exits 0 and all sanity targets pass. Stage only the 
 git commit -m "$(cat <<'EOF'
 book: execute chapter <N> notebook (<chapter title>)
 
-Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>
+Co-Authored-By: Claude Fable 5 (1M context) <noreply@anthropic.com>
 EOF
 )"
 ```

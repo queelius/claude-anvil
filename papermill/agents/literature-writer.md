@@ -20,7 +20,7 @@ tools:
   - Glob
   - Grep
   - WebSearch
-model: opus
+model: fable
 color: cyan
 ---
 

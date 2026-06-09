@@ -34,7 +34,7 @@ tools:
   - Bash
   - Edit
   - Write
-model: opus
+model: fable
 color: green
 ---
 

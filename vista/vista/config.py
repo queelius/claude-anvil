@@ -89,9 +89,9 @@ FIELDS: dict[str, dict] = {
 }
 
 # Anthropic model defaults. Per CLAUDE.md user notes, default to current Sonnet for cost,
-# escalate to Opus for premium runs (--premium flag in CLI).
+# escalate to Fable for premium runs (--premium flag in CLI).
 DEFAULT_MODEL = os.environ.get("FOLLOWUPS_MODEL", "claude-sonnet-4-6")
-PREMIUM_MODEL = "claude-opus-4-8"
+PREMIUM_MODEL = "claude-fable-5"
 
 
 @dataclass

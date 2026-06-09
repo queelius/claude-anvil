@@ -23,7 +23,7 @@ tools:
   - Grep
   - Bash
   - Task
-model: opus
+model: fable
 color: red
 ---
 
@@ -36,16 +36,16 @@ Launch these via Task tool. Each receives the paper content and context via XML 
 ### Literature Scouts (run first, in parallel)
 | Agent | Type | Purpose |
 |-------|------|---------|
-| `papermill:literature-scout-broad` | opus | Field survey — competing approaches, benchmarks, state of the art |
-| `papermill:literature-scout-targeted` | opus | Direct comparisons — same problem, same techniques, overlapping claims |
+| `papermill:literature-scout-broad` | fable | Field survey — competing approaches, benchmarks, state of the art |
+| `papermill:literature-scout-targeted` | fable | Direct comparisons — same problem, same techniques, overlapping claims |
 
 ### Specialist Reviewers (run after scouts, in parallel)
 | Agent | Type | Purpose |
 |-------|------|---------|
-| `papermill:logic-checker` | opus | Proof correctness, logical chain integrity, claim support |
-| `papermill:novelty-assessor` | opus | Contribution clarity, differentiation, significance |
-| `papermill:methodology-auditor` | opus | Experimental design, statistical rigor, reproducibility |
-| `papermill:prose-auditor` | opus | Writing quality, narrative arc, notation consistency |
+| `papermill:logic-checker` | fable | Proof correctness, logical chain integrity, claim support |
+| `papermill:novelty-assessor` | fable | Contribution clarity, differentiation, significance |
+| `papermill:methodology-auditor` | fable | Experimental design, statistical rigor, reproducibility |
+| `papermill:prose-auditor` | fable | Writing quality, narrative arc, notation consistency |
 | `papermill:citation-verifier` | sonnet | Citation accuracy, missing references, bibliography integrity |
 | `papermill:format-validator` | sonnet | Build verification, label resolution, venue formatting |
 

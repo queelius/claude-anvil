@@ -22,7 +22,7 @@ tools:
   - Read
   - Glob
   - Grep
-model: opus
+model: fable
 color: yellow
 ---
 

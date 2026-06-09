@@ -36,7 +36,7 @@ tools:
   - Bash
   - Task
   - AskUserQuestion
-model: opus
+model: fable
 color: purple
 ---
 

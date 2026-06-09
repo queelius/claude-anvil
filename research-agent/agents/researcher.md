@@ -34,7 +34,7 @@ tools:
   - WebSearch
   - WebFetch
   - Task
-model: opus
+model: fable
 color: yellow
 ---
 

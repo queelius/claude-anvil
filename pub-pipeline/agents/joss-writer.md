@@ -27,7 +27,7 @@ tools:
   - Bash
   - Task
   - WebSearch
-model: opus
+model: fable
 color: blue
 ---
 

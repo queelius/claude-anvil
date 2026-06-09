@@ -129,7 +129,7 @@ def extract(
 @app.command()
 def analyze(
     max_papers: int = typer.Option(0, help="0 = all"),
-    premium: bool = typer.Option(False, "--premium", help="use Opus instead of Sonnet"),
+    premium: bool = typer.Option(False, "--premium", help="use Fable instead of Sonnet"),
     model: str = typer.Option("", help="explicit model id; overrides --premium"),
     verbose: bool = typer.Option(False, "-v"),
 ):

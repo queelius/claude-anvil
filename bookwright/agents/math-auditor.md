@@ -19,7 +19,7 @@ description: >-
   <commentary>math-auditor can be invoked directly when a specific numerical error is suspected.</commentary>
   </example>
 tools: Read, Bash, Glob
-model: "claude-opus-4-8[1m]"
+model: "claude-fable-5[1m]"
 color: purple
 ---
 

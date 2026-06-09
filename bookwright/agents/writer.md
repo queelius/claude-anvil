@@ -29,7 +29,7 @@ description: >-
   <commentary>writer handles the fix loop when given a review report rather than a plan section.</commentary>
   </example>
 tools: Read, Write, Edit, Glob, Grep, Bash, Task, AskUserQuestion
-model: "claude-opus-4-8[1m]"
+model: "claude-fable-5[1m]"
 color: blue
 ---
 
@@ -89,7 +89,7 @@ Do not stage `book.pdf` or any LaTeX build artifacts (`*.aux`, `*.log`, `*.bbl`,
 git commit -m "$(cat <<'EOF'
 book: <chapter/section description>
 
-Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>
+Co-Authored-By: Claude Fable 5 (1M context) <noreply@anthropic.com>
 EOF
 )"
 ```

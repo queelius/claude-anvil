@@ -23,7 +23,7 @@ tools:
   - Glob
   - Grep
   - Bash
-model: opus
+model: fable
 color: magenta
 ---
 

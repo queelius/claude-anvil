@@ -38,29 +38,29 @@ Agents run autonomously and produce structured output files. The plugin has two 
 
 | Agent | Model | Description |
 |-------|-------|-------------|
-| **writer** | opus | Multi-agent writing orchestrator (lead author) — plans paper, spawns writers, integrates draft |
-| **literature-writer** | opus | Related work and background sections — narrative synthesis of prior work |
-| **formal-writer** | opus | Mathematical content — definitions, theorems, proofs, derivations |
-| **method-writer** | opus | Methodology and algorithms — experimental design, pseudocode, reproducibility |
-| **results-writer** | opus | Results, analysis, and discussion — evidence interpretation and implications |
+| **writer** | fable | Multi-agent writing orchestrator (lead author) — plans paper, spawns writers, integrates draft |
+| **literature-writer** | fable | Related work and background sections — narrative synthesis of prior work |
+| **formal-writer** | fable | Mathematical content — definitions, theorems, proofs, derivations |
+| **method-writer** | fable | Methodology and algorithms — experimental design, pseudocode, reproducibility |
+| **results-writer** | fable | Results, analysis, and discussion — evidence interpretation and implications |
 
 ### Review System
 
 | Agent | Model | Description |
 |-------|-------|-------------|
-| **reviewer** | opus | Multi-agent review orchestrator (area chair) — spawns specialists and synthesizes unified report |
-| **logic-checker** | opus | Proof correctness, logical chain integrity, assumption sufficiency |
-| **novelty-assessor** | opus | Contribution evaluation against literature context |
-| **methodology-auditor** | opus | Experimental design, statistical rigor, reproducibility |
-| **prose-auditor** | opus | Writing quality, narrative arc, notation consistency |
+| **reviewer** | fable | Multi-agent review orchestrator (area chair) — spawns specialists and synthesizes unified report |
+| **logic-checker** | fable | Proof correctness, logical chain integrity, assumption sufficiency |
+| **novelty-assessor** | fable | Contribution evaluation against literature context |
+| **methodology-auditor** | fable | Experimental design, statistical rigor, reproducibility |
+| **prose-auditor** | fable | Writing quality, narrative arc, notation consistency |
 | **citation-verifier** | sonnet | Reference accuracy, missing citations, bibliography integrity |
 
 ### Shared Agents
 
 | Agent | Model | Description |
 |-------|-------|-------------|
-| **literature-scout-broad** | opus | Broad field survey — competing approaches, benchmarks, state of the art |
-| **literature-scout-targeted** | opus | Direct comparison finder — same problem, same techniques, overlapping claims |
+| **literature-scout-broad** | fable | Broad field survey — competing approaches, benchmarks, state of the art |
+| **literature-scout-targeted** | fable | Direct comparison finder — same problem, same techniques, overlapping claims |
 | **format-validator** | sonnet | Build verification, label resolution, venue formatting compliance |
 | **surveyor** | sonnet | Deep autonomous literature search with citation network exploration |
 

@@ -62,6 +62,6 @@ single document a future reader relies on is `synthesis.md`.
 
 ## Notes
 
-- The agent runs on `model: opus` (the latest Opus, with the 1M context window
+- The agent runs on `model: fable` (the latest Fable, with the 1M context window
   when the harness enables it).
 - For internal and editing details, see `CLAUDE.md`.

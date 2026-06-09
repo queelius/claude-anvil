@@ -32,7 +32,7 @@ tools:
   - Grep
   - Bash
   - Task
-model: opus
+model: fable
 color: red
 ---
 
@@ -48,10 +48,10 @@ Launch these via Task tool. Each receives the manuscript and project context via
 
 | Agent | Type | Purpose |
 |-------|------|---------|
-| `worldsmith:consistency-auditor` | opus | Timeline, facts, character state, spatial contradictions |
-| `worldsmith:craft-auditor` | opus | Prose quality, cliche detection, scene mechanics |
-| `worldsmith:voice-auditor` | opus | Character voice consistency, dialogue distinctiveness, POV |
-| `worldsmith:structure-auditor` | opus | Pacing, tension, scene turns, thematic coherence, arcs |
+| `worldsmith:consistency-auditor` | fable | Timeline, facts, character state, spatial contradictions |
+| `worldsmith:craft-auditor` | fable | Prose quality, cliche detection, scene mechanics |
+| `worldsmith:voice-auditor` | fable | Character voice consistency, dialogue distinctiveness, POV |
+| `worldsmith:structure-auditor` | fable | Pacing, tension, scene turns, thematic coherence, arcs |
 
 ## Workflow
 
