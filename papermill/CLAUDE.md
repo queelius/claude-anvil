@@ -20,6 +20,7 @@ papermill/
 │   ├── simulation.md
 │   ├── proof.md
 │   ├── review.md                 # Multi-agent editorial review
+│   ├── revise.md                 # Multi-agent revision (fix-then-verify)
 │   ├── venue.md
 │   └── polish.md
 ├── skills/                       # Interactive skills (the core logic)
@@ -34,7 +35,8 @@ papermill/
 │   ├── experiment/SKILL.md       # Experiment design
 │   ├── simulation/SKILL.md       # Monte Carlo methodology
 │   ├── proof/SKILL.md            # Proof development
-│   └── polish/SKILL.md           # Submission preparation
+│   ├── polish/SKILL.md           # Submission preparation
+│   └── revise/SKILL.md           # Multi-agent revision from review findings
 ├── agents/                       # Autonomous agents
 │   ├── writer.md                 # Multi-agent writing orchestrator (lead author)
 │   ├── literature-writer.md      # Related work & background specialist
@@ -42,6 +44,7 @@ papermill/
 │   ├── method-writer.md          # Methodology & algorithms specialist
 │   ├── results-writer.md         # Results & discussion specialist
 │   ├── reviewer.md               # Multi-agent review orchestrator (area chair)
+│   ├── reviser.md                # Multi-agent revision orchestrator (fix-then-verify)
 │   ├── surveyor.md               # Literature survey agent
 │   ├── literature-scout-broad.md # Broad field survey (shared by writer & reviewer)
 │   ├── literature-scout-targeted.md # Direct comparison finder (shared by writer & reviewer)
@@ -124,6 +127,10 @@ The review skill (`/papermill:review`) launches a multi-agent review orchestrate
 5. **Synthesis** — deduplicate, resolve conflicts, calibrate severity, check for blind spots
 6. **Report** — unified report + individual specialist reports written to `.papermill/reviews/`
 
+## Multi-Agent Revision System
+
+The revise skill (`/papermill:revise`) launches the `reviser` orchestrator on an existing review report. It parses the unified report's findings, fixes mechanical items directly, dispatches the four section writers for technical rewrites (routed by the finding's source specialist), verifies every Critical/Major fix with the review specialist that owns that domain, and writes `revision.md` next to the source `review.md`. The skill then stamps the matching review_history entry with `revised` + `findings_fixed`, which the status dashboard uses to compute remaining unresolved findings. Reviews diagnose; revisions repair; a follow-up review confirms.
+
 ## Typical Workflow
 
 ```
@@ -133,6 +140,7 @@ The review skill (`/papermill:review`) launches a multi-agent review orchestrate
 /papermill:outline       → Design paper structure
 /papermill:draft         → Multi-agent paper drafting ← NEW
 /papermill:review        → Multi-agent editorial review
+/papermill:revise        → Apply review findings (fix-then-verify)
 /papermill:proof         → Verify mathematical content
 /papermill:experiment    → Design experiments
 /papermill:simulation    → Design Monte Carlo studies

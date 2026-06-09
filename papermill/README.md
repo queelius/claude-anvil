@@ -27,6 +27,7 @@ Invoke commands with `/papermill:<name>` in Claude Code. Each command triggers i
 | **simulation** | Monte Carlo simulation design for validating theoretical results |
 | **proof** | Mathematical proof development, verification, and presentation |
 | **review** | Multi-agent editorial review with 8 specialists covering logic, novelty, methodology, prose, citations, and formatting |
+| **revise** | Apply review findings via the reviser orchestrator: fix-then-verify per finding, revision report paired with the review |
 | **venue** | Identify and evaluate publication venues with ranked recommendations |
 | **polish** | Pre-submission checklist: formatting, citations, figures, metadata, build verification |
 
@@ -49,6 +50,7 @@ Agents run autonomously and produce structured output files. The plugin has two 
 | Agent | Model | Description |
 |-------|-------|-------------|
 | **reviewer** | fable | Multi-agent review orchestrator (area chair) — spawns specialists and synthesizes unified report |
+| **reviser** | fable | Multi-agent revision orchestrator: routes findings to section writers, verifies fixes with the owning specialist |
 | **logic-checker** | fable | Proof correctness, logical chain integrity, assumption sufficiency |
 | **novelty-assessor** | fable | Contribution evaluation against literature context |
 | **methodology-auditor** | fable | Experimental design, statistical rigor, reproducibility |

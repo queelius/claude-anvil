@@ -89,6 +89,8 @@ review_history:
     findings_minor: 0
     recommendation: "ready | minor-revision | major-revision | not-ready"
     notes: "Brief summary of key findings"
+    revised: "YYYY-MM-DD (optional; written by the revise skill)"
+    findings_fixed: 0        # optional; fixed-and-verified count from revision.md
 ```
 
 ### `venue.candidates[]`

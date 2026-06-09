@@ -114,6 +114,6 @@ Append a timestamped note to the markdown body.
 Based on the recommendation, suggest the most relevant next step:
 
 - **Ready for submission** → `/papermill:polish` to prepare, then `/papermill:venue` if no venue is selected yet.
-- **Minor revision** → Address the minor issues, then re-run `/papermill:review`.
-- **Major revision** → Address major issues first. If issues are structural, suggest `/papermill:outline`. If issues are with the argument, suggest `/papermill:thesis`. Then re-run `/papermill:review`.
+- **Minor revision** → `/papermill:revise` to apply the fixes with verification, then re-run `/papermill:review`.
+- **Major revision** → `/papermill:revise` for the concrete findings. If issues are structural, suggest `/papermill:outline` first; if issues are with the argument, suggest `/papermill:thesis`. Then re-run `/papermill:review`.
 - **Not ready** → Identify the root cause. Weak thesis → `/papermill:thesis`. Insufficient evidence → `/papermill:experiment` or `/papermill:simulation`. Missing related work → `/papermill:prior-art`. Proof gaps → `/papermill:proof`.
