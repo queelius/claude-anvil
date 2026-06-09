@@ -11,7 +11,10 @@ description: >-
 # Synthesize Research
 
 Force the researcher to write its final synthesis and conclude, even if
-it would otherwise continue exploring.
+it would otherwise continue exploring. If the user names a branch, add
+`<branch>name</branch>` to the launch prompt to conclude only that branch
+(output: `.research/branches/<name>/synthesis.md`). A main-line synthesis
+automatically compares all branches.
 
 ## When to use
 

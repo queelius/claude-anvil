@@ -9,7 +9,7 @@ description: >-
 
 # Resume Research
 
-Continue a paused or interrupted research-agent run.
+Continue a paused or interrupted research-agent run. If the user names a branch (e.g. "resume the induction-proof branch" or `/research-agent:resume induction-proof`), verify `.research/branches/<name>/` exists and add `<branch>name</branch>` to the launch prompt; all checks below then apply to the branch subtree's files.
 
 ## Step 1: Verify .research/ exists
 

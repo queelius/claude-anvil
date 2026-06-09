@@ -35,6 +35,8 @@ Use Glob and Bash to count:
   slugs and one-line summaries
 - `findings/*`: confirmed results promoted out of attempts/
 - `synthesis.md`: present means the run has concluded (note this prominently)
+- `branches/*/`: for each branch, read its state.md "Current focus" and count
+  its log.md cycle entries; note whether its synthesis.md exists
 
 ## Step 4: Format the report
 
@@ -79,6 +81,10 @@ Currently focused sub-problem: {description}
 - Latest score: X (or "self-evaluation")
 - Best score: Y
 - Trend over last 5 cycles: improving | flat | declining
+
+## Branches
+- {name}: {cycle count} cycles, focus: {current focus}, concluded: yes|no
+- (omit this section when no branches exist)
 
 ## Attempts inventory
 - {N} attempts total

@@ -19,7 +19,8 @@ It is fire-and-forget: the agent works on its own and writes everything to disk.
 | `/research-agent:research <goal> [eval script at ./eval.sh]` | Launch a fresh run. The goal is the body of your message; an eval script is optional. |
 | `/research-agent:status` | Read-only progress: cycle count, current focus, and eval trend. Does not touch the agent. |
 | `/research-agent:resume` | Continue an interrupted run after a session restart. |
-| `/research-agent:synthesize` | Force the run to conclude and write `synthesis.md`. |
+| `/research-agent:synthesize` | Force the run to conclude and write `synthesis.md`. Mainline synthesis compares branches. |
+| `/research-agent:branch <name> [focus]` | Fork the run at its checkpoint into a named branch pursuing a competing strategy. |
 
 ## Example
 
@@ -57,6 +58,8 @@ maintains a `.research/` directory:
   attempts/       one subdirectory per attempt, with notes and artifacts
   findings/       confirmed results promoted out of attempts/
   synthesis.md    the final deliverable; its presence means the run concluded
+  branches/<name>/  forked strategy lines (own state/log/attempts; goal and
+                    parent findings shared read-only)
 ```
 
 Disk is the source of truth: very long runs may compress earlier conversation

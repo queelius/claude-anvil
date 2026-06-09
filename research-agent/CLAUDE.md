@@ -29,7 +29,8 @@ launching skill passes:
 
 - **fresh**: `<goal>...</goal>` plus `<eval>...</eval>`. Used by `/research-agent:research`. Creates `.research/`, writes goal.md, optionally runs the eval baseline, then begins the DECOMPOSE phase.
 - **resume**: `<mode>resume</mode>`. Used by `/research-agent:resume`. Reads state.md and log.md, reorients, then continues from the documented current focus.
-- **synthesize**: `<mode>synthesize</mode>`. Used by `/research-agent:synthesize`. Reads state.md and log.md, finalizes statuses, writes synthesis.md, exits without starting new cycles.
+- **synthesize**: `<mode>synthesize</mode>`. Used by `/research-agent:synthesize`. Reads state.md and log.md, finalizes statuses, writes synthesis.md (with a Branch Comparison section when branches exist), exits without starting new cycles. With `<branch>name</branch>`, concludes only that branch.
+- **branch**: `<mode>branch</mode>` plus `<branch>name</branch>`. Used by `/research-agent:branch`. Forks the run at its checkpoint into `.research/branches/<name>/` (own state.md, log.md, scores.jsonl, attempts/, findings/); the parent's goal.md and findings/ are shared read-only. Resume accepts `<branch>` to continue a branch.
 
 The status skill is **not** an agent dispatch: it reads `.research/` files
 directly and produces a structured summary. This is faster, cheaper, and
@@ -50,14 +51,18 @@ through this directory; treat it as the cross-mode interface.
   attempts/       # One subdirectory per attempt: NNN-<slug>/notes.md plus artifacts.
   findings/       # Confirmed results promoted out of attempts/.
   synthesis.md    # Final deliverable. Presence => the run has concluded.
+  branches/<name>/  # Forked strategy lines: each holds its own state.md, log.md,
+                    # scores.jsonl, attempts/, findings/, and (when concluded)
+                    # synthesis.md. Branches never write the parent's goal.md,
+                    # log.md, or state.md; promotion into the parent's findings/
+                    # happens only at synthesis, with a provenance note.
 ```
 
 Discipline points the agent enforces: `log.md` is append-only; `state.md`
 is the source of truth for "where am I?"; `synthesis.md` is the single
 document a future reader relies on. Any new mode you add must respect
-these invariants. For example, a hypothetical "branch" mode should
-**not** rewrite `goal.md` or rewind `log.md`; it should fork into a new
-sibling subtree.
+these invariants. The branch mode follows exactly this rule: it never rewrites `goal.md` or
+rewinds `log.md`; it forks into the `branches/<name>/` sibling subtree.
 
 ## Editing Guidelines
 

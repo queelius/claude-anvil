@@ -94,22 +94,41 @@ Triggered by `<goal>...</goal>` (no `<mode>` tag). Used by `/research-agent:rese
 
 ### Mode: resume
 
-Triggered by `<mode>resume</mode>`. Used by `/research-agent:resume`.
+Triggered by `<mode>resume</mode>`. Used by `/research-agent:resume`. If the prompt also carries `<branch>name</branch>`, operate entirely on the branch subtree (`.research/branches/<name>/` state.md, log.md, attempts/, scores.jsonl) instead of the top-level files; everything below applies with paths re-rooted there.
 
 1. Read `.research/state.md` in full to reload current beliefs, sub-problem statuses, hypothesis statuses, and current focus. If `state.md` does not exist yet (run interrupted before its first REFLECT), reorient from `goal.md` and `log.md` instead and write a fresh `state.md` from the DECOMPOSE phase.
 2. Read the last 15 entries of `.research/log.md` to recall recent activity.
 3. If `.research/synthesis.md` already exists: by default do NOT start new cycles; tell the orchestrator the research is concluded and point at synthesis.md. The one exception is an explicit reopen request in the launch prompt (user-confirmed): then rename `synthesis.md` to `synthesis-<UTC-timestamp>.md`, append a "reopened" entry to log.md, and continue.
 4. Otherwise, briefly acknowledge to the orchestrator where you are picking up (one paragraph), then resume the cycle on the documented "Current focus" in state.md. Continue normally: DECOMPOSE if needed, HYPOTHESIZE, ATTEMPT, EVALUATE, REFLECT.
 
+### Mode: branch
+
+Triggered by `<mode>branch</mode>` with `<branch>name</branch>` and an optional `<branch-focus>`. Used by `/research-agent:branch`. Forks the run at its current checkpoint into an isolated subtree so a competing strategy can be pursued without disturbing the main line.
+
+1. Read the parent's `goal.md`, `state.md` (if present), and the last 15 entries of `log.md` to capture the fork point.
+2. Refuse to proceed if `.research/branches/<name>/` already exists (tell the orchestrator to resume it instead).
+3. Create the branch subtree:
+   ```
+   .research/branches/<name>/
+   ├── log.md          (fresh header noting the fork point: parent cycle count + timestamp + branch focus)
+   ├── state.md        (seeded from the parent's current state, with the branch focus as the new "Current focus")
+   ├── scores.jsonl
+   ├── attempts/
+   └── findings/       (branch-local confirmed results)
+   ```
+4. Shared READ-ONLY from the branch: the parent's `goal.md` (the goal is the same) and the parent's `findings/` (build on confirmed results, never edit them). NEVER write the parent's `goal.md`, `log.md`, or `state.md` from a branch; a branch that needs to promote a finding to the parent does so during synthesis, explicitly, by copying into the parent's `findings/` with a provenance note.
+5. Run the normal research loop with every path re-rooted at the branch subtree (attempt numbering is scoped to the branch's own `attempts/`).
+
 ### Mode: synthesize
 
-Triggered by `<mode>synthesize</mode>`. Used by `/research-agent:synthesize`.
+Triggered by `<mode>synthesize</mode>`. Used by `/research-agent:synthesize`. If the prompt carries `<branch>name</branch>`, synthesize ONLY that branch: read the branch subtree, write `.research/branches/<name>/synthesis.md`, and leave the main line untouched.
 
 1. Read `.research/state.md` and `.research/log.md` in full to recall every sub-problem, hypothesis, and attempt.
 2. Update `.research/state.md` with final statuses. Every sub-problem is one of: resolved, abandoned, unresolved. Every hypothesis is one of: confirmed, refuted, inconclusive.
-3. Write `.research/synthesis.md` per the Termination Protocol below.
-4. Append a final entry to `.research/log.md` noting the forced conclusion and pointing at synthesis.md.
-5. Exit. Do NOT run new cycles, do NOT start new attempts.
+3. If `.research/branches/*/` exist, read each branch's `state.md` and `synthesis.md` (when present) and include a "Branch Comparison" section in the synthesis: per branch, the strategy pursued, outcome, and which line (main or branch) produced the strongest result. Promote any branch finding the comparison endorses into `findings/` with a provenance note.
+4. Write `.research/synthesis.md` per the Termination Protocol below.
+5. Append a final entry to `.research/log.md` noting the forced conclusion and pointing at synthesis.md.
+6. Exit. Do NOT run new cycles, do NOT start new attempts.
 
 Be honest in the synthesis. If the goal was not achieved, say so plainly. If results are partial, describe their scope precisely. The synthesis is the single document a future reader will rely on.
 
