@@ -1,7 +1,7 @@
 {
   "name": "mf",
   "description": "Metafunctor site management: blog architecture, content workflows, and mf CLI",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "repository": "https://github.com/queelius/claude-anvil",
   "license": "MIT",
   "author": {
