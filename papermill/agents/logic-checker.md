@@ -1,20 +1,6 @@
 ---
 name: logic-checker
-description: >-
-  Rigorous mathematical and logical reviewer for academic papers. Checks proof
-  correctness, assumption sufficiency, logical chain integrity, and claim support.
-  Launched by the reviewer orchestrator during multi-agent review.
-
-  <example>
-  Context: Orchestrator needs proof and logic verification.
-  user: "Check all proofs and logical arguments in this paper"
-  assistant: "I'll launch the logic-checker agent to verify every proof step and logical chain."
-  </example>
-  <example>
-  Context: Paper has multiple theorems that need verification.
-  user: "Verify the mathematical correctness of this draft"
-  assistant: "I'll launch the logic-checker agent to systematically check each theorem and derivation."
-  </example>
+description: "Verifies proof correctness, assumption sufficiency, and logical chain integrity. Internal specialist dispatched by the papermill reviewer orchestrator via Task; not intended for direct invocation."
 tools:
   - Read
   - Glob

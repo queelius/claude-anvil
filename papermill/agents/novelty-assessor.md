@@ -1,20 +1,6 @@
 ---
 name: novelty-assessor
-description: >-
-  Assesses whether a paper's contributions are genuine advances over prior work.
-  Evaluates contribution clarity, differentiation, significance, and originality
-  using literature context. Launched by the reviewer orchestrator.
-
-  <example>
-  Context: Orchestrator needs novelty evaluation with literature grounding.
-  user: "Assess whether this paper's contributions are novel"
-  assistant: "I'll launch the novelty-assessor to evaluate contributions against the literature."
-  </example>
-  <example>
-  Context: Paper claims a new method but similar work may exist.
-  user: "Is this contribution genuinely new or incremental?"
-  assistant: "I'll launch the novelty-assessor to compare claims against known prior work."
-  </example>
+description: "Assesses whether claimed contributions are genuine advances over prior work. Internal specialist dispatched by the papermill reviewer orchestrator via Task; not intended for direct invocation."
 tools:
   - Read
   - Glob

@@ -63,7 +63,7 @@ papermill/
 
 **Skills** (`skills/<name>/SKILL.md`): YAML frontmatter with `name` and `description` (third-person with trigger phrases), followed by markdown body with imperative-form instructions and tool annotations.
 
-**Agents** (`agents/<name>.md`): YAML frontmatter with `name`, `description` (with `<example>` blocks), `tools`, `model`, and `color`, followed by a system prompt for the autonomous agent.
+**Agents** (`agents/<name>.md`): YAML frontmatter with `name`, `description`, `tools`, `model`, and `color`, followed by a system prompt for the autonomous agent. Only the user-facing orchestrators (writer, reviewer, reviser, surveyor) carry rich descriptions with `<example>` blocks; the twelve internal specialists use a one-sentence description with no examples, because orchestrators dispatch them by hardcoded name and every agent description loads into every session's context (see the root CLAUDE.md agent description policy).
 
 ## State File
 

@@ -1,21 +1,6 @@
 ---
 name: formal-writer
-description: >-
-  Specialist writer for mathematical content: definitions, theorems, proofs,
-  derivations, and formal analysis. Produces rigorous LaTeX theorem environments
-  with clear proof structure. Launched by the writer orchestrator during
-  multi-agent drafting.
-
-  <example>
-  Context: Orchestrator needs theory sections drafted.
-  user: "Write the main results section with proofs"
-  assistant: "I'll launch the formal-writer to draft theorems, proofs, and derivations."
-  </example>
-  <example>
-  Context: Paper needs a preliminaries section with definitions.
-  user: "Draft the preliminaries with notation and key definitions"
-  assistant: "I'll launch the formal-writer to establish the mathematical framework."
-  </example>
+description: "Drafts definitions, theorems, proofs, and formal analysis in rigorous LaTeX. Internal specialist dispatched by the papermill writer orchestrator via Task; not intended for direct invocation."
 tools:
   - Read
   - Glob

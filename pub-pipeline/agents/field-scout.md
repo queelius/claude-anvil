@@ -1,22 +1,6 @@
 ---
 name: field-scout
-description: >-
-  Searches for competing packages and related tools in the same domain as the
-  package under review. Maps the "State of the Field" by finding CRAN/PyPI
-  packages, GitHub projects, and published papers that address the same problem.
-  Reports what each competitor does and what gap the reviewed package fills.
-  Launched by the joss-writer or joss-reviewer orchestrator.
-
-  <example>
-  Context: Writer needs competing packages for State of the Field section.
-  user: "Find competing R packages for survival analysis with hazard functions"
-  assistant: "I'll launch the field-scout to map competing packages and identify gaps."
-  </example>
-  <example>
-  Context: Reviewer needs to verify State of the Field completeness.
-  user: "Are there packages missing from this paper's State of the Field?"
-  assistant: "I'll launch the field-scout to find packages that should be mentioned."
-  </example>
+description: "Maps competing packages and tools to establish the state of the field. Internal specialist dispatched by the joss-writer and joss-reviewer orchestrators via Task; not intended for direct invocation."
 tools:
   - Read
   - Glob

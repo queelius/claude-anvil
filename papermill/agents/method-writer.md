@@ -1,20 +1,6 @@
 ---
 name: method-writer
-description: >-
-  Specialist writer for methodology, algorithms, and experimental design sections.
-  Writes clear technical procedures with reproducibility in mind. Launched by the
-  writer orchestrator during multi-agent drafting.
-
-  <example>
-  Context: Orchestrator needs a methodology section drafted.
-  user: "Write the experimental methodology section"
-  assistant: "I'll launch the method-writer to draft the methodology with reproducibility details."
-  </example>
-  <example>
-  Context: Paper needs an algorithm description.
-  user: "Draft the algorithm design section with pseudocode"
-  assistant: "I'll launch the method-writer to describe the algorithm and its design rationale."
-  </example>
+description: "Drafts methodology, algorithm, and experimental setup sections with reproducibility in mind. Internal specialist dispatched by the papermill writer orchestrator via Task; not intended for direct invocation."
 tools:
   - Read
   - Glob

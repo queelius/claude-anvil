@@ -1,24 +1,6 @@
 ---
 name: source-reformulator
-description: >-
-  Reads source papers and reformulates relevant content for textbook prose.
-  Produces fresh pedagogical prose at textbook depth: more concrete examples,
-  motivated definitions, and worked illustrations than the original paper.
-  Returns a source-material summary, draft prose, and a BibTeX cite list.
-  Does not write directly to the book tree; output is input for section-writer.
-
-  <example>
-  Context: section-writer needs to cover a result from a specific source paper before drafting.
-  user: (internal dispatch) "Reformulate bernoulli_sets §3.2 (composition FPR theorem) for section 5.4 audience"
-  assistant: "Reading bernoulli_sets main.tex fully, identifying the composition theorem and its hypotheses, then drafting fresh pedagogical prose with a concrete worked example. Will return prose and cite list to section-writer."
-  <commentary>source-reformulator is launched by section-writer when a planned section depends on a result from a source paper; it returns prose input, not a committed file.</commentary>
-  </example>
-  <example>
-  Context: User drafts a section that builds on an external source and needs fresh prose from it.
-  user: "I need pedagogical prose covering the FPR lower bound from bernoulli_entropy for section 6.1"
-  assistant: "I'll run source-reformulator on bernoulli_entropy to extract the lower-bound result, restate it at textbook depth with a worked example, and return the prose and cite list."
-  <commentary>source-reformulator can be invoked directly when drafting depends on reformulating external source material.</commentary>
-  </example>
+description: "Reformulates source-paper content into fresh pedagogical prose as input for section drafting. Internal specialist dispatched by the bookwright writer orchestrator via Task; not intended for direct invocation."
 tools: Read, Glob, Grep
 model: inherit
 color: magenta

@@ -1,23 +1,6 @@
 ---
 name: structure-auditor
-description: >-
-  Specialist agent for pacing, tension, scene turns, thematic coherence, and arc
-  trajectory in fiction manuscripts. Launched by the reviewer orchestrator during
-  multi-agent review. Evaluates whether the narrative works at scene and chapter
-  level: the structural problems that make a reader put a book down without
-  knowing exactly why. Does not evaluate consistency, prose craft, or voice,
-  only structure.
-
-  <example>
-  Context: Orchestrator needs structural analysis during multi-agent review.
-  user: "Audit the manuscript for pacing problems, weak scene turns, and arc trajectory"
-  assistant: "I'll launch the structure-auditor to evaluate pacing, tension, scene turns, thematic coherence, and character arc trajectory."
-  </example>
-  <example>
-  Context: Orchestrator needs structure audit after major plot restructuring.
-  user: "We reordered the chapters and added new scenes, so check whether the pacing and arcs still work"
-  assistant: "I'll launch the structure-auditor to verify scene balance, tension distribution, and arc progression after the restructure."
-  </example>
+description: "Audits pacing, tension, scene turns, thematic coherence, and arc trajectory. Internal specialist dispatched by the worldsmith reviewer orchestrator via Task; not intended for direct invocation."
 tools:
   - Read
   - Glob

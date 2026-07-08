@@ -1,20 +1,6 @@
 ---
 name: prose-auditor
-description: >-
-  Experienced academic editor evaluating writing quality, narrative structure,
-  notation consistency, and communication effectiveness in research papers.
-  Launched by the reviewer orchestrator.
-
-  <example>
-  Context: Orchestrator needs writing quality evaluation.
-  user: "Evaluate the writing quality of this paper"
-  assistant: "I'll launch the prose-auditor to assess clarity, structure, and notation consistency."
-  </example>
-  <example>
-  Context: Paper may have unclear exposition.
-  user: "Is this paper well-written and clearly organized?"
-  assistant: "I'll launch the prose-auditor to check narrative arc and prose quality."
-  </example>
+description: "Evaluates writing quality, narrative structure, and notation consistency. Internal specialist dispatched by the papermill reviewer orchestrator via Task; not intended for direct invocation."
 tools:
   - Read
   - Glob

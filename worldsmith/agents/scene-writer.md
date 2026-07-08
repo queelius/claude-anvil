@@ -1,21 +1,6 @@
 ---
 name: scene-writer
-description: >-
-  Specialist agent for prose scene drafting with craft discipline. Launched by
-  the writer orchestrator during multi-agent content generation. Produces draft
-  prose that shows rather than tells, with distinct character voices, concrete
-  sensory detail, and scene structure that creates and releases tension.
-
-  <example>
-  Context: Orchestrator needs a confrontation scene drafted for chapter 7.
-  user: "Draft the scene where Maren confronts her mother about the treaty"
-  assistant: "I'll launch the scene-writer to draft the confrontation: entering late, writing to Maren's documented voice patterns, and grounding the tension in physical detail."
-  </example>
-  <example>
-  Context: Orchestrator needs a quiet character scene between two chapters.
-  user: "Write the interlude scene where Kael discovers the broken resonance stone"
-  assistant: "I'll launch the scene-writer to draft the discovery scene: sensory detail, Kael's documented speech tics, and a turn that shifts the stakes."
-  </example>
+description: "Drafts prose scenes with craft discipline, documented character voices, and concrete sensory detail. Internal specialist dispatched by the worldsmith writer orchestrator via Task; not intended for direct invocation."
 tools:
   - Read
   - Glob

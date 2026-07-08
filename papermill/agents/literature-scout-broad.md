@@ -1,21 +1,6 @@
 ---
 name: literature-scout-broad
-description: >-
-  Field surveyor that maps the landscape of competing and related approaches for
-  a paper under review. Searches broadly at multiple levels of specificity to find
-  competing approaches, benchmarks, and state-of-the-art comparisons.
-  Launched by the reviewer orchestrator.
-
-  <example>
-  Context: Orchestrator needs broad literature context for review.
-  user: "Survey the field around this paper's topic"
-  assistant: "I'll launch the broad literature scout to map competing and related approaches."
-  </example>
-  <example>
-  Context: Paper needs contextualization within its research area.
-  user: "What is the landscape of related work for this paper?"
-  assistant: "I'll launch the broad literature scout to find competing approaches and benchmarks."
-  </example>
+description: "Maps the surrounding field of a paper: competing approaches, benchmarks, state of the art. Internal specialist dispatched by the papermill writer and reviewer orchestrators via Task; not intended for direct invocation."
 tools:
   - Read
   - Glob

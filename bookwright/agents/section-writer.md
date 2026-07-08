@@ -1,25 +1,6 @@
 ---
 name: section-writer
-description: >-
-  Drafts a single prose section for a technical non-fiction textbook. Reads all
-  source files and prior sections before writing, produces a .tex file with a
-  header cross-reference comment block, the prose body, theorem/proposition/
-  definition environments as required by the plan, and a closing signpost.
-  Builds the book, commits on success, and reports build exit code, commit SHA,
-  and word count.
-
-  <example>
-  Context: writer orchestrator dispatches a prose section task.
-  user: (internal dispatch) "Draft section 5.3: Bloom Filter Error Rates per plan task spec"
-  assistant: "Reading source files and prior sections, then drafting section 5.3 with required environments and cross-reference block."
-  <commentary>section-writer is typically launched by the writer orchestrator, not directly by the user.</commentary>
-  </example>
-  <example>
-  Context: User wants a single section drafted end-to-end.
-  user: "Draft section 6.2 on composition error propagation"
-  assistant: "I'll launch the section-writer agent to read the plan spec, source papers, and prior sections, then draft and commit section 6.2."
-  <commentary>section-writer can also be invoked directly for a standalone task.</commentary>
-  </example>
+description: "Drafts a single textbook prose section per the chapter plan spec, builds the book, and commits on success. Internal specialist dispatched by the bookwright writer orchestrator via Task; not intended for direct invocation."
 tools: Read, Write, Edit, Glob, Grep, Bash
 model: inherit
 color: green

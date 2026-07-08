@@ -1,20 +1,6 @@
 ---
 name: citation-verifier
-description: >-
-  Bibliographic specialist verifying citation accuracy, relevance, completeness,
-  and related work fairness. Uses web search to verify citations exist and match
-  claims. Launched by the reviewer orchestrator.
-
-  <example>
-  Context: Orchestrator needs citation verification.
-  user: "Verify all citations in this paper"
-  assistant: "I'll launch the citation-verifier to check every reference for accuracy and relevance."
-  </example>
-  <example>
-  Context: Paper's related work section needs scrutiny.
-  user: "Is the related work section fair and complete?"
-  assistant: "I'll launch the citation-verifier to evaluate related work coverage and citation accuracy."
-  </example>
+description: "Verifies citation accuracy, relevance, and related-work fairness using web search. Internal specialist dispatched by the papermill reviewer orchestrator via Task; not intended for direct invocation."
 tools:
   - Read
   - Glob

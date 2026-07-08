@@ -12,7 +12,7 @@
       "name": "pub-pipeline",
       "source": "./pub-pipeline",
       "description": "Unified publication pipeline: R packages (CRAN/JOSS/JSS) and Python packages (PyPI)",
-      "version": "0.8.1",
+      "version": "0.8.2",
       "author": {
         "name": "Alexander Towell"
       }
@@ -21,7 +21,7 @@
       "name": "papermill",
       "source": "./papermill",
       "description": "Research paper lifecycle management: thesis refinement, literature surveys, experimental design, multi-agent drafting, editorial review, and publication venue matching",
-      "version": "0.8.1",
+      "version": "0.8.2",
       "author": {
         "name": "Alexander Towell"
       }
@@ -30,7 +30,7 @@
       "name": "worldsmith",
       "source": "./worldsmith",
       "description": "Documentation-first worldbuilding methodology for fiction projects. The Silmarillion approach: docs ARE the world, story text derives from them.",
-      "version": "0.13.1",
+      "version": "0.13.2",
       "author": {
         "name": "Alexander Towell"
       }
@@ -72,15 +72,6 @@
       }
     },
     {
-      "name": "jot",
-      "source": "./jot",
-      "description": "Journal-aware Claude Code sessions that surface relevant tasks, ideas, and plans from your jot journal",
-      "version": "0.4.0",
-      "author": {
-        "name": "Alexander Towell"
-      }
-    },
-    {
       "name": "crier",
       "source": "./crier",
       "description": "Cross-post blog content to multiple platforms: audit, publish, rewrite, and track content distribution via the crier CLI",
@@ -102,7 +93,7 @@
       "name": "vista",
       "source": "./vista",
       "description": "Surface salient research directions from highly-cited papers. Live OpenAlex search, PDF section extraction, structured catalog, MCP tools for in-conversation lookups.",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "author": {
         "name": "Alexander Towell"
       }
@@ -111,7 +102,7 @@
       "name": "bookwright",
       "source": "./bookwright",
       "description": "Documentation-first methodology and multi-agent toolchain for technical non-fiction long-form manuscripts. The Bernoulli-textbook approach: design spec and chapter plans drive the manuscript.",
-      "version": "0.2.1",
+      "version": "0.2.2",
       "author": {
         "name": "Alexander Towell"
       }

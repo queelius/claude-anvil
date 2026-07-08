@@ -1,21 +1,6 @@
 ---
 name: consistency-auditor
-description: >-
-  Specialist agent for objective consistency verification in fiction manuscripts.
-  Launched by the reviewer orchestrator during multi-agent review. Checks
-  timeline, factual, character state, and spatial consistency against canonical
-  documentation. Does not evaluate prose quality, voice, or structure.
-
-  <example>
-  Context: Orchestrator needs timeline and factual consistency verification.
-  user: "Check this manuscript against the canonical docs for contradictions"
-  assistant: "I'll launch the consistency-auditor to verify timeline, facts, character state, and spatial consistency."
-  </example>
-  <example>
-  Context: Orchestrator needs to verify manuscript after canonical doc changes.
-  user: "The timeline was updated, so check the manuscript for new contradictions"
-  assistant: "I'll launch the consistency-auditor to compare the manuscript against the updated canonical docs."
-  </example>
+description: "Checks a manuscript against canonical docs for timeline, factual, character-state, and spatial contradictions. Internal specialist dispatched by the worldsmith reviewer orchestrator via Task; not intended for direct invocation."
 tools:
   - Read
   - Glob

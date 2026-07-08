@@ -1,22 +1,6 @@
 ---
 name: voice-auditor
-description: >-
-  Specialist agent for character voice, dialogue distinctiveness, and POV
-  consistency in fiction manuscripts. Launched by the reviewer orchestrator
-  during multi-agent review. Verifies characters sound like themselves and like
-  distinct people: the hardest thing for AI-assisted fiction to get right. Does
-  not evaluate consistency, prose craft, or structure, only voice.
-
-  <example>
-  Context: Orchestrator needs character voice verification during multi-agent review.
-  user: "Audit whether each character's dialogue matches their documented voice patterns"
-  assistant: "I'll launch the voice-auditor to verify voice consistency, distinctiveness, and POV discipline against the character docs."
-  </example>
-  <example>
-  Context: Orchestrator needs voice audit after adding new scenes with multiple characters.
-  user: "Check whether the new chapters maintain distinct character voices or if they're collapsing"
-  assistant: "I'll launch the voice-auditor to compare dialogue and internal monologue against character voice specs and flag any convergence."
-  </example>
+description: "Verifies character voice consistency, dialogue distinctiveness, and POV discipline against character docs. Internal specialist dispatched by the worldsmith reviewer orchestrator via Task; not intended for direct invocation."
 tools:
   - Read
   - Glob

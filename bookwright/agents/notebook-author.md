@@ -1,26 +1,6 @@
 ---
 name: notebook-author
-description: >-
-  Drafts and executes paired computational notebooks for textbook chapters.
-  Reads the chapter plan for the content checklist and numerical-sanity targets,
-  reads bookwright.config.yaml for the project stack (Python+uv, R+renv, or
-  Quarto), reads prior notebooks for style continuity, writes the notebook as
-  valid nbformat-4 JSON (.ipynb), R Markdown (.Rmd), or Quarto document (.qmd),
-  executes end-to-end, and reports execution exit code plus observed values
-  against targets.
-
-  <example>
-  Context: writer orchestrator dispatches a notebook task after section prose is committed.
-  user: (internal dispatch) "Write and execute the chapter 5 notebook per plan task spec"
-  assistant: "Reading plan spec for chapter 5 notebook targets, config.yaml for stack, and prior notebooks for style. Writing chapter_05.ipynb and executing end-to-end."
-  <commentary>notebook-author is typically launched by the writer orchestrator immediately after section prose lands, not directly by the user.</commentary>
-  </example>
-  <example>
-  Context: User invokes /bookwright:notebook for a specific chapter.
-  user: "/bookwright:notebook chapter 7"
-  assistant: "I'll launch notebook-author to read the chapter 7 plan spec, detect the project stack from config.yaml, draft the notebook, execute it, and verify sanity targets."
-  <commentary>notebook-author can be invoked directly via the /bookwright:notebook slash command.</commentary>
-  </example>
+description: "Drafts and executes a chapter's paired computational notebook against plan targets. Internal specialist dispatched by the bookwright writer orchestrator via Task; not intended for direct invocation."
 tools: Read, Write, Bash, Glob
 model: inherit
 color: cyan

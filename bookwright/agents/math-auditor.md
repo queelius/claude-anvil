@@ -1,23 +1,6 @@
 ---
 name: math-auditor
-description: >-
-  Verifies arithmetic, formula derivations, and worked examples in a textbook
-  section by recomputing each result independently. Uses Python via Bash for
-  numerical checks (sympy, numpy). Reports discrepancies by severity. Does not
-  edit any file.
-
-  <example>
-  Context: reviewer orchestrator dispatches math-auditor as one of four parallel auditors.
-  user: (internal dispatch) "Verify math in section 5.3 as part of parallel review"
-  assistant: "Reading section 5.3, extracting each numerical claim and derivation step, recomputing independently with Python/sympy where needed, comparing to prose values. Returning severity-tagged report."
-  <commentary>math-auditor is typically one of four parallel auditors launched by the reviewer orchestrator after a section is drafted.</commentary>
-  </example>
-  <example>
-  Context: User suspects a numerical error in a recently drafted section.
-  user: "Check the math in section 6.1, specifically the Bloom space calculation"
-  assistant: "I'll run math-auditor on section 6.1: reading the section, recomputing the Bloom space formula independently, and comparing observed values to prose claims."
-  <commentary>math-auditor can be invoked directly when a specific numerical error is suspected.</commentary>
-  </example>
+description: "Recomputes arithmetic, derivations, and worked examples independently via Python. Internal specialist dispatched by the bookwright reviewer orchestrator via Task; not intended for direct invocation."
 tools: Read, Bash, Glob
 model: inherit
 color: purple

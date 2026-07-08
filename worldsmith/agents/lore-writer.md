@@ -1,21 +1,6 @@
 ---
 name: lore-writer
-description: >-
-  Specialist agent for worldbuilding content generation: history, mythology,
-  cultures, and systems. Launched by the writer orchestrator during multi-agent
-  content generation. Develops canonical documentation with narrative prose
-  quality and consequence chains.
-
-  <example>
-  Context: Orchestrator needs world history developed for a kingdom.
-  user: "Develop the history of the Northern Kingdom from founding through the civil war"
-  assistant: "I'll launch the lore-writer to build the Northern Kingdom's history: geological constraints, founding myths, political evolution, and the civil war's causes and aftermath."
-  </example>
-  <example>
-  Context: Orchestrator needs a magic system designed with full consequences.
-  user: "Design a resonance-based magic system and derive its societal implications"
-  assistant: "I'll launch the lore-writer to design the resonance magic system: mechanics, costs, power structures, economic implications, and cultural attitudes."
-  </example>
+description: "Develops canonical worldbuilding docs: history, mythology, cultures, and systems with consequence chains. Internal specialist dispatched by the worldsmith writer orchestrator via Task; not intended for direct invocation."
 tools:
   - Read
   - Write

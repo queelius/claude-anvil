@@ -1,21 +1,6 @@
 ---
 name: community-auditor
-description: >-
-  Reviews community and open-source practice against JOSS requirements:
-  CONTRIBUTING.md, CODE_OF_CONDUCT.md, LICENSE, issue tracker accessibility,
-  development history, and installation instructions. Lightweight audit
-  focused on repository hygiene. Launched by the joss-reviewer orchestrator.
-
-  <example>
-  Context: Orchestrator needs community guidelines check.
-  user: "Check if this repo has CONTRIBUTING and CODE_OF_CONDUCT"
-  assistant: "I'll launch the community-auditor to check open-source practice requirements."
-  </example>
-  <example>
-  Context: Package needs JOSS community requirements verified.
-  user: "Does this repo meet JOSS community standards?"
-  assistant: "I'll launch the community-auditor to evaluate community guidelines and repo hygiene."
-  </example>
+description: "Checks LICENSE, CONTRIBUTING, CODE_OF_CONDUCT, issue tracker, and repo hygiene for JOSS. Internal specialist dispatched by the joss-reviewer orchestrator via Task; not intended for direct invocation."
 tools:
   - Glob
   - Grep

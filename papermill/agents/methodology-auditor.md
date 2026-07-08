@@ -1,20 +1,6 @@
 ---
 name: methodology-auditor
-description: >-
-  Evaluates experimental design, statistical rigor, reproducibility, and baseline
-  appropriateness in academic papers. Checks whether results can be trusted and
-  reproduced. Launched by the reviewer orchestrator.
-
-  <example>
-  Context: Orchestrator needs methodology evaluation.
-  user: "Audit the experimental methodology in this paper"
-  assistant: "I'll launch the methodology-auditor to evaluate design, statistics, and reproducibility."
-  </example>
-  <example>
-  Context: Paper has computational experiments that need scrutiny.
-  user: "Are the experiments in this paper sound and reproducible?"
-  assistant: "I'll launch the methodology-auditor to check experimental rigor."
-  </example>
+description: "Audits experimental design, statistical rigor, and reproducibility. Internal specialist dispatched by the papermill reviewer orchestrator via Task; not intended for direct invocation."
 tools:
   - Read
   - Glob

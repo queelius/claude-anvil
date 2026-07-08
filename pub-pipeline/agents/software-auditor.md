@@ -1,21 +1,6 @@
 ---
 name: software-auditor
-description: >-
-  Reviews software quality against JOSS functionality criteria: API design,
-  documentation completeness, test coverage, CI/CD setup, installation,
-  and error handling. Produces a structured findings report with severity
-  ratings. Launched by the joss-reviewer orchestrator.
-
-  <example>
-  Context: Orchestrator needs software quality assessment.
-  user: "Audit the software quality of this R package"
-  assistant: "I'll launch the software-auditor to evaluate tests, docs, CI, and API design."
-  </example>
-  <example>
-  Context: Package needs functionality verification before JOSS submission.
-  user: "Does this package meet JOSS software requirements?"
-  assistant: "I'll launch the software-auditor to check against JOSS functionality criteria."
-  </example>
+description: "Audits software quality against JOSS criteria: tests, docs, CI, installation, API design. Internal specialist dispatched by the joss-reviewer orchestrator via Task; not intended for direct invocation."
 tools:
   - Glob
   - Grep

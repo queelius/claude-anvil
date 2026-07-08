@@ -1,20 +1,6 @@
 ---
 name: literature-writer
-description: >-
-  Specialist writer for related work and background sections. Turns literature
-  scout findings into a compelling narrative that positions the paper's contribution
-  against the field. Launched by the writer orchestrator during multi-agent drafting.
-
-  <example>
-  Context: Orchestrator needs a related work section drafted.
-  user: "Write the related work section positioning our contribution"
-  assistant: "I'll launch the literature-writer to draft a narrative related work section."
-  </example>
-  <example>
-  Context: Paper needs a background section synthesizing prior approaches.
-  user: "Draft the background section covering existing methods"
-  assistant: "I'll launch the literature-writer to synthesize prior work into a coherent background."
-  </example>
+description: "Drafts related work and background sections from literature scout findings. Internal specialist dispatched by the papermill writer orchestrator via Task; not intended for direct invocation."
 tools:
   - Read
   - Glob

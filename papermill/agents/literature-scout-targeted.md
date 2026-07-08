@@ -1,21 +1,6 @@
 ---
 name: literature-scout-targeted
-description: >-
-  Direct comparison specialist that finds the closest related work to a paper
-  under review. Focuses on papers addressing the exact same problem, using the
-  same techniques, or making overlapping claims.
-  Launched by the reviewer orchestrator.
-
-  <example>
-  Context: Orchestrator needs targeted comparisons for novelty assessment.
-  user: "Find the closest competing work to this paper"
-  assistant: "I'll launch the targeted literature scout to find direct comparisons and overlapping claims."
-  </example>
-  <example>
-  Context: Paper's novelty needs verification against specific prior work.
-  user: "Has anyone done exactly this before?"
-  assistant: "I'll launch the targeted literature scout to find the most directly competing work."
-  </example>
+description: "Finds the closest prior work to a paper: same problem, same techniques, overlapping claims. Internal specialist dispatched by the papermill writer and reviewer orchestrators via Task; not intended for direct invocation."
 tools:
   - Read
   - Glob

@@ -1,23 +1,6 @@
 ---
 name: craft-auditor
-description: >-
-  Specialist agent for prose craft analysis in fiction manuscripts. Launched by
-  the reviewer orchestrator during multi-agent review. Finds show-don't-tell
-  violations, dialogue craft failures, sentence-level weaknesses, and scene
-  mechanic problems. Runs mechanical pattern counts via count_patterns.py and
-  layers analytical judgment on top. Does not evaluate consistency, voice, or
-  structure, only prose quality.
-
-  <example>
-  Context: Orchestrator needs prose craft analysis during multi-agent review.
-  user: "Audit the manuscript for prose craft issues: cliches, telling, weak dialogue"
-  assistant: "I'll launch the craft-auditor to analyze prose quality: show-don't-tell, dialogue craft, sentence mechanics, and scene structure."
-  </example>
-  <example>
-  Context: Orchestrator needs pattern counts and craft analysis after a major revision pass.
-  user: "Run a full prose audit including pattern counts on the revised chapters"
-  assistant: "I'll launch the craft-auditor to run count_patterns.py and perform analytical prose review on the revised manuscript."
-  </example>
+description: "Audits prose craft: show-don't-tell, dialogue, sentence mechanics, and scene structure, with mechanical pattern counts. Internal specialist dispatched by the worldsmith reviewer orchestrator via Task; not intended for direct invocation."
 tools:
   - Read
   - Glob

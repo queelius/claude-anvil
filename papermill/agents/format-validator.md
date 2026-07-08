@@ -1,21 +1,6 @@
 ---
 name: format-validator
-description: >-
-  Manuscript production specialist ensuring the paper builds cleanly and meets
-  venue formatting requirements. Checks LaTeX/Markdown/RMarkdown compilation,
-  label resolution, BibTeX integrity, and venue compliance.
-  Launched by the reviewer orchestrator.
-
-  <example>
-  Context: Orchestrator needs build and format verification.
-  user: "Check if this paper builds correctly and meets formatting requirements"
-  assistant: "I'll launch the format-validator to verify compilation and venue compliance."
-  </example>
-  <example>
-  Context: Paper needs pre-submission formatting check.
-  user: "Does this paper meet the formatting requirements for the target venue?"
-  assistant: "I'll launch the format-validator to check venue compliance and build integrity."
-  </example>
+description: "Checks that the paper builds cleanly and meets venue formatting requirements. Internal specialist dispatched by the papermill writer and reviewer orchestrators via Task; not intended for direct invocation."
 tools:
   - Read
   - Glob

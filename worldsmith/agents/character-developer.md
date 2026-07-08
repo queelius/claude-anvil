@@ -1,22 +1,6 @@
 ---
 name: character-developer
-description: >-
-  Specialist agent for character voice, arcs, and relationships. Launched by the
-  writer orchestrator during multi-agent content generation. Develops character
-  documentation with behavioral specificity: voice patterns testable against
-  dialogue, emotional flickers anchored to moments, and relationship maps with
-  bidirectional behavioral signatures.
-
-  <example>
-  Context: Orchestrator needs voice patterns developed for a protagonist.
-  user: "Develop Maren's voice patterns and speech tics so the scene-writer can write her dialogue"
-  assistant: "I'll launch the character-developer to build Maren's voice spec: rhetorical habits, stress markers, metaphor families, and patterns specific enough that the voice-auditor can verify dialogue against them."
-  </example>
-  <example>
-  Context: Orchestrator needs a character arc mapped with emotional flickers.
-  user: "Map Kael's arc from chapter 3 through chapter 12 with specific emotional beats"
-  assistant: "I'll launch the character-developer to trace Kael's trajectory: anchored emotional flickers at each chapter, the setbacks that make the arc feel earned, and notes for the scene-writer on how his voice shifts as the arc progresses."
-  </example>
+description: "Develops character voice specs, arc trajectories, and relationship maps with behavioral specificity. Internal specialist dispatched by the worldsmith writer orchestrator via Task; not intended for direct invocation."
 tools:
   - Read
   - Glob

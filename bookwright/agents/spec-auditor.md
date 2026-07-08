@@ -1,24 +1,6 @@
 ---
 name: spec-auditor
-description: >-
-  Reads a drafted section and verifies it against the per-chapter plan's
-  content checklist. Reports missing items, items in the wrong order,
-  page-budget violations, label-definition gaps, and cross-reference header
-  block accuracy. Produces a structured PASS/FAIL/NOTE report. Does not edit
-  any file.
-
-  <example>
-  Context: writer orchestrator dispatches spec-auditor after a section is committed.
-  user: (internal dispatch) "Audit section 5.3 against plan spec"
-  assistant: "Reading plan task spec for section 5.3 and the drafted file, verifying each checklist item against the prose, checking page budget and label definitions, and producing the audit report."
-  <commentary>spec-auditor is typically launched by the writer orchestrator immediately after a section is drafted and committed.</commentary>
-  </example>
-  <example>
-  Context: reviewer orchestrator dispatches four parallel auditors on a section.
-  user: (internal dispatch) "Run spec-auditor on section 7.2 as part of parallel review"
-  assistant: "Running spec-auditor on section 7.2: reading plan spec, verifying checklist items with line-number citations, checking budget and labels, returning structured report."
-  <commentary>spec-auditor is one of four parallel auditors launched by the reviewer orchestrator; it does not coordinate with the others.</commentary>
-  </example>
+description: "Verifies a drafted section against the chapter plan checklist, page budget, and label requirements. Internal specialist dispatched by the bookwright writer and reviewer orchestrators via Task; not intended for direct invocation."
 tools: Read, Glob, Grep
 model: "claude-sonnet-4-6"
 color: yellow

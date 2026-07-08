@@ -1,20 +1,6 @@
 ---
 name: results-writer
-description: >-
-  Specialist writer for results, analysis, and discussion sections. Presents
-  findings clearly, interprets them honestly, and discusses implications and
-  limitations. Launched by the writer orchestrator during multi-agent drafting.
-
-  <example>
-  Context: Orchestrator needs results written up from experimental data.
-  user: "Write the results section presenting our findings"
-  assistant: "I'll launch the results-writer to present findings with analysis and discussion."
-  </example>
-  <example>
-  Context: Paper needs a discussion section interpreting results.
-  user: "Draft the discussion covering implications and limitations"
-  assistant: "I'll launch the results-writer to interpret results and discuss limitations."
-  </example>
+description: "Drafts results, analysis, and discussion sections that interpret findings honestly. Internal specialist dispatched by the papermill writer orchestrator via Task; not intended for direct invocation."
 tools:
   - Read
   - Glob

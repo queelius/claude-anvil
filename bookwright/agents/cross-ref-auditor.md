@@ -1,24 +1,6 @@
 ---
 name: cross-ref-auditor
-description: >-
-  Verifies cross-reference integrity across the book. Checks that every
-  \Cref{} target exists, flags label collisions, and categorizes undefined
-  references as expected (matching a documented baseline) or unexpected (real
-  bugs). Also generates the cross-reference map table for integration-pass
-  records. Does not edit any file.
-
-  <example>
-  Context: reviewer orchestrator dispatches cross-ref-auditor as one of four parallel auditors.
-  user: (internal dispatch) "Run cross-ref-auditor on section 8.1 as part of parallel review"
-  assistant: "Reading the section header block, verifying DEFINED labels against actual declarations, checking RESOLVED labels exist in the book tree, grepping book.log for undefined references, and categorizing each against the baseline."
-  <commentary>cross-ref-auditor is one of four parallel auditors launched by the reviewer orchestrator.</commentary>
-  </example>
-  <example>
-  Context: /bookwright:integrate calls cross-ref-auditor before merging a chapter.
-  user: (internal dispatch) "Run cross-ref-auditor before integrating chapter 9"
-  assistant: "Running full cross-reference integrity check for chapter 9: parsing header blocks, verifying all DEFINED and RESOLVED labels, grepping book.log, categorizing undefined refs, and generating the cross-reference map for integration records."
-  <commentary>cross-ref-auditor is also called by /bookwright:integrate to produce the cross-reference map before a chapter is merged into the main build.</commentary>
-  </example>
+description: "Verifies cross-reference integrity: Cref targets, label collisions, and undefined-reference categorization. Internal specialist dispatched by the bookwright reviewer orchestrator and the integrate command via Task; not intended for direct invocation."
 tools: Read, Bash, Glob, Grep
 model: "claude-sonnet-4-6"
 color: pink
