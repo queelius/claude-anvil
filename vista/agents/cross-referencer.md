@@ -26,9 +26,12 @@ The orchestrator hands you:
    `.bib` files, parse titles and abstract keywords. Build a short set of the
    user's working keywords and methods.
 
-2. **Query the literature side.** Call the Vista MCP tools to retrieve
-   relevant papers' Future Work / Limitations sections. Choose tools by query
-   shape:
+2. **Query the literature side.** First call `search_directions` to pull any
+   directions already mined and tagged by prior cross-reference runs (the
+   `crossref:<user-theme>` tags written in step 4), so you do not re-mine what
+   the catalog already holds; treat those as a starting set. Then call the live
+   Vista MCP tools to retrieve relevant papers' Future Work / Limitations
+   sections. Choose tools by query shape:
    - Specific topic: `topic_followups`.
    - Multi-field bridge: `broad_followups(fields=[...])`.
    - Older neglected directions: `find_seminal`.

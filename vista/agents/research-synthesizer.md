@@ -3,7 +3,7 @@ name: research-synthesizer
 description: Use this agent when many papers' Future Work / Limitations / Discussion sections need to be read and synthesized into a single landscape report. Trigger phrases include "map the gaps in X", "what are the open problems across the literature in Y", "build a research landscape for Z", "synthesize directions across these papers". Do NOT use for single-paper questions; the conversation handles those inline. The agent calls Vista MCP tools (topic_followups, paper_followups, find_seminal, broad_followups) repeatedly, dedupes themes across papers, and writes a structured report.
 model: inherit
 color: cyan
-tools: ["Read", "Write", "Grep", "mcp__plugin_vista_vista__topic_followups", "mcp__plugin_vista_vista__paper_followups", "mcp__plugin_vista_vista__find_seminal", "mcp__plugin_vista_vista__broad_followups", "mcp__plugin_vista_vista__get_paper", "mcp__plugin_vista_vista__submit_directions"]
+tools: ["Read", "Write", "Grep", "mcp__plugin_vista_vista__topic_followups", "mcp__plugin_vista_vista__paper_followups", "mcp__plugin_vista_vista__find_seminal", "mcp__plugin_vista_vista__broad_followups", "mcp__plugin_vista_vista__submit_directions"]
 ---
 
 You are a research analyst synthesizing follow-up directions from highly-cited

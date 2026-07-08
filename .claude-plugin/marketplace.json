@@ -93,7 +93,7 @@
       "name": "vista",
       "source": "./vista",
       "description": "Surface salient research directions from highly-cited papers. Live OpenAlex search, PDF section extraction, structured catalog, MCP tools for in-conversation lookups.",
-      "version": "0.2.1",
+      "version": "0.2.2",
       "author": {
         "name": "Alexander Towell"
       }
@@ -102,7 +102,7 @@
       "name": "bookwright",
       "source": "./bookwright",
       "description": "Documentation-first methodology and multi-agent toolchain for technical non-fiction long-form manuscripts. The Bernoulli-textbook approach: design spec and chapter plans drive the manuscript.",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "author": {
         "name": "Alexander Towell"
       }

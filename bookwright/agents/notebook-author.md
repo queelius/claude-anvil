@@ -1,6 +1,6 @@
 ---
 name: notebook-author
-description: "Drafts and executes a chapter's paired computational notebook against plan targets. Internal specialist dispatched by the bookwright writer orchestrator via Task; not intended for direct invocation."
+description: "Drafts and executes a chapter's paired computational notebook against plan targets. Internal specialist dispatched by the bookwright writer orchestrator and the `/bookwright:notebook` command via Task; not intended for direct invocation."
 tools: Read, Write, Bash, Glob
 model: inherit
 color: cyan
