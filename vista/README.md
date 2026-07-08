@@ -42,6 +42,13 @@ uv pip install -e .
 python -m pytest tests/ -q
 ```
 
+> **`uv` is required on PATH.** Both the CLI and the MCP server run through
+> `uv`. The plugin's `.mcp.json` launches the server with
+> `uv run --project ${CLAUDE_PLUGIN_ROOT} vista-mcp`, which creates the
+> virtualenv and syncs dependencies on first launch. That first sync needs
+> network access; after it, startup is fast and offline. If `uv` is missing
+> or the machine is offline on first run, the MCP server will fail to come up.
+
 For the headless batch path (cron, CI), install the optional `api` extra and
 set `ANTHROPIC_API_KEY`:
 

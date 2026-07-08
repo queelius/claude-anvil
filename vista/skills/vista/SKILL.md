@@ -1,7 +1,6 @@
 ---
 name: vista
 description: This skill should be used when the user asks about research directions, open problems, future work, or follow-up research from the academic literature. Trigger phrases include "open problems in X", "what's next for Y", "future work for paper Z", "research directions on T", "salient follow-up research", "what should I work on next in", "find me follow-up research unrelated to my prior work", "broad survey of W", "neglected directions in V". Routes the request to the right Vista MCP tool, reads back the structured paper sections, and synthesizes research directions in the conversation.
-version: 0.1.0
 ---
 
 # Vista
