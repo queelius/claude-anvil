@@ -156,7 +156,7 @@ When working in a multi-work project:
 - **Manuscripts are scoped.** Each work has its own manuscript directory. Reviews, diagnostics, and writing target one work at a time.
 - **Propagation crosses works.** When shared lore changes, check ALL works' manuscripts for affected passages. When local lore changes, only that work's manuscript needs checking.
 - **Reviews are per-work.** A review of the short story does not review the novel. But consistency checks always verify against shared lore.
-- **Work identity from project.yaml.** Each work has a name, type (novel, novella, short-story, collection), manuscript directory, optional local lore directory, and optional file type filters. The first work listed is the primary work (default when no work is specified).
+- **Work identity from project.yaml.** Each work has a name, type (novel, novella, short-story, collection, nonfiction), manuscript directory, optional local lore directory, and optional file type filters. The first work listed is the primary work (default when no work is specified).
 
 ## Additional Resources
 

@@ -74,6 +74,15 @@ def test_human_output_counts_files(tmp_path):
     assert "Tale [short-story]: tales (1 file)" in r.stdout
 
 
+def test_nonfiction_type_accepted(tmp_path):
+    # Essays and nonfiction books (e.g. Broken Things, Multitudes) share the
+    # lore-first workflow; `type` is informational and must not reject them.
+    text = VALID.replace("type: short-story", "type: nonfiction")
+    r = run(tmp_path, text, "--human")
+    assert r.returncode == 0, r.stderr
+    assert "Tale [nonfiction]: tales" in r.stdout
+
+
 @pytest.mark.parametrize("text,msg", [
     ("- a\n- b\n", "must be a YAML mapping"),
     ("works: [{name: a, type: novel}]\n", "'universe'"),

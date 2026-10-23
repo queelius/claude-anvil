@@ -74,7 +74,7 @@ def validate(data: dict) -> tuple[str, str, list[dict]]:
     if not raw_works or not isinstance(raw_works, list):
         die("project.yaml must have a non-empty 'works' list")
 
-    valid_types = {"novel", "novella", "short-story", "collection"}
+    valid_types = {"novel", "novella", "short-story", "collection", "nonfiction"}
     works = []
     for i, w in enumerate(raw_works):
         if not isinstance(w, dict):

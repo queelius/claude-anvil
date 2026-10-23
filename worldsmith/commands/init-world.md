@@ -55,7 +55,7 @@ Nothing exists. Build from scratch.
    - Manuscript format if any preference (chapter files, single file, etc.)
 2. Ask about related projects: is this part of a series or shared universe? If so, get paths to related projects.
 3. Ask whether this project will contain multiple works (e.g., a novel and short stories sharing the same world). If yes:
-   - Ask for each work's name, type (novel/novella/short-story/collection), and manuscript directory path.
+   - Ask for each work's name, type (novel/novella/short-story/collection/nonfiction), and manuscript directory path.
    - Generate `.worldsmith/project.yaml` with the universe name, lore directory, and works list.
 4. Create `.worldsmith/` and `docs/` directories.
 5. Generate lightweight starter docs: not comprehensive schemas, just enough to begin working. Each doc should have:
