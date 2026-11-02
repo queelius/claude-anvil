@@ -119,6 +119,21 @@
         "notebooks"
       ],
       "defaultEnabled": false
+    },
+    {
+      "name": "research-communication",
+      "source": {
+        "source": "github",
+        "repo": "queelius/writing-style",
+        "ref": "main"
+      },
+      "category": "writing",
+      "tags": [
+        "writing",
+        "research",
+        "review",
+        "readability"
+      ]
     }
   ]
 }

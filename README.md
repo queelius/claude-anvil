@@ -31,6 +31,7 @@ papermill, worldsmith, and bookwright are opt-in (`defaultEnabled: false`): enab
 | [crier](crier/) | Cross-post blog content to multiple platforms |
 | [research-agent](research-agent/) | Autonomous research agent: iterates toward a goal through proofs, code, simulations, tests |
 | [vista](vista/) | Surface salient research directions from highly-cited papers (live OpenAlex + PDF section extraction) |
+| research-communication | Readable research writing and blind review of drafts. Lives in a private repo (`queelius/writing-style`), so installing it needs GitHub access to that repo |
 
 Each plugin's version is in its `.claude-plugin/plugin.json`.
 

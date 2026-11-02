@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What This Is
 
-A Claude Code **plugin marketplace** named `queelius-plugins` (the `name` in `.claude-plugin/marketplace.json`; the GitHub repo is `queelius/claude-anvil`). All plugins are distributed as a single git repo. Most plugins are Markdown with YAML frontmatter; vista (Python, pytest via uv) and kdp's MCP server (TypeScript, vitest via npm) carry real code and tests, and worldsmith/bookwright have hook scripts with shell and pytest suites. CI (`.github/workflows/validate.yml`) runs all of them plus `scripts/check-plugins.py`.
+A Claude Code **plugin marketplace** named `queelius-plugins` (the `name` in `.claude-plugin/marketplace.json`; the GitHub repo is `queelius/claude-anvil`). All plugins but one are distributed from this repo; research-communication is listed here with a `github` source and lives in its own private repo, `queelius/writing-style`. Most plugins are Markdown with YAML frontmatter; vista (Python, pytest via uv) and kdp's MCP server (TypeScript, vitest via npm) carry real code and tests, and worldsmith/bookwright have hook scripts with shell and pytest suites. CI (`.github/workflows/validate.yml`) runs all of them plus `scripts/check-plugins.py`.
 
 **Install**: `/plugin marketplace add queelius/claude-anvil`
 **Install a plugin**: `/plugin install repoindex@queelius-plugins`
@@ -22,6 +22,7 @@ A Claude Code **plugin marketplace** named `queelius-plugins` (the `name` in `.c
 | **research-agent** | `research-agent/` | Autonomous research agent with a status/resume/synthesize/branch control surface for long runs |
 | **vista** | `vista/` | Surface salient research directions from highly-cited papers. Live OpenAlex search, PDF section extraction, structured catalog |
 | **bookwright** | `bookwright/` | Non-fiction book authoring: LaTeX + paired computational notebooks, multi-agent drafting/review, design→plan→draft→integrate workflow |
+| **research-communication** | external: `queelius/writing-style` | Readable research writing: main idea first, terms defined before use, faithful revision; a review skill runs blind reviewers on a draft. Its components and tests live in that repo, so `check-plugins.py` skips them; installing it needs GitHub access to that private repo (`gh auth login` and `gh auth setup-git`) |
 
 Versions are not listed here on purpose: each plugin's `.claude-plugin/plugin.json` is the only place a version lives (see Version Bumps).
 
@@ -96,7 +97,8 @@ Several plugins share bare names, which is fine because every entry is namespace
 
 | Bare name | Defined by |
 |-----------|------------|
-| `/draft`, `/review`, `/revise` | papermill, worldsmith, bookwright |
+| `/draft`, `/revise` | papermill, worldsmith, bookwright |
+| `/review` | papermill, worldsmith, bookwright, research-communication |
 | `/iterate`, `/check`, `/help` | worldsmith, bookwright |
 | `/init` | papermill, bookwright |
 | `/status` | papermill, research-agent |

@@ -5,7 +5,8 @@ Complements `claude plugin validate` with the conventions in CLAUDE.md that
 the validator does not know about. Exits 1 and lists every problem found.
 
 Checks:
-- marketplace.json lists exactly the plugin directories, with no entry versions
+- marketplace.json lists exactly the plugin directories, with no entry versions;
+  an entry kept in another repo needs a github source and is checked there
 - skill, command, and agent frontmatter parses and has the required keys
 - no command shares a name with a skill in the same plugin (the command wins)
 - agents never grant AskUserQuestion and never pin model: fable
@@ -67,7 +68,12 @@ def load_plugins(errors: list[str]) -> list[Plugin]:
     for entry in catalog["plugins"]:
         if "version" in entry:
             errors.append(f"marketplace.json: {entry['name']} has a version; it belongs only in plugin.json")
-        listed[entry["name"]] = (ROOT / entry["source"]).resolve()
+        source = entry["source"]
+        if isinstance(source, dict):  # a plugin kept in its own repo; its components are checked there
+            if source.get("source") != "github" or not source.get("repo"):
+                errors.append(f"marketplace.json: {entry['name']} external source needs source 'github' and a repo")
+            continue
+        listed[entry["name"]] = (ROOT / source).resolve()
     on_disk = {p.parent.parent.resolve() for p in ROOT.glob("*/.claude-plugin/plugin.json")}
     for missing in on_disk - set(listed.values()):
         errors.append(f"{missing.name}/ has a plugin.json but no marketplace.json entry")
